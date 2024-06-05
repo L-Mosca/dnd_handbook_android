@@ -7,4 +7,63 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Black-->
+    <color name="black_100">#FF515151</color>
+    <color name="black_200">#FF454444</color>
+    <color name="black_300">#FF363636</color>
+    <color name="black_400">#FF2C2C2C</color>
+    <color name="black_500">#FF232323</color>
+    <color name="black_600">#FF1D1D1D</color>
+    <color name="black_700">#FF161616</color>
+    <color name="black_800">#FF0A0A0A</color>
+    <color name="black_900">#FF000000</color>
+
+    <!--Gray-->
+    <color name="gray_100">#FFE1E1E1</color>
+    <color name="gray_200">#FFCFCFCF</color>
+    <color name="gray_300">#FFB1B1B1</color>
+    <color name="gray_400">#FF9E9E9E</color>
+    <color name="gray_500">#FF7E7E7E</color>
+    <color name="gray_600">#FF626262</color>
+    <color name="gray_700">#FF515151</color>
+    <color name="gray_800">#FF3B3B3B</color>
+    <color name="gray_900">#FF222222</color>
+
+    <!--Sky Blue-->
+    <color name="blue_100">#FFBBDEFB</color>
+    <color name="blue_200">#FF90CAF9</color>
+    <color name="blue_300">#FF64B5F6</color>
+    <color name="blue_400">#FF42A5F5</color>
+    <color name="blue_500">#FF2196F3</color>
+    <color name="blue_600">#FF1E88E5</color>
+    <color name="blue_700">#FF1976D2</color>
+    <color name="blue_800">#FF1565C0</color>
+    <color name="blue_900">#FF0D47A1</color>
+
+    <!--Crimson-->
+    <color name="crimson_100">#FFFFC1C1</color>
+    <color name="crimson_200">#FFFF8A8A</color>
+    <color name="crimson_300">#FFFF5252</color>
+    <color name="crimson_400">#FFFF2C2C</color>
+    <color name="crimson_500">#FFFF0000</color>
+    <color name="crimson_600">#FFE60000</color>
+    <color name="crimson_700">#FFCC0000</color>
+    <color name="crimson_800">#FFB30000</color>
+    <color name="crimson_900">#FF800000</color>
+    
+    <!--Classes-->
+    <color name="fighter">#FF654519</color>
+    <color name="artificer">#FFAB611C</color>
+    <color name="paladin">#FF9E9E9E</color>
+    <color name="warlock">#FF5F1C8A</color>
+    <color name="bard">#FFDC64DE</color>
+    <color name="rogue">#FF373636</color>
+    <color name="sorcerer">#FFB11716</color>
+    <color name="barbarian">#FFE79100</color>
+    <color name="cleric">#FFFFAE00</color>
+    <color name="druid">#FF9CC01B</color>
+    <color name="ranger">#FF2B4906</color>
+    <color name="monk">#FF1DAAE6</color>
+    <color name="wizard">#FF1F1F85</color>
 </resources>
