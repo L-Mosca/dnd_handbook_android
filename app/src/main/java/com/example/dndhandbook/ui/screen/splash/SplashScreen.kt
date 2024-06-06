@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,7 +34,9 @@ fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel = 
 }
 
 private fun goToHomeScreen(navController: NavHostController) {
-    navController.navigate(Screen.Home.route)
+    navController.navigate(Screen.Home.route) {
+        popUpTo(Screen.Splash.route) { inclusive = true }
+    }
 }
 
 @Composable
@@ -45,7 +48,7 @@ fun AppLogo() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.img_dnd_logo),
-            contentDescription = "image from drawable resource",
+            contentDescription = stringResource(id = R.string.app_name),
             modifier = Modifier.size(width = 240.dp, height = 240.dp),
             contentScale = ContentScale.Crop
         )
