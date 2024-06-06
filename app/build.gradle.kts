@@ -79,6 +79,9 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // Coil
+    implementation(libs.coil.kt.coil.compose)
 }
 
 kapt {
