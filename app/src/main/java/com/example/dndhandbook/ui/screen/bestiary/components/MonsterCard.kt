@@ -11,13 +11,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.dndhandbook.R
@@ -33,13 +33,12 @@ fun MonsterCard(monster: MonsterBasicData) {
 fun MonsterLayout(monster: MonsterBasicData) {
     monster.apply {
         Card(
-            colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.black_800)),
+            colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.black_700)),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(8.dp),
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 MonsterImage(image = image)
-                Spacer(modifier = Modifier.height(10.dp))
                 MonsterName(name = name)
                 Spacer(modifier = Modifier.height(10.dp))
             }
@@ -63,9 +62,7 @@ fun MonsterImage(image: String) {
     Image(
         painter = painter,
         contentDescription = image,
-        modifier = Modifier
-            .clip(RoundedCornerShape(8.dp))
-            .size(160.dp),
+        modifier = Modifier.size(width = 200.dp, height = 200.dp),
         contentScale = ContentScale.Fit
     )
 }
@@ -75,7 +72,8 @@ fun MonsterName(name: String) {
     BaseText(
         text = name,
         color = colorResource(id = R.color.crimson_600),
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        fontSize = 16.sp
     )
 }
 
