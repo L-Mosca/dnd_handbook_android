@@ -5,11 +5,9 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MonsterBasicData(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
+data class MonsterList(
+    @SerializedName("count")
+    val count: Int = 0,
+    @SerializedName("results")
+    val results: List<MonsterBasicData> = emptyList(),
 ) : Parcelable

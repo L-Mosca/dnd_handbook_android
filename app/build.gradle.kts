@@ -82,6 +82,9 @@ dependencies {
 
     // Coil
     implementation(libs.coil.kt.coil.compose)
+
+    // Gson
+    implementation(libs.gson)
 }
 
 kapt {
