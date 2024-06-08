@@ -1,12 +1,16 @@
 package com.example.dndhandbook.domain.remote
 
 import com.example.dndhandbook.BuildConfig
+import com.example.dndhandbook.domain.models.monster.MonsterDetail
+import com.example.dndhandbook.domain.models.monster.MonsterList
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface DndApi {
@@ -41,4 +45,10 @@ interface DndApi {
                 .build()
         }
     }
+
+    @GET(ApiConstants.FETCH_MONSTERS)
+    suspend fun fetchAllMonsters(): MonsterList?
+
+    @GET(ApiConstants.FETCH_MONSTER_DETAIL)
+    suspend fun fetchMonsterDetail(@Path("index") monsterIndex: String): MonsterDetail?
 }
