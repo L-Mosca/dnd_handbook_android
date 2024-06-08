@@ -29,73 +29,73 @@ fun BestiaryScreen(
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/adult--dragon.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/adult--dragon.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/aboleth.png"
         )
     )
     list.add(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/zombie.png"
         )
     )
 

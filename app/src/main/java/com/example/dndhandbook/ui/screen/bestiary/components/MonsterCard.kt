@@ -38,7 +38,7 @@ fun MonsterLayout(monster: MonsterBasicData) {
             shape = RoundedCornerShape(8.dp),
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                MonsterImage(image = image)
+                MonsterImage(image = url)
                 MonsterName(name = name)
                 Spacer(modifier = Modifier.height(10.dp))
             }
@@ -83,7 +83,7 @@ fun MonsterCardPreview() {
     MonsterLayout(
         MonsterBasicData(
             name = "Nome do Monstror",
-            image = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
+            url = "https://www.dnd5eapi.co/api/images/monsters/adult-black-dragon.png"
         )
     )
 }
