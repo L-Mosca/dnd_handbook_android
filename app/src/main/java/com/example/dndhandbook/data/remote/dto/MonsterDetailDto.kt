@@ -1,6 +1,11 @@
 package com.example.dndhandbook.data.remote.dto
 
 import android.os.Parcelable
+import com.example.dndhandbook.domain.models.ArmorClass
+import com.example.dndhandbook.domain.models.MonsterImmunity
+import com.example.dndhandbook.domain.models.MonsterProficiency
+import com.example.dndhandbook.domain.models.MonsterReaction
+import com.example.dndhandbook.domain.models.MonsterSenses
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -34,11 +39,13 @@ data class MonsterDetailDto(
     @SerializedName("size")
     val size: String = "",      //Possible values: [Tiny, Small, Medium, Large, Huge, Gargantuan]
     @SerializedName("type")
-    val type: String = "",      //Displacer, beast, Giant, Celestial, Dragon, Elemental, Fey, Aberration, Construct, Fiend, Humanoid, Monstrosity, Plant, Undead, Ooze
+    val type: String = "",
+    @SerializedName("alignment")
+    val alignment: String = "", //Displacer, beast, Giant, Celestial, Dragon, Elemental, Fey, Aberration, Construct, Fiend, Humanoid, Monstrosity, Plant, Undead, Ooze
     @SerializedName("subtype")
     val subtype: String = "", // Possible values: [chaotic neutral, chaotic evil, chaotic good, lawful neutral, lawful evil, lawful good, neutral, neutral evil, neutral good, any alignment, unaligned]
     @SerializedName("armor_class")
-    val armorClass: @RawValue Any? = null,
+    val armorClass: List<ArmorClass> = emptyList(),
     @SerializedName("hit_points")
     val hitPoints: Int = 0,
     @SerializedName("hit_dice")
@@ -50,7 +57,7 @@ data class MonsterDetailDto(
     @SerializedName("challenge_rating")
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     @SerializedName("condition_immunities")
-    val conditionImmunities: List<MonsterImmunityDto> = emptyList(),
+    val conditionImmunities: List<MonsterImmunity> = emptyList(),
     @SerializedName("damage_immunities")
     val damageImmunities: List<String> = emptyList(),
     @SerializedName("damage_resistances")
@@ -62,84 +69,15 @@ data class MonsterDetailDto(
     @SerializedName("languages")
     val languages: String = "",
     @SerializedName("proficiencies")
-    val proficiencies: List<MonsterProficiencyDto> = emptyList(),
+    val proficiencies: List<MonsterProficiency> = emptyList(),
     @SerializedName("reactions")
-    val reactions: List<MonsterReactionDto> = emptyList(),
+    val reactions: List<MonsterReaction> = emptyList(),
     @SerializedName("senses")
-    val senses: MonsterSensesDto = MonsterSensesDto(),
+    val senses: MonsterSenses = MonsterSenses(),
     @SerializedName("special_abilities")
     val specialAbilities: @RawValue Any? = null,
     @SerializedName("speed")
-    val speed: @RawValue Any? = null,
+    val speed: @RawValue Map<String, String> = emptyMap(),
     @SerializedName("xp")
     val xp: Int = 0,
-) : Parcelable
-
-@Parcelize
-data class MonsterImmunityDto(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("level")
-    val level: Int = 0,
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-) : Parcelable
-
-@Parcelize
-data class MonsterProficiencyDto(
-    @SerializedName("value")
-    val value: Int = 0,
-    @SerializedName("proficiency")
-    val proficiency: ProficiencyDto = ProficiencyDto(),
-) : Parcelable
-
-@Parcelize
-data class ProficiencyDto(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("level")
-    val level: Int = 0,
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-) : Parcelable
-
-@Parcelize
-data class MonsterReactionDto(
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("desc")
-    val desc: String = "",
-    @SerializedName("action_options")
-    val actionOptions: @RawValue List<Map<Any, Any>> = emptyList(),
-    @SerializedName("choice")
-    val choice: MonsterChoiceDto = MonsterChoiceDto(),
-
-    ) : Parcelable
-
-@Parcelize
-data class MonsterChoiceDto(
-    @SerializedName("desc")
-    val desc: String = "",
-    @SerializedName("choose")
-    val choose: Int = 0,
-    @SerializedName("type")
-    val type: String = "",
-) : Parcelable
-
-@Parcelize
-data class MonsterSensesDto(
-    @SerializedName("passive_perception")
-    val passivePerception: Int = 0,
-    @SerializedName("blindsight")
-    val blindSight: String = "",
-    @SerializedName("darkvision")
-    val darkVision: String = "",
-    @SerializedName("tremorsense")
-    val tremorSense: String = "",
-    @SerializedName("truesight")
-    val trueSight: String = "",
 ) : Parcelable
