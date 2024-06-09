@@ -7,7 +7,7 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.dndhandbook.ui.screen.main.MainActivity"
+        android:name="com.example.dndhandbook.presentation.screen.main.MainActivity"
         android:label="MainActivity" />
     <activity
         android:id="@+id/splashActivity"

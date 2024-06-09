@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.dndhandbook.ui.screen.bestiary.BestiaryScreen
-import com.example.dndhandbook.ui.screen.home.HomeScreen
-import com.example.dndhandbook.ui.screen.splash.SplashScreen
+import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
+import com.example.dndhandbook.presentation.screen.home.HomeScreen
+import com.example.dndhandbook.presentation.screen.splash.SplashScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
