@@ -17,7 +17,7 @@ data class MonsterDetail(
     val level: Int = 0,
     val name: String = "",
     val url: String = "",
-    val desc: List<String> = emptyList(),
+    val desc: String = "",
     val charisma: Int = 0,
     val constitution: Int = 0,
     val dexterity: Int = 0,
@@ -28,23 +28,23 @@ data class MonsterDetail(
     val size: String = "",      //Possible values: [Tiny, Small, Medium, Large, Huge, Gargantuan]
     val type: String = "",      //Displacer, beast, Giant, Celestial, Dragon, Elemental, Fey, Aberration, Construct, Fiend, Humanoid, Monstrosity, Plant, Undead, Ooze
     val subtype: String = "", // Possible values: [chaotic neutral, chaotic evil, chaotic good, lawful neutral, lawful evil, lawful good, neutral, neutral evil, neutral good, any alignment, unaligned]
-    val armorClass: @RawValue Map<String, Any> = emptyMap(),
+    val armorClass: @RawValue Any? = null,
     val hitPoints: Int = 0,
     val hitDice: String = "",
-    val actions: @RawValue List<Map<Any, Any>> = emptyList(),
-    val legendaryActions: @RawValue List<Map<Any, Any>> = emptyList(),
-    val challengeRating: Int = 0, // Possible values: value ≤ 21
+    val actions: @RawValue Any? = null,
+    val legendaryActions: @RawValue Any? = null,
+    val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     val conditionImmunities: List<MonsterImmunity> = emptyList(),
-    val damageImmunities: String = "",
-    val damageResistances: String = "",
-    val damageVulnerabilities: String = "",
+    val damageImmunities: List<String> = emptyList(),
+    val damageResistances: List<String> = emptyList(),
+    val damageVulnerabilities: List<String> = emptyList(),
     val forms: @RawValue Any? = null,
     val languages: String = "",
     val proficiencies: List<MonsterProficiency> = emptyList(),
     val reactions: List<MonsterReaction> = emptyList(),
     val senses: MonsterSenses = MonsterSenses(),
     val specialAbilities: @RawValue Any? = null,
-    val speed: @RawValue Map<String, String> = emptyMap(),
+    val speed: @RawValue Any? = null,
     val xp: Int = 0,
 ) : Parcelable
 

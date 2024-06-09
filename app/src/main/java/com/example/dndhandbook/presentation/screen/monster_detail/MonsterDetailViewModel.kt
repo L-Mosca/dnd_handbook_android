@@ -3,11 +3,14 @@ package com.example.dndhandbook.presentation.screen.monster_detail
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
+import com.example.dndhandbook.commoon.Constants
 import com.example.dndhandbook.commoon.Resource
 import com.example.dndhandbook.domain.models.MonsterDetail
 import com.example.dndhandbook.domain.use_case.get_monster.GetMonsterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -22,9 +25,10 @@ class MonsterDetailViewModel @Inject constructor(
 
 
     init {
-        savedStateHandle.get<String>("")?.let { monsterIndex ->
-            getMonsterDetail(monsterIndex)
-        }
+        savedStateHandle.get<String>(Constants.MONSTER_DETAIL_SCREEN_ARGUMENT)
+            ?.let { monsterIndex ->
+                getMonsterDetail(monsterIndex)
+            }
     }
 
     private fun getMonsterDetail(monsterIndex: String) {
@@ -43,7 +47,7 @@ class MonsterDetailViewModel @Inject constructor(
                     _state.value = MonsterDetailState(error = result.message!!)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
 }
