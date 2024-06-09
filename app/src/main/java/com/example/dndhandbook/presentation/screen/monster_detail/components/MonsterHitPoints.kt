@@ -15,28 +15,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.ArmorClass
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
-fun MonsterArmorClass(armorClass: List<ArmorClass> = emptyList()) {
-
-    var armor = ""
-    armorClass.forEach {
-        armor += "${it.value} (${it.type})"
-    }
+fun MonsterHitPoints(hitPoints: String = "", hitPointsRoll: String = "") {
 
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
         Row {
             BaseText(
-                text = stringResource(id = R.string.armor_class),
+                text = stringResource(id = R.string.hit_points),
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.crimson_800),
                 fontWeight = FontWeight.W600,
             )
             Spacer(modifier = Modifier.width(8.dp))
             BaseText(
-                text = armor,
+                text = "$hitPoints ($hitPointsRoll)",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W600,
                 color = colorResource(id = R.color.gray_400)
@@ -47,25 +41,20 @@ fun MonsterArmorClass(armorClass: List<ArmorClass> = emptyList()) {
 
 @Preview
 @Composable
-fun MonsterArmorClassPreview() {
-    val immunities =
-        listOf(ArmorClass(type = "Natural", value = 20), ArmorClass(type = "plate", value = 10))
-    var armor = ""
-    immunities.forEach {
-        armor += "${it.value} (${it.type}). "
-    }
-
+fun MonsterHitPointsPreview() {
+    val hitPoints = "367"
+    val hitPointsRoll = "21d20 + 147"
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
         Row {
             BaseText(
-                text = stringResource(id = R.string.armor_class),
+                text = stringResource(id = R.string.hit_points),
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.crimson_800),
                 fontWeight = FontWeight.W600,
             )
             Spacer(modifier = Modifier.width(8.dp))
             BaseText(
-                text = armor,
+                text = "$hitPoints ($hitPointsRoll)",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W600,
                 color = colorResource(id = R.color.gray_400)
