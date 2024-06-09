@@ -1,4 +1,4 @@
-package com.example.dndhandbook.ui.theme
+package com.example.dndhandbook.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
