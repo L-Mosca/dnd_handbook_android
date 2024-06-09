@@ -27,6 +27,7 @@ data class MonsterDetail(
     val armorClass: List<ArmorClass> = emptyList(),
     val hitPoints: Int = 0,
     val hitDice: String = "",
+    val hitPointsRoll: String = "",
     val actions: @RawValue Any? = null,
     val legendaryActions: @RawValue Any? = null,
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
@@ -64,6 +65,7 @@ fun MonsterDetailDto.toMonsterDetail(): MonsterDetail = MonsterDetail(
     armorClass = armorClass,
     hitPoints = hitPoints,
     hitDice = hitDice,
+    hitPointsRoll = hitPointsRoll,
     actions = actions,
     legendaryActions = legendaryActions,
     challengeRating = challengeRating,

@@ -21,8 +21,14 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.attributes.GameAttribute
 import com.example.dndhandbook.domain.models.attributes.buildMockList
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterArmorClass
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterArmorClassPreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterAttributes
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterHitPoints
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterHitPointsPreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterName
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSpeed
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSpeedPreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSubtitle
 
 @Composable
@@ -49,14 +55,16 @@ fun MonsterDetailScreen(
                     .padding(top = 20.dp, start = 20.dp, end = 20.dp)
                     .fillMaxSize()
             ) {
-                MonsterName(name = monsterDetail.name)
-                MonsterSubtitle(
-                    size = monsterDetail.size,
-                    type = monsterDetail.type,
-                    alignment = monsterDetail.alignment
-                )
-                Spacer(modifier = Modifier.height(30.dp))
-                MonsterAttributes(basicAttrs = monsterDetail.extractAttributes())
+                with(monsterDetail) {
+                    MonsterName(name = name)
+                    MonsterSubtitle(size = size, type = type, alignment = alignment)
+                    Spacer(modifier = Modifier.height(30.dp))
+                    MonsterArmorClass(armorClass)
+                    MonsterHitPoints(hitPoints.toString(), hitDice)
+                    MonsterSpeed(speed)
+                    Spacer(modifier = Modifier.height(20.dp))
+                    MonsterAttributes(basicAttrs = extractAttributes())
+                }
             }
         }
     }
@@ -83,6 +91,10 @@ fun ScreenPreview() {
                 MonsterName(name = "Tyrant Beholder")
                 MonsterSubtitle(size = "Large", type = "Undead", alignment = "lawful evil")
                 Spacer(modifier = Modifier.height(30.dp))
+                MonsterArmorClassPreview()
+                MonsterHitPointsPreview()
+                MonsterSpeedPreview()
+                Spacer(modifier = Modifier.height(20.dp))
                 MonsterAttributes(basicAttrs = GameAttribute().buildMockList())
             }
         }

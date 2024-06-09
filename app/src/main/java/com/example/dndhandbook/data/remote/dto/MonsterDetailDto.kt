@@ -50,6 +50,8 @@ data class MonsterDetailDto(
     val hitPoints: Int = 0,
     @SerializedName("hit_dice")
     val hitDice: String = "",
+    @SerializedName("hit_points_roll")
+    val hitPointsRoll: String = "",
     @SerializedName("actions")
     val actions: @RawValue Any? = null,
     @SerializedName("legendary_actions")
