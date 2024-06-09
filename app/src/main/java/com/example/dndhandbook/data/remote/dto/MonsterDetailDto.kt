@@ -16,7 +16,7 @@ data class MonsterDetailDto(
     @SerializedName("url")
     val url: String = "",
     @SerializedName("desc")
-    val desc: List<String> = emptyList(),
+    val desc: String = "",
     @SerializedName("charisma")
     val charisma: Int = 0,
     @SerializedName("constitution")
@@ -38,25 +38,25 @@ data class MonsterDetailDto(
     @SerializedName("subtype")
     val subtype: String = "", // Possible values: [chaotic neutral, chaotic evil, chaotic good, lawful neutral, lawful evil, lawful good, neutral, neutral evil, neutral good, any alignment, unaligned]
     @SerializedName("armor_class")
-    val armorClass: @RawValue Map<String, Any> = emptyMap(),
+    val armorClass: @RawValue Any? = null,
     @SerializedName("hit_points")
     val hitPoints: Int = 0,
     @SerializedName("hit_dice")
     val hitDice: String = "",
     @SerializedName("actions")
-    val actions: @RawValue List<Map<Any, Any>> = emptyList(),
+    val actions: @RawValue Any? = null,
     @SerializedName("legendary_actions")
-    val legendaryActions: @RawValue List<Map<Any, Any>> = emptyList(),
+    val legendaryActions: @RawValue Any? = null,
     @SerializedName("challenge_rating")
-    val challengeRating: Int = 0, // Possible values: value ≤ 21
+    val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     @SerializedName("condition_immunities")
     val conditionImmunities: List<MonsterImmunityDto> = emptyList(),
     @SerializedName("damage_immunities")
-    val damageImmunities: String = "",
+    val damageImmunities: List<String> = emptyList(),
     @SerializedName("damage_resistances")
-    val damageResistances: String = "",
+    val damageResistances: List<String> = emptyList(),
     @SerializedName("damage_vulnerabilities")
-    val damageVulnerabilities: String = "",
+    val damageVulnerabilities: List<String> = emptyList(),
     @SerializedName("forms")
     val forms: @RawValue Any? = null,
     @SerializedName("languages")
@@ -70,7 +70,7 @@ data class MonsterDetailDto(
     @SerializedName("special_abilities")
     val specialAbilities: @RawValue Any? = null,
     @SerializedName("speed")
-    val speed: @RawValue Map<String, String> = emptyMap(),
+    val speed: @RawValue Any? = null,
     @SerializedName("xp")
     val xp: Int = 0,
 ) : Parcelable
