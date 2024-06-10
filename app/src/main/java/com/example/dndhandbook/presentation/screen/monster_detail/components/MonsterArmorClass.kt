@@ -15,16 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
+import com.example.dndhandbook.common.extensions_functions.extractArmorClass
 import com.example.dndhandbook.domain.models.ArmorClass
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
 fun MonsterArmorClass(armorClass: List<ArmorClass> = emptyList()) {
 
-    var armor = ""
-    armorClass.forEach {
-        armor += "${it.value} (${it.type})"
-    }
+    if (armorClass.isEmpty()) return
 
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
         Row {
@@ -36,7 +34,7 @@ fun MonsterArmorClass(armorClass: List<ArmorClass> = emptyList()) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             BaseText(
-                text = armor,
+                text = armorClass.extractArmorClass(),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W600,
                 color = colorResource(id = R.color.gray_400)
@@ -50,26 +48,6 @@ fun MonsterArmorClass(armorClass: List<ArmorClass> = emptyList()) {
 fun MonsterArmorClassPreview() {
     val immunities =
         listOf(ArmorClass(type = "Natural", value = 20), ArmorClass(type = "plate", value = 10))
-    var armor = ""
-    immunities.forEach {
-        armor += "${it.value} (${it.type}). "
-    }
 
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
-        Row {
-            BaseText(
-                text = stringResource(id = R.string.armor_class),
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.crimson_800),
-                fontWeight = FontWeight.W600,
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            BaseText(
-                text = armor,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.W600,
-                color = colorResource(id = R.color.gray_400)
-            )
-        }
-    }
+    MonsterArmorClass(immunities)
 }

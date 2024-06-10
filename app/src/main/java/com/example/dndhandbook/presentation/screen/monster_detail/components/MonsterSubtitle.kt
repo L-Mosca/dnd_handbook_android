@@ -11,6 +11,7 @@ import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
 fun MonsterSubtitle(size: String, type: String, alignment: String) {
+    if (size.isBlank() && type.isBlank() && alignment.isBlank()) return
     BaseText(
         text = "$size $type, $alignment",
         fontSize = 14.sp,

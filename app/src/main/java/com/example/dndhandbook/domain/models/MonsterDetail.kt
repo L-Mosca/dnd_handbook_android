@@ -39,7 +39,7 @@ data class MonsterDetail(
     val languages: String = "",
     val proficiencies: List<MonsterProficiency> = emptyList(),
     val reactions: List<MonsterReaction> = emptyList(),
-    val senses: MonsterSenses = MonsterSenses(),
+    val senses: @RawValue Map<String, String> = emptyMap(),
     val specialAbilities: @RawValue Any? = null,
     val speed: @RawValue Map<String, String> = emptyMap(),
     val xp: Int = 0,
@@ -101,14 +101,22 @@ data class MonsterProficiency(
     val value: Int = 0,
     @SerializedName("proficiency")
     val proficiency: Proficiency = Proficiency(),
-) : Parcelable
+) : Parcelable {
+    fun isSavingThrow(): Boolean =
+        value > -1 && proficiency.name.isNotEmpty() && proficiency.name.contains(
+            "Saving Throw"
+        )
+
+    fun isSkill(): Boolean =
+        value > -1 && proficiency.name.isNotEmpty() && proficiency.name.contains(
+            "Skill"
+        )
+}
 
 @Parcelize
 data class Proficiency(
     @SerializedName("index")
     val index: String = "",
-    @SerializedName("level")
-    val level: Int = 0,
     @SerializedName("name")
     val name: String = "",
     @SerializedName("url")
@@ -135,20 +143,6 @@ data class MonsterChoice(
     val choose: Int = 0,
     @SerializedName("type")
     val type: String = "",
-) : Parcelable
-
-@Parcelize
-data class MonsterSenses(
-    @SerializedName("passive_perception")
-    val passivePerception: Int = 0,
-    @SerializedName("blindsight")
-    val blindSight: String = "",
-    @SerializedName("darkvision")
-    val darkVision: String = "",
-    @SerializedName("tremorsense")
-    val tremorSense: String = "",
-    @SerializedName("truesight")
-    val trueSight: String = "",
 ) : Parcelable
 
 @Parcelize

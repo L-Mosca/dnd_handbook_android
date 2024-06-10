@@ -21,15 +21,7 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.attributes.GameAttribute
 import com.example.dndhandbook.domain.models.attributes.buildMockList
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterArmorClass
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterArmorClassPreview
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterAttributes
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterHitPoints
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterHitPointsPreview
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterName
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSpeed
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSpeedPreview
-import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSubtitle
+import com.example.dndhandbook.presentation.screen.monster_detail.components.*
 
 @Composable
 fun MonsterDetailScreen(
@@ -56,14 +48,19 @@ fun MonsterDetailScreen(
                     .fillMaxSize()
             ) {
                 with(monsterDetail) {
-                    MonsterName(name = name)
+                    MonsterName(name)
                     MonsterSubtitle(size = size, type = type, alignment = alignment)
                     Spacer(modifier = Modifier.height(30.dp))
                     MonsterArmorClass(armorClass)
                     MonsterHitPoints(hitPoints.toString(), hitDice)
                     MonsterSpeed(speed)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    MonsterAttributes(basicAttrs = extractAttributes())
+                    MonsterAttributes(extractAttributes())
+                    MonsterSavingThrows(proficiencies)
+                    MonsterSkills(proficiencies)
+                    MonsterDamageImmunities(damageImmunities)
+                    MonsterSenses(senses)
+                    MonsterLanguages(languages)
+                    MonsterChallenge(challengeRating, xp)
                 }
             }
         }
@@ -88,14 +85,19 @@ fun ScreenPreview() {
                     .padding(top = 20.dp, start = 20.dp, end = 20.dp)
                     .fillMaxSize()
             ) {
-                MonsterName(name = "Tyrant Beholder")
-                MonsterSubtitle(size = "Large", type = "Undead", alignment = "lawful evil")
+                MonsterNamePreview()
+                MonsterSubtitlePreview()
                 Spacer(modifier = Modifier.height(30.dp))
                 MonsterArmorClassPreview()
                 MonsterHitPointsPreview()
                 MonsterSpeedPreview()
-                Spacer(modifier = Modifier.height(20.dp))
                 MonsterAttributes(basicAttrs = GameAttribute().buildMockList())
+                MonsterSavingThrowsPreview()
+                MonsterSkillsPreview()
+                MonsterDamageImmunitiesPreview()
+                MonsterSensesPreview()
+                MonsterLanguagesPreview()
+                MonsterChallengePreview()
             }
         }
     }

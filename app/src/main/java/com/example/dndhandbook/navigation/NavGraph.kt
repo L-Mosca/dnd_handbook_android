@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.dndhandbook.commoon.Constants
+import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen

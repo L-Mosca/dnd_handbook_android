@@ -15,24 +15,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.common.extensions_functions.extractMonsterSpeed
+import com.example.dndhandbook.common.extensions_functions.getMonsterChallenge
+import com.example.dndhandbook.common.extensions_functions.getMonsterXp
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
-fun MonsterSpeed(speed: Map<String, String>) {
+fun MonsterChallenge(challenge: Double = 0.0, xp: Int = 0) {
+    if (challenge == 0.0 && xp == 0) return
 
-    if (speed.isEmpty()) return
     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
         Row {
             BaseText(
-                text = stringResource(id = R.string.speed),
+                text = "${stringResource(id = R.string.challenge)} ${challenge.getMonsterChallenge()}",
                 fontSize = 14.sp,
                 color = colorResource(id = R.color.crimson_800),
                 fontWeight = FontWeight.W600,
             )
             Spacer(modifier = Modifier.width(8.dp))
             BaseText(
-                text = speed.extractMonsterSpeed(),
+                text = xp.getMonsterXp(),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W600,
                 color = colorResource(id = R.color.gray_400)
@@ -43,11 +44,6 @@ fun MonsterSpeed(speed: Map<String, String>) {
 
 @Preview
 @Composable
-fun MonsterSpeedPreview() {
-    val speed = mapOf(
-        "walk" to "40 ft.",
-        "fly" to "80 ft.",
-        "swim" to "40 ft.",
-    )
-    MonsterSpeed(speed = speed)
+fun MonsterChallengePreview() {
+    MonsterChallenge(14.0, 11500)
 }
