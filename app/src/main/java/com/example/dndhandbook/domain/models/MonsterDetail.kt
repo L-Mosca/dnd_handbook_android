@@ -40,7 +40,7 @@ data class MonsterDetail(
     val proficiencies: List<MonsterProficiency> = emptyList(),
     val reactions: List<MonsterReaction> = emptyList(),
     val senses: @RawValue Map<String, String> = emptyMap(),
-    val specialAbilities: @RawValue Any? = null,
+    val specialAbilities: List<MonsterSpecialAbility> = emptyList(),
     val speed: @RawValue Map<String, String> = emptyMap(),
     val xp: Int = 0,
 ) : Parcelable
@@ -175,4 +175,22 @@ data class ActionType(
     val count: Int = 0,
     @SerializedName("type")
     val type: String = "",
+) : Parcelable
+
+@Parcelize
+data class MonsterSpecialAbility(
+    @SerializedName("name")
+    val name: String = "",
+    @SerializedName("desc")
+    val desc: String = "",
+    @SerializedName("usage")
+    val usage: SpecialAbilityUsage = SpecialAbilityUsage(),
+) : Parcelable
+
+@Parcelize
+data class SpecialAbilityUsage(
+    @SerializedName("type")
+    val type: String = "",
+    @SerializedName("times")
+    val times: Int = 0,
 ) : Parcelable

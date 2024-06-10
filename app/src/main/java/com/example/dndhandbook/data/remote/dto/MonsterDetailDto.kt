@@ -2,6 +2,7 @@ package com.example.dndhandbook.data.remote.dto
 
 import android.os.Parcelable
 import com.example.dndhandbook.domain.models.ArmorClass
+import com.example.dndhandbook.domain.models.MonsterSpecialAbility
 import com.example.dndhandbook.domain.models.MonsterImmunity
 import com.example.dndhandbook.domain.models.MonsterProficiency
 import com.example.dndhandbook.domain.models.MonsterReaction
@@ -76,7 +77,7 @@ data class MonsterDetailDto(
     @SerializedName("senses")
     val senses: @RawValue Map<String, String> = emptyMap(),
     @SerializedName("special_abilities")
-    val specialAbilities: @RawValue Any? = null,
+    val specialAbilities: List<MonsterSpecialAbility> = emptyList(),
     @SerializedName("speed")
     val speed: @RawValue Map<String, String> = emptyMap(),
     @SerializedName("xp")
