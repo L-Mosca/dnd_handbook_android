@@ -44,21 +44,5 @@ fun MonsterHitPoints(hitPoints: String = "", hitPointsRoll: String = "") {
 fun MonsterHitPointsPreview() {
     val hitPoints = "367"
     val hitPointsRoll = "21d20 + 147"
-    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomStart) {
-        Row {
-            BaseText(
-                text = stringResource(id = R.string.hit_points),
-                fontSize = 14.sp,
-                color = colorResource(id = R.color.crimson_800),
-                fontWeight = FontWeight.W600,
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            BaseText(
-                text = "$hitPoints ($hitPointsRoll)",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.W600,
-                color = colorResource(id = R.color.gray_400)
-            )
-        }
-    }
+    MonsterHitPoints(hitPoints, hitPointsRoll)
 }

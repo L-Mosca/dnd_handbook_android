@@ -1,6 +1,6 @@
 package com.example.dndhandbook.domain.use_case.get_monster
 
-import com.example.dndhandbook.commoon.Resource
+import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.MonsterDetail
 import com.example.dndhandbook.domain.models.toMonsterDetail
 import com.example.dndhandbook.domain.repository.monster.MonsterRepository

@@ -26,6 +26,7 @@ import com.example.dndhandbook.presentation.base_components.HexagonBox
 
 @Composable
 fun MonsterAttributes(basicAttrs: List<GameAttribute>) {
+    if (basicAttrs.isEmpty()) return
     basicAttrs.apply {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
@@ -35,7 +36,7 @@ fun MonsterAttributes(basicAttrs: List<GameAttribute>) {
             modifier = Modifier
                 .wrapContentHeight()
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(horizontal = 20.dp, vertical = 40.dp)
         ) {
             items(basicAttrs) { attribute ->
                 AttributeContainer(attribute = attribute)

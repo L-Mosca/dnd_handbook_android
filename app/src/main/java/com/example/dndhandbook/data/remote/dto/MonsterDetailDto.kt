@@ -5,7 +5,6 @@ import com.example.dndhandbook.domain.models.ArmorClass
 import com.example.dndhandbook.domain.models.MonsterImmunity
 import com.example.dndhandbook.domain.models.MonsterProficiency
 import com.example.dndhandbook.domain.models.MonsterReaction
-import com.example.dndhandbook.domain.models.MonsterSenses
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -75,7 +74,7 @@ data class MonsterDetailDto(
     @SerializedName("reactions")
     val reactions: List<MonsterReaction> = emptyList(),
     @SerializedName("senses")
-    val senses: MonsterSenses = MonsterSenses(),
+    val senses: @RawValue Map<String, String> = emptyMap(),
     @SerializedName("special_abilities")
     val specialAbilities: @RawValue Any? = null,
     @SerializedName("speed")

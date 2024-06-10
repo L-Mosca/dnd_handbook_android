@@ -3,4 +3,10 @@
     <string name="armor_class">Armor Class</string>
     <string name="hit_points">Hit Points</string>
     <string name="speed">Speed</string>
+    <string name="saving_throws">Saving Throws</string>
+    <string name="skills">Skills</string>
+    <string name="damage_immunities">Damage Immunities</string>
+    <string name="senses">Senses</string>
+    <string name="languages">Languages</string>
+    <string name="challenge">Challenge</string>
 </resources>

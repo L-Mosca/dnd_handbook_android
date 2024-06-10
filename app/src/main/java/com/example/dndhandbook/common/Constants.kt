@@ -1,4 +1,4 @@
-package com.example.dndhandbook.commoon
+package com.example.dndhandbook.common
 
 object Constants {
 

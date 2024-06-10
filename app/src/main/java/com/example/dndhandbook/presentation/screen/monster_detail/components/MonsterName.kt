@@ -10,6 +10,7 @@ import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
 fun MonsterName(name: String) {
+    if (name.isBlank()) return
     BaseText(
         text = name,
         fontSize = 24.sp,
@@ -20,6 +21,6 @@ fun MonsterName(name: String) {
 
 @Preview
 @Composable
-fun PreviewMonsterName() {
+fun MonsterNamePreview() {
     MonsterName(name = "Tyrant Beholder")
 }
