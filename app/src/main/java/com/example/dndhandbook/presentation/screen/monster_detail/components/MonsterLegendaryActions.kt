@@ -31,7 +31,7 @@ fun MonsterLegendaryActions(legendaryActions: List<LegendaryActions> = emptyList
             MonsterBaseSubtitle(title = stringResource(id = R.string.legendary_actions))
             legendaryActions.forEach { action ->
                 MonsterBasicText(
-                    title = action.name,
+                    title = "${action.name}.",
                     titleColor = R.color.gold_700,
                     description = action.desc
                 )
