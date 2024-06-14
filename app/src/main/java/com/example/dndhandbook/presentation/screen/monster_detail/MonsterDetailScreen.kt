@@ -33,6 +33,8 @@ import com.example.dndhandbook.presentation.screen.monster_detail.components.Mon
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterHitPointsPreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterLanguages
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterLanguagesPreview
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterLegendaryActions
+import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterLegendaryActionsPreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterName
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterNamePreview
 import com.example.dndhandbook.presentation.screen.monster_detail.components.MonsterSavingThrows
@@ -88,6 +90,7 @@ fun MonsterDetailScreen(
                     item { MonsterChallenge(challengeRating, xp) }
                     item { MonsterSpecialAbilities(specialAbilities) }
                     item { MonsterActions(actions) }
+                    item { MonsterLegendaryActions(legendaryActions) }
                 }
             }
         }
@@ -126,6 +129,7 @@ fun ScreenPreview() {
                 item { MonsterLanguagesPreview() }
                 item { MonsterChallengePreview() }
                 item { MonsterSpecialAbilitiesPreview() }
+                item { MonsterLegendaryActionsPreview() }
             }
         }
     }

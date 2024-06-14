@@ -3,6 +3,7 @@ package com.example.dndhandbook.data.remote.dto
 import android.os.Parcelable
 import com.example.dndhandbook.domain.models.Actions
 import com.example.dndhandbook.domain.models.ArmorClass
+import com.example.dndhandbook.domain.models.LegendaryActions
 import com.example.dndhandbook.domain.models.MonsterSpecialAbility
 import com.example.dndhandbook.domain.models.MonsterImmunity
 import com.example.dndhandbook.domain.models.MonsterProficiency
@@ -56,7 +57,7 @@ data class MonsterDetailDto(
     @SerializedName("actions")
     val actions: List<Actions> = emptyList(),
     @SerializedName("legendary_actions")
-    val legendaryActions: @RawValue Any? = null,
+    val legendaryActions: List<LegendaryActions> = emptyList(),
     @SerializedName("challenge_rating")
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     @SerializedName("condition_immunities")

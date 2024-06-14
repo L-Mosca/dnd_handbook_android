@@ -29,7 +29,7 @@ data class MonsterDetail(
     val hitDice: String = "",
     val hitPointsRoll: String = "",
     val actions: List<Actions> = emptyList(),
-    val legendaryActions: @RawValue Any? = null,
+    val legendaryActions: List<LegendaryActions> = emptyList(),
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     val conditionImmunities: List<MonsterImmunity> = emptyList(),
     val damageImmunities: List<String> = emptyList(),
@@ -211,3 +211,11 @@ data class ActionUsage(
         return type.isEmpty() && dice.isEmpty() && minValue == 0
     }
 }
+
+@Parcelize
+data class LegendaryActions(
+    @SerializedName("name")
+    val name: String = "",
+    @SerializedName("desc")
+    val desc: String = "",
+) : Parcelable
