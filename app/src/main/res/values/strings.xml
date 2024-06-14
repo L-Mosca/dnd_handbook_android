@@ -9,4 +9,6 @@
     <string name="senses">Senses</string>
     <string name="languages">Languages</string>
     <string name="challenge">Challenge</string>
+    <string name="actions">Actions</string>
+    <string name="recharge">Recharge</string>
 </resources>
