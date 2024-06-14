@@ -1,18 +1,16 @@
 package com.example.dndhandbook.presentation.screen.bestiary
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.MonsterBasicData
+import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.base_components.BaseText
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 
@@ -34,14 +33,14 @@ fun BestiaryScreen(
 ) {
     val state = viewModel.state.value
 
-    Scaffold(contentColor = colorResource(id = R.color.black_800)) { innerPadding ->
+    Scaffold { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            BestiaryList(list = state.monsterList.results)
+            BestiaryList(list = state.monsterList.results, navController)
 
             if (state.error.isNotBlank()) BestiaryError(state.error)
             if (state.isLoading) BestiaryLoading()
@@ -50,19 +49,23 @@ fun BestiaryScreen(
 }
 
 @Composable
-fun BestiaryList(list: List<MonsterBasicData>) {
-    val context = LocalContext.current
+fun BestiaryList(list: List<MonsterBasicData>, navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.black_800))
     ) {
-        items(list) { monster ->
+        itemsIndexed(list) { index, monster ->
             MonsterCard(
                 monster = monster,
-                onItemClick = { Toast.makeText(context, monster.name, Toast.LENGTH_SHORT).show() })
+                index = index,
+                onItemClick = { navigateToMonsterDetail(monster.index, navController) })
         }
     }
+}
+
+private fun navigateToMonsterDetail(monsterIndex: String, navController: NavHostController) {
+    navController.navigate(Screen.MonsterDetail.route + "/$monsterIndex")
 }
 
 @Composable
@@ -83,8 +86,7 @@ fun BestiaryLoading() {
     CircularProgressIndicator(color = colorResource(id = R.color.crimson_800))
 }
 
-@Preview()
+@Preview
 @Composable
 fun ScreenPreview() {
-    BestiaryError(errorMessage = "teste")
 }
