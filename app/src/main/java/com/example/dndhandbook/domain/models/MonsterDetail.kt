@@ -28,7 +28,7 @@ data class MonsterDetail(
     val hitPoints: Int = 0,
     val hitDice: String = "",
     val hitPointsRoll: String = "",
-    val actions: @RawValue Any? = null,
+    val actions: List<Actions> = emptyList(),
     val legendaryActions: @RawValue Any? = null,
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     val conditionImmunities: List<MonsterImmunity> = emptyList(),
@@ -164,7 +164,9 @@ data class Actions(
     @SerializedName("actions")
     val actions: List<ActionType> = emptyList(),
     @SerializedName("attack_bonus")
-    val bonusAttack: Int,
+    val bonusAttack: Int = 0,
+    @SerializedName("usage")
+    val usage: ActionUsage = ActionUsage()
 ) : Parcelable
 
 @Parcelize
@@ -194,3 +196,18 @@ data class SpecialAbilityUsage(
     @SerializedName("times")
     val times: Int = 0,
 ) : Parcelable
+
+@Parcelize
+data class ActionUsage(
+    @SerializedName("type")
+    val type: String = "",
+    @SerializedName("dice")
+    val dice: String = "",
+    @SerializedName("min_value")
+    val minValue: Int = 0
+) : Parcelable {
+
+    fun isEmpty(): Boolean {
+        return type.isEmpty() && dice.isEmpty() && minValue == 0
+    }
+}

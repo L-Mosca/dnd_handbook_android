@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.screen.monster_detail.components
 
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicText
@@ -17,12 +18,17 @@ import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 
 @Composable
-fun MonsterBasicText(title: String, description: String) {
+fun MonsterBasicText(
+    title: String,
+    description: String,
+    @ColorRes titleColor: Int = R.color.crimson_800,
+    @ColorRes descriptionColor: Int = R.color.gray_400
+) {
     val annotatedString = buildAnnotatedString {
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.W600,
-                color = colorResource(id = R.color.crimson_800),
+                color = colorResource(id = titleColor),
                 fontSize = 16.sp
             )
         ) {
@@ -31,7 +37,7 @@ fun MonsterBasicText(title: String, description: String) {
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.W600,
-                color = colorResource(id = R.color.gray_400),
+                color = colorResource(id = descriptionColor),
                 fontSize = 14.sp
             )
         ) {

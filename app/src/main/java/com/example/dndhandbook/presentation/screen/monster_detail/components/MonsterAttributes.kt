@@ -2,14 +2,12 @@ package com.example.dndhandbook.presentation.screen.monster_detail.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +26,7 @@ import com.example.dndhandbook.presentation.base_components.HexagonBox
 fun MonsterAttributes(basicAttrs: List<GameAttribute>) {
     if (basicAttrs.isEmpty()) return
     basicAttrs.apply {
-        LazyVerticalGrid(
+        /*LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -41,6 +39,29 @@ fun MonsterAttributes(basicAttrs: List<GameAttribute>) {
             items(basicAttrs) { attribute ->
                 AttributeContainer(attribute = attribute)
             }
+        }*/
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 40.dp)
+        ) {
+            basicAttrs.forEachIndexed { index, gameAttribute ->
+                if (index % 3 == 0) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        AttributeContainer(attribute = basicAttrs[index])
+                        if (index + 1 < basicAttrs.size) {
+                            AttributeContainer(attribute = basicAttrs[index + 1])
+                        }
+                        if (index + 2 < basicAttrs.size) {
+                            AttributeContainer(attribute = basicAttrs[index + 2])
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+            }
         }
     }
 }
@@ -50,7 +71,8 @@ fun AttributeContainer(attribute: GameAttribute) {
     with(attribute) {
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.wrapContentHeight(),
         ) {
             BaseText(text = name, fontSize = 12.sp, color = colorResource(id = color))
             Spacer(modifier = Modifier.height(4.dp))
