@@ -1,7 +1,9 @@
 package com.example.dndhandbook.presentation.screen.bestiary.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,35 +25,39 @@ import com.example.dndhandbook.domain.models.MonsterBasicData
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
-fun MonsterCard(monster: MonsterBasicData, onItemClick: (MonsterBasicData) -> Unit) {
-    MonsterLayout(monster, onItemClick)
+fun MonsterCard(monster: MonsterBasicData, index: Int, onItemClick: (MonsterBasicData) -> Unit) {
+    MonsterLayout(monster, index, onItemClick)
 }
 
 @Composable
-fun MonsterLayout(monster: MonsterBasicData, onItemCLick: (MonsterBasicData) -> Unit) {
+fun MonsterLayout(monster: MonsterBasicData, index: Int, onItemCLick: (MonsterBasicData) -> Unit) {
+    val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
+    val color = colorResource(id = colorResourceId)
     monster.apply {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onItemCLick(monster) }
-                .padding(20.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            BaseText(
-                text = monster.name,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.W600,
-                textOverflow = TextOverflow.Ellipsis
+        Box(modifier = Modifier.background(color)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onItemCLick(monster) }
+                    .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             )
+            {
+                BaseText(
+                    text = monster.name,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W600,
+                    textOverflow = TextOverflow.Ellipsis
+                )
 
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
-                contentDescription = monster.name,
-                tint = colorResource(id = R.color.crimson_800),
-                modifier = Modifier.size(width = 30.dp, height = 30.dp)
-            )
+                Icon(
+                    imageVector = Icons.Filled.KeyboardArrowRight,
+                    contentDescription = monster.name,
+                    tint = colorResource(id = R.color.crimson_800),
+                    modifier = Modifier.size(width = 30.dp, height = 30.dp)
+                )
+            }
         }
     }
 }
@@ -85,6 +91,7 @@ fun MonsterCardPreview() {
             index = "adult-black-dragon",
             name = "Adult black dragon",
             url = "/adult_black_dragon"
-        )
+        ),
+        index = 0
     ) {}
 }
