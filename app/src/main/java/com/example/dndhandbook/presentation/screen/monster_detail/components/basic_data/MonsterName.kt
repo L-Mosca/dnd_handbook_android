@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.screen.monster_detail.components
+package com.example.dndhandbook.presentation.screen.monster_detail.components.basic_data
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource

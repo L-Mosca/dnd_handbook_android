@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.screen.monster_detail.components
+package com.example.dndhandbook.presentation.screen.monster_detail.components.base_components
 
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.background

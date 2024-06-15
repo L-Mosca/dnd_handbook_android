@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.screen.monster_detail.components
+package com.example.dndhandbook.presentation.screen.monster_detail.components.skills
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.getMonsterActionTitle
 import com.example.dndhandbook.domain.models.Actions
+import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBaseSubtitle
+import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
 @Composable
 fun MonsterActions(actions: List<Actions> = emptyList()) {
