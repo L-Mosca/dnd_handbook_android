@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.screen.monster_detail.components
+package com.example.dndhandbook.presentation.screen.monster_detail.components.skills
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -7,6 +7,7 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.extractSkills
 import com.example.dndhandbook.domain.models.MonsterProficiency
 import com.example.dndhandbook.domain.models.Proficiency
+import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
 @Composable
 fun MonsterSkills(proficiencies: List<MonsterProficiency>) {

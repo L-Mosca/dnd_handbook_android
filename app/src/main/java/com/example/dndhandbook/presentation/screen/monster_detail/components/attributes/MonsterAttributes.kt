@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.screen.monster_detail.components
+package com.example.dndhandbook.presentation.screen.monster_detail.components.attributes
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
