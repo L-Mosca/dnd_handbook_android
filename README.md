@@ -19,9 +19,7 @@ ___
 Actually you can use bestiary screen (list with all monsters) and monster detail screen (screen with
 monster attributes, like a bestiary book)
 
-!(Bestiary)[bestiary_screen.png]
-
-!(Monster Detail)[monster_detail_screen.png]
+<img src="screenshots/bestiary_screen.png" alt="Bestiary" width="300"/> <img src="screenshots/monster_detail_screen.png" alt="Monster Detail" width="300"/>
 
 ___
 
