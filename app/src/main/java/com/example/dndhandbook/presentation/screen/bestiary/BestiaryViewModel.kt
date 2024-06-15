@@ -26,17 +26,34 @@ class BestiaryViewModel @Inject constructor(
 
     private fun getMonsters() {
         getMonstersUseCase().onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
-                    _state.value = BestiaryState(monsterList = result.data ?: MonsterList())
+                    _state.value = BestiaryState(
+                        monsterList = result.data ?: MonsterList(),
+                        filterList = result.data ?: MonsterList()
+                    )
                 }
+
                 is Resource.Loading -> {
                     _state.value = BestiaryState(isLoading = true)
                 }
+
                 is Resource.Error -> {
                     _state.value = BestiaryState(error = result.message!!)
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun filterMonster(query: String) {
+        val filteredList = if (query.isBlank()) {
+            _state.value.monsterList.results
+        } else {
+            _state.value.monsterList.results.filter {
+                it.name.contains(query, ignoreCase = true)
+            }
+        }
+
+        _state.value = _state.value.copy(filterList = MonsterList(results = filteredList))
     }
 }

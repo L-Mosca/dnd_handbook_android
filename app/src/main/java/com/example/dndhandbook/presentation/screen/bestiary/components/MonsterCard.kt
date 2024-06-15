@@ -33,13 +33,14 @@ fun MonsterCard(monster: MonsterBasicData, index: Int, onItemClick: (MonsterBasi
 fun MonsterLayout(monster: MonsterBasicData, index: Int, onItemCLick: (MonsterBasicData) -> Unit) {
     val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
     val color = colorResource(id = colorResourceId)
+    val paddingTop = if (index == 0) 50.dp else 20.dp
     monster.apply {
         Box(modifier = Modifier.background(color)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onItemCLick(monster) }
-                    .padding(20.dp),
+                    .padding(start = 20.dp, end = 20.dp, bottom = 20.dp, top = paddingTop),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             )
@@ -61,27 +62,6 @@ fun MonsterLayout(monster: MonsterBasicData, index: Int, onItemCLick: (MonsterBa
         }
     }
 }
-
-/*@Composable
-fun MonsterImage(image: String) {
-    val context = LocalContext.current
-
-    val painter = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(context)
-            .data(image)
-            .crossfade(true)
-            .placeholder(R.drawable.img_monster_loading)
-            .error(R.drawable.img_monster_error)
-            .build()
-    )
-
-    Image(
-        painter = painter,
-        contentDescription = image,
-        modifier = Modifier.size(width = 200.dp, height = 200.dp),
-        contentScale = ContentScale.Fit
-    )
-}*/
 
 @Preview
 @Composable
