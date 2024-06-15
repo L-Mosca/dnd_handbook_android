@@ -46,12 +46,12 @@ fun BestiaryScreen(
         ) {
             Column(modifier = Modifier.background(colorResource(id = R.color.black_800))) {
                 Spacer(modifier = Modifier.height(30.dp))
-                SearchMonsterField(onSearchClicked = {}, onValueChanged = { inputText ->
+                SearchMonsterField(onValueChanged = { inputText ->
+                    viewModel.filterMonster(inputText)
                 })
                 Spacer(modifier = Modifier.height((-10).dp))
-                BestiaryList(list = state.monsterList.results, navController)
+                BestiaryList(list = state.filterList.results, navController)
             }
-
 
             if (state.error.isNotBlank()) BestiaryError(state.error)
             if (state.isLoading) BestiaryLoading()
