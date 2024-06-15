@@ -2,7 +2,10 @@ package com.example.dndhandbook.presentation.screen.bestiary
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -25,6 +28,7 @@ import com.example.dndhandbook.domain.models.MonsterBasicData
 import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.base_components.BaseText
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
+import com.example.dndhandbook.presentation.screen.bestiary.components.SearchMonsterField
 
 @Composable
 fun BestiaryScreen(
@@ -40,7 +44,14 @@ fun BestiaryScreen(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            BestiaryList(list = state.monsterList.results, navController)
+            Column(modifier = Modifier.background(colorResource(id = R.color.black_800))) {
+                Spacer(modifier = Modifier.height(30.dp))
+                SearchMonsterField(onValueChanged = { inputText ->
+                    viewModel.filterMonster(inputText)
+                })
+                Spacer(modifier = Modifier.height((-10).dp))
+                BestiaryList(list = state.filterList.results, navController)
+            }
 
             if (state.error.isNotBlank()) BestiaryError(state.error)
             if (state.isLoading) BestiaryLoading()
@@ -89,4 +100,5 @@ fun BestiaryLoading() {
 @Preview
 @Composable
 fun ScreenPreview() {
+
 }
