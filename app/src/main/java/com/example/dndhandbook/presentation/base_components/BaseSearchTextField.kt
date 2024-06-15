@@ -20,10 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 
 @Composable
@@ -50,8 +52,14 @@ fun BaseSearchTextField(
                 color = colorResource(id = R.color.gray_500)
             )
         },
-        textStyle = TextStyle.Default.copy(color = colorResource(id = R.color.crimson_800)),
-        modifier = Modifier.padding(10.dp).fillMaxWidth(),
+        textStyle = TextStyle.Default.copy(
+            color = colorResource(id = R.color.crimson_800),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.W600
+        ),
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = colorResource(id = R.color.black_700),

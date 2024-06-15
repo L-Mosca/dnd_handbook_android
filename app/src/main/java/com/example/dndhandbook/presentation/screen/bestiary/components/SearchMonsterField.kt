@@ -12,10 +12,7 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.base_components.BaseSearchTextField
 
 @Composable
-fun SearchMonsterField(
-    onValueChanged: ((String) -> Unit),
-    onSearchClicked: ((String) -> Unit),
-) {
+fun SearchMonsterField(onValueChanged: ((String) -> Unit)) {
 
     Box(
         contentAlignment = Alignment.Center,
@@ -26,12 +23,12 @@ fun SearchMonsterField(
         BaseSearchTextField(
             hintText = stringResource(id = R.string.search_monster),
             onValueChange = { onValueChanged.invoke(it) },
-            onSearchClicked = { onSearchClicked.invoke(it) })
+            onSearchClicked = { })
     }
 }
 
 @Preview
 @Composable
 fun SearchMonsterFieldPreview() {
-    SearchMonsterField(onSearchClicked = {}, onValueChanged = {})
+    SearchMonsterField(onValueChanged = {})
 }
