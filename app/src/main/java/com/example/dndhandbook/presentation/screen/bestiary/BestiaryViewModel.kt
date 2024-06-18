@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.domain.models.MonsterList
+import com.example.dndhandbook.domain.models.monster.MonsterList
 import com.example.dndhandbook.domain.use_case.get_monsters.GetMonstersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

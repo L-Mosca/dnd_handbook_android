@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.MonsterBasicData
+import com.example.dndhandbook.domain.models.monster.MonsterBasicData
 import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.base_components.BaseText
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard

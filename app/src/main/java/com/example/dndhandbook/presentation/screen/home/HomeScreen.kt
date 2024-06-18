@@ -41,6 +41,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            CreateCharacterButton(navController = navController)
             BestiaryButton(navController = navController)
         }
     }
@@ -59,18 +60,23 @@ fun BestiaryButton(navController: NavHostController) {
     )
 }
 
+@Composable
+fun CreateCharacterButton(navController: NavHostController) {
+    Image(
+        painter = painterResource(id = R.drawable.img_create_character),
+        contentDescription = "image from drawable resource",
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .clickable {
+                navController.navigate(Screen.CreateCharacter.route)
+            },
+    )
+}
+
 @Preview
 @Composable
 fun ScreenPreview() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(id = R.color.black_800)),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        BestiaryButton(navController = rememberNavController())
-    }
+    HomeScreen(navController = rememberNavController())
 }
 
 /*
