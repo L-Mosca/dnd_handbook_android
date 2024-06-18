@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
+import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
@@ -50,6 +51,16 @@ fun NavGraph(navController: NavHostController) {
             })
         ) {
             MonsterDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.CreateCharacter.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+        ) {
+            CreateCharacterScreen(navController = navController)
         }
     }
 }

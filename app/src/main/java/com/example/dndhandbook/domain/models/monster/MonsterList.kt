@@ -1,9 +1,8 @@
-package com.example.dndhandbook.domain.models
+package com.example.dndhandbook.domain.models.monster
 
 import android.os.Parcelable
 import com.example.dndhandbook.data.remote.dto.MonsterBasicDataDto
 import com.example.dndhandbook.data.remote.dto.MonsterListDto
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -15,4 +15,8 @@
 
     <!--Bestiary Screen-->
     <string name="search_monster">Find Monster</string>
+
+    <!--Create Character Screen-->
+    <string name="races">Races</string>
+    <string name="classes">Classes</string>
 </resources>

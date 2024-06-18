@@ -13,8 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.extractTitle
-import com.example.dndhandbook.domain.models.MonsterSpecialAbility
-import com.example.dndhandbook.domain.models.SpecialAbilityUsage
+import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
+import com.example.dndhandbook.domain.models.monster.SpecialAbilityUsage
 import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
 @Composable
