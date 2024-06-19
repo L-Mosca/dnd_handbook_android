@@ -8,4 +8,7 @@ object Constants {
     // Create Character Steps
     const val CC_CHOSE_RACE = 0
     const val CC_CHOSE_CLASS = 1
+
+    // Race Detail
+    const val RACE_DETAIL_SCREEN_ARGUMENT = "raceIndex"
 }

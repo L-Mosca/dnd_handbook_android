@@ -1,4 +1,4 @@
-package com.example.dndhandbook.data.remote.dto
+package com.example.dndhandbook.data.remote.dto.race
 
 import android.os.Parcelable
 import com.example.dndhandbook.domain.models.race.RaceBasicData

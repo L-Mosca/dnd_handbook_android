@@ -13,6 +13,7 @@ import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
 import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
+import com.example.dndhandbook.presentation.screen.race_detail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
 
 @Composable
@@ -61,6 +62,19 @@ fun NavGraph(navController: NavHostController) {
             popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
         ) {
             CreateCharacterScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.RaceDetail.route}/{${Constants.RACE_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.RACE_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            RaceDetailScreen(navController = navController)
         }
     }
 }
