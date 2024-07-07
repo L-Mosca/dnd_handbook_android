@@ -26,26 +26,12 @@ import com.example.dndhandbook.presentation.base_components.HexagonBox
 fun MonsterAttributes(basicAttrs: List<GameAttribute>) {
     if (basicAttrs.isEmpty()) return
     basicAttrs.apply {
-        /*LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(14.dp),
-            userScrollEnabled = false,
-            modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 40.dp)
-        ) {
-            items(basicAttrs) { attribute ->
-                AttributeContainer(attribute = attribute)
-            }
-        }*/
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 40.dp)
         ) {
-            basicAttrs.forEachIndexed { index, gameAttribute ->
+            basicAttrs.forEachIndexed { index, _ ->
                 if (index % 3 == 0) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
