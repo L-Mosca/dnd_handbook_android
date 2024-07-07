@@ -1,13 +1,13 @@
-package com.example.dndhandbook.data.remote.dto
+package com.example.dndhandbook.data.remote.dto.monster
 
 import android.os.Parcelable
-import com.example.dndhandbook.domain.models.Actions
-import com.example.dndhandbook.domain.models.ArmorClass
-import com.example.dndhandbook.domain.models.LegendaryActions
-import com.example.dndhandbook.domain.models.MonsterSpecialAbility
-import com.example.dndhandbook.domain.models.MonsterImmunity
-import com.example.dndhandbook.domain.models.MonsterProficiency
-import com.example.dndhandbook.domain.models.MonsterReaction
+import com.example.dndhandbook.domain.models.monster.Actions
+import com.example.dndhandbook.domain.models.monster.ArmorClass
+import com.example.dndhandbook.domain.models.monster.LegendaryActions
+import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
+import com.example.dndhandbook.domain.models.monster.MonsterImmunity
+import com.example.dndhandbook.domain.models.monster.MonsterProficiency
+import com.example.dndhandbook.domain.models.monster.MonsterReaction
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue

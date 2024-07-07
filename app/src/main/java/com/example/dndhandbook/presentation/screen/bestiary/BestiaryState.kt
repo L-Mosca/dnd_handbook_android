@@ -1,6 +1,6 @@
 package com.example.dndhandbook.presentation.screen.bestiary
 
-import com.example.dndhandbook.domain.models.MonsterList
+import com.example.dndhandbook.domain.models.monster.MonsterList
 
 data class BestiaryState(
     val isLoading: Boolean = false,

@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.MonsterBasicData
+import com.example.dndhandbook.domain.models.monster.MonsterBasicData
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
