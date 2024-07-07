@@ -27,4 +27,7 @@
     <string name="traits">Traits</string>
     <string name="ability_bonuses">Ability bonuses</string>
     <string name="alignment">Alignment</string>
+
+    <!--Sub Race Detail-->
+    <string name="start_proficiencies">Start Proficiencies</string>
 </resources>
