@@ -9,24 +9,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.MonsterBasicData
+import com.example.dndhandbook.domain.models.monster.MonsterBasicData
 import com.example.dndhandbook.navigation.Screen
-import com.example.dndhandbook.presentation.base_components.BaseText
+import com.example.dndhandbook.presentation.base_components.BaseErrorMessage
+import com.example.dndhandbook.presentation.base_components.BaseLoading
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 import com.example.dndhandbook.presentation.screen.bestiary.components.SearchMonsterField
 
@@ -53,8 +50,8 @@ fun BestiaryScreen(
                 BestiaryList(list = state.filterList.results, navController)
             }
 
-            if (state.error.isNotBlank()) BestiaryError(state.error)
-            if (state.isLoading) BestiaryLoading()
+            if (state.error.isNotBlank()) BaseErrorMessage(state.error)
+            if (state.isLoading) BaseLoading()
         }
     }
 }
@@ -79,26 +76,8 @@ private fun navigateToMonsterDetail(monsterIndex: String, navController: NavHost
     navController.navigate(Screen.MonsterDetail.route + "/$monsterIndex")
 }
 
-@Composable
-fun BestiaryError(errorMessage: String) {
-    BaseText(
-        text = errorMessage,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.W600,
-        textAlign = TextAlign.Center,
-        textOverflow = TextOverflow.Ellipsis,
-        padding = 20.dp,
-        color = colorResource(id = R.color.crimson_800)
-    )
-}
-
-@Composable
-fun BestiaryLoading() {
-    CircularProgressIndicator(color = colorResource(id = R.color.crimson_800))
-}
-
 @Preview
 @Composable
 fun ScreenPreview() {
-
+    BestiaryScreen(navController = rememberNavController())
 }

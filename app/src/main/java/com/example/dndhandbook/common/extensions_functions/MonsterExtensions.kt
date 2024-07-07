@@ -3,10 +3,10 @@ package com.example.dndhandbook.common.extensions_functions
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.Actions
-import com.example.dndhandbook.domain.models.ArmorClass
-import com.example.dndhandbook.domain.models.MonsterProficiency
-import com.example.dndhandbook.domain.models.MonsterSpecialAbility
+import com.example.dndhandbook.domain.models.monster.Actions
+import com.example.dndhandbook.domain.models.monster.ArmorClass
+import com.example.dndhandbook.domain.models.monster.MonsterProficiency
+import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.NumberFormat
 import java.util.Locale
