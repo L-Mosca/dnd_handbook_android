@@ -54,7 +54,7 @@ fun CreateCharacterScreen(
                 RaceList(state.raceList, navController, viewModel)
 
             if (state.step == Constants.CC_CHOSE_SUB_RACE)
-                SubRaceList()
+                SubRaceList(state.subRaceList, navController, viewModel)
         }
     }
 }
@@ -66,17 +66,25 @@ fun RaceList(
     viewModel: CreateCharacterViewModel
 ) {
     RaceDataList(raceList = raceList,
-        onItemSelected = { raceData ->
-            viewModel.nextStep(raceData)
-        },
+        onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
             navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
         })
 }
 
 @Composable
-fun SubRaceList() {
-    RaceDataList(onItemSelected = {}, onItemInfoSelected = {}, raceList = RaceList())
+fun SubRaceList(
+    raceList: RaceList,
+    navController: NavHostController,
+    viewModel: CreateCharacterViewModel
+) {
+    RaceDataList(
+        onItemSelected = { viewModel.nextStep(it) },
+        onItemInfoSelected = { raceIndex ->
+
+        },
+        raceList = raceList
+    )
 }
 
 @Preview

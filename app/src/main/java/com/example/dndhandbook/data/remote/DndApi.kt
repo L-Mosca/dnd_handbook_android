@@ -5,6 +5,7 @@ import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
 import com.example.dndhandbook.data.remote.dto.monster.MonsterListDto
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
 import com.example.dndhandbook.data.remote.dto.race.RaceListDto
+import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
 import com.example.dndhandbook.domain.remote.ApiConstants
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
@@ -61,4 +62,10 @@ interface DndApi {
 
     @GET("${ApiConstants.FETCH_RACE_LIST}/{index}")
     suspend fun fetchRaceDetail(@Path("index") raceIndex: String): RaceDetailDto?
+
+    @GET(ApiConstants.FETCH_SUB_RACE_DETAIL)
+    suspend fun fetchSubRaceDetail(@Path("index") subRaceIndex: String): SubRaceDetailDto?
+
+    @GET(ApiConstants.FETCH_SUB_RACE)
+    suspend fun fetchSubRaceList(@Path("index") raceIndex: String): RaceListDto?
 }
