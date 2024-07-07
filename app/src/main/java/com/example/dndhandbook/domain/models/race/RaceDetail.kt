@@ -66,7 +66,7 @@ data class DefaultRaceObject(
 data class AbilityBonus(
     @SerializedName("ability_score")
     val abilityScore: DefaultRaceObject = DefaultRaceObject(),
-    @SerializedName("")
+    @SerializedName("bonus")
     val bonus: Int = 0,
 )
 
