@@ -26,7 +26,8 @@ import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
 fun RaceItem(
-    onItemSelected: (() -> Unit),
+    onItemSelected: ((RaceBasicData) -> Unit),
+    onItemInfoSelected: ((String) -> Unit),
     raceData: RaceBasicData = RaceBasicData(),
     index: Int = 0
 ) {
@@ -37,7 +38,7 @@ fun RaceItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onItemSelected() }
+                .clickable { onItemSelected(raceData) }
                 .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -56,7 +57,7 @@ fun RaceItem(
                 modifier = Modifier
                     .size(width = 30.dp, height = 30.dp)
                     .clickable {
-
+                        onItemInfoSelected.invoke(raceData.index)
                     }
             )
         }
@@ -68,5 +69,5 @@ fun RaceItem(
 @Preview
 @Composable
 fun RaceItemPreview() {
-    RaceItem(onItemSelected = {}, raceData = RaceBasicData(name = "Dwarf"))
+    RaceItem(onItemSelected = {}, raceData = RaceBasicData(name = "Dwarf"), onItemInfoSelected = {})
 }

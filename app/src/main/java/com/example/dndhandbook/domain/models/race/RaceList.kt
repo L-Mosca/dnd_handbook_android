@@ -1,7 +1,7 @@
 package com.example.dndhandbook.domain.models.race
 
 import android.os.Parcelable
-import com.example.dndhandbook.data.remote.dto.RaceListDto
+import com.example.dndhandbook.data.remote.dto.race.RaceListDto
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 

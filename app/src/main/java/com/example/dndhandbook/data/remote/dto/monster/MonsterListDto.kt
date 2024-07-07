@@ -1,4 +1,4 @@
-package com.example.dndhandbook.data.remote.dto
+package com.example.dndhandbook.data.remote.dto.monster
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
