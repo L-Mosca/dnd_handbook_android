@@ -2,7 +2,9 @@ package com.example.dndhandbook.presentation.screen.create_character
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -20,7 +22,7 @@ import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.extensions_functions.getCreateCharacterTitle
 import com.example.dndhandbook.domain.models.race.RaceList
 import com.example.dndhandbook.navigation.Screen
-import com.example.dndhandbook.presentation.screen.create_character.components.CreateCharacterLoading
+import com.example.dndhandbook.presentation.base_components.BaseErrorMessage
 import com.example.dndhandbook.presentation.screen.create_character.components.CreateCharacterTitle
 import com.example.dndhandbook.presentation.screen.create_character.components.race.RaceDataList
 
@@ -35,26 +37,48 @@ fun CreateCharacterScreen(
 
     BackHandler {
         if (state.step == Constants.CC_CHOSE_RACE) navController.popBackStack()
-        else viewModel.previewStep(null)
+        else viewModel.previewStep()
     }
 
-    Scaffold { innerPadding ->
+    with(state) {
+        val alignment = if (error.isNotBlank()) Alignment.Center else Alignment.TopCenter
 
-        if (state.isLoading) CreateCharacterLoading()
+        Scaffold { innerPadding ->
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(colorResource(id = R.color.black_800)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            CreateCharacterTitle(title = state.step.getCreateCharacterTitle(context))
-            if (state.step == Constants.CC_CHOSE_RACE)
-                RaceList(state.raceList, navController, viewModel)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .background(colorResource(id = R.color.black_800)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            if (state.step == Constants.CC_CHOSE_SUB_RACE)
-                SubRaceList(state.subRaceList, navController, viewModel)
+                CreateCharacterTitle(title = step.getCreateCharacterTitle(context))
+
+                Box(
+                    modifier = Modifier.fillMaxHeight(),
+                    contentAlignment = alignment,
+                ) {
+                    if (error.isNotBlank()) BaseErrorMessage(error)
+
+                    HandleCreateCharacterStep(this@with, navController, viewModel)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HandleCreateCharacterStep(
+    state: CreateCharacterState,
+    navController: NavHostController,
+    viewModel: CreateCharacterViewModel
+) {
+    with(state) {
+        if (error.isNotBlank()) return@with
+        when (step) {
+            Constants.CC_CHOSE_RACE -> RaceList(raceList, navController, viewModel)
+            Constants.CC_CHOSE_SUB_RACE -> SubRaceList(subRaceList, navController, viewModel)
         }
     }
 }
@@ -81,7 +105,7 @@ fun SubRaceList(
     RaceDataList(
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
-
+            navController.navigate(Screen.SubRaceDetail.route + "/$raceIndex")
         },
         raceList = raceList
     )

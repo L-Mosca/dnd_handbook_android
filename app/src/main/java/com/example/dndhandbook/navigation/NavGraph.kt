@@ -15,6 +15,7 @@ import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
 import com.example.dndhandbook.presentation.screen.race_detail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
+import com.example.dndhandbook.presentation.screen.sub_race_detail.SubRaceDetailScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -75,6 +76,19 @@ fun NavGraph(navController: NavHostController) {
             })
         ) {
             RaceDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.SubRaceDetail.route}/{${Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            SubRaceDetailScreen(navController = navController)
         }
     }
 }
