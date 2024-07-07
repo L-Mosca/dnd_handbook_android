@@ -17,6 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.extensions_functions.getCreateCharacterTitle
+import com.example.dndhandbook.domain.models.race.RaceList
+import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.screen.create_character.components.CreateCharacterLoading
 import com.example.dndhandbook.presentation.screen.create_character.components.CreateCharacterTitle
 import com.example.dndhandbook.presentation.screen.create_character.components.race.RaceDataList
@@ -42,9 +44,18 @@ fun CreateCharacterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CreateCharacterTitle(title = state.step.getCreateCharacterTitle(context))
-            if (state.step == Constants.CC_CHOSE_RACE) RaceDataList(raceList = state.raceList)
+            if (state.step == Constants.CC_CHOSE_RACE) RaceList(state.raceList, navController)
         }
     }
+}
+
+@Composable
+fun RaceList(raceList: RaceList, navController: NavHostController) {
+    RaceDataList(raceList = raceList,
+        onItemSelected = {},
+        onItemInfoSelected = { raceIndex ->
+            navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
+        })
 }
 
 @Preview
