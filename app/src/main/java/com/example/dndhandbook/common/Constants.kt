@@ -12,4 +12,7 @@ object Constants {
 
     // Race Detail
     const val RACE_DETAIL_SCREEN_ARGUMENT = "raceIndex"
+
+    // Sub Race Detail
+    const val SUB_RACE_DETAIL_SCREEN_ARGUMENT = "subRaceIndex"
 }

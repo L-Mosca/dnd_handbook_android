@@ -9,10 +9,8 @@ import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.Character
 import com.example.dndhandbook.domain.models.race.RaceBasicData
 import com.example.dndhandbook.domain.models.race.RaceList
-import com.example.dndhandbook.domain.models.sub_race.SubRaceDetail
 import com.example.dndhandbook.domain.use_case.get_races.GetRacesUseCase
 import com.example.dndhandbook.domain.use_case.get_sub_races.GetSubRacesUseCase
-import com.example.dndhandbook.domain.use_case.get_sub_races_detail.GetSubRaceDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateCharacterViewModel @Inject constructor(
     private val getRacesUseCase: GetRacesUseCase,
-    private val getSubRacesUseCase: GetSubRacesUseCase,
-    private val getSubRaceDetailUseCase: GetSubRaceDetailUseCase
+    private val getSubRacesUseCase: GetSubRacesUseCase
 ) :
     BaseViewModel() {
 
@@ -63,16 +60,22 @@ class CreateCharacterViewModel @Inject constructor(
         }
     }
 
-    fun <T> previewStep(data: T?) {
+    fun previewStep() {
         val actualStep = _state.value.step
-        _state.value = _state.value.copy(step = actualStep - 1)
+        val hasSubRaceList = _state.value.subRaceList.results.isNotEmpty()
+
+        val previewStep = when {
+            actualStep == Constants.CC_CHOSE_CLASS && !hasSubRaceList -> Constants.CC_CHOSE_RACE
+            else -> actualStep - 1
+        }
+
+        _state.value = _state.value.copy(step = previewStep)
     }
 
     private fun updateSelectedRace(race: RaceBasicData) {
         val character = _state.value.character ?: Character()
         character.race = race
-        _state.value =
-            _state.value.copy(step = Constants.CC_CHOSE_SUB_RACE, character = character)
+        _state.value = _state.value.copy(character = character)
         getSubRaceList(race.index)
     }
 
@@ -83,41 +86,31 @@ class CreateCharacterViewModel @Inject constructor(
     }
 
     private fun getSubRaceList(index: String) {
-        getSubRacesUseCase(index).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(subRaceList = result.data ?: RaceList())
-                    if (result.data?.results?.isEmpty() == true) {
-                        nextStep(RaceBasicData())
+        if (index.isEmpty()) {
+            _state.value = _state.value.copy(step = Constants.CC_CHOSE_CLASS)
+        } else {
+            getSubRacesUseCase(index).onEach { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        if (result.data?.results?.isEmpty() == true) {
+                            nextStep(RaceBasicData())
+                        } else {
+                            _state.value = _state.value.copy(
+                                step = Constants.CC_CHOSE_SUB_RACE,
+                                subRaceList = result.data ?: RaceList()
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        _state.value = _state.value.copy(isLoading = true)
+                    }
+
+                    is Resource.Error -> {
+                        _state.value = _state.value.copy(error = result.message!!)
                     }
                 }
-
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(error = result.message!!)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun getSubRaceDetail(index: String) {
-        getSubRaceDetailUseCase(index).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = _state.value.copy(subRaceDetail = result.data ?: SubRaceDetail())
-                }
-
-                is Resource.Loading -> {
-                    _state.value = _state.value.copy(isLoading = true)
-                }
-
-                is Resource.Error -> {
-                    _state.value = _state.value.copy(error = result.message!!)
-                }
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+        }
     }
 }
