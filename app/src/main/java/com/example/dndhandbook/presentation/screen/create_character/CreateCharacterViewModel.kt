@@ -75,7 +75,7 @@ class CreateCharacterViewModel @Inject constructor(
     private fun updateSelectedRace(race: RaceBasicData) {
         val character = _state.value.character ?: Character()
         character.race = race
-        _state.value = _state.value.copy(character = character)
+        _state.value = _state.value.copy(character = character, subRaceList = RaceList())
         getSubRaceList(race.index)
     }
 
