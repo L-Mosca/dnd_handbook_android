@@ -4,7 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
+import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.Resource
+import com.example.dndhandbook.domain.models.Character
+import com.example.dndhandbook.domain.models.race.RaceBasicData
 import com.example.dndhandbook.domain.models.race.RaceList
 import com.example.dndhandbook.domain.use_case.get_races.GetRacesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,21 +31,36 @@ class CreateCharacterViewModel @Inject constructor(private val getRacesUseCase: 
         getRacesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = CreateCharacterState(raceList = result.data ?: RaceList())
+                    _state.value = _state.value.copy(raceList = result.data ?: RaceList())
                 }
 
                 is Resource.Loading -> {
-                    _state.value = CreateCharacterState(isLoading = true)
+                    _state.value = _state.value.copy(isLoading = true)
                 }
 
                 is Resource.Error -> {
-                    _state.value = CreateCharacterState(error = result.message!!)
+                    _state.value = _state.value.copy(error = result.message!!)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun <T> nextStep(data: T?) {}
+    fun <T> nextStep(data: T?) {
+        when (_state.value.step) {
+            Constants.CC_CHOSE_RACE -> updateSelectedRace(data as RaceBasicData)
+            Constants.CC_CHOSE_SUB_RACE -> {}
+        }
+    }
 
-    fun <T> previewStep(data: T?) {}
+    fun <T> previewStep(data: T?) {
+        val actualStep = _state.value.step
+        _state.value = _state.value.copy(step = actualStep - 1)
+    }
+
+    private fun updateSelectedRace(race: RaceBasicData) {
+        val character = _state.value.character ?: Character()
+        character.race = race
+        _state.value =
+            _state.value.copy(step = Constants.CC_CHOSE_SUB_RACE, character = character)
+    }
 }

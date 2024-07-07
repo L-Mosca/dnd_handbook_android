@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.screen.create_character
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +33,11 @@ fun CreateCharacterScreen(
     val context = LocalContext.current
     val state = viewModel.state.value
 
+    BackHandler {
+        if (state.step == Constants.CC_CHOSE_RACE) navController.popBackStack()
+        else viewModel.previewStep(null)
+    }
+
     Scaffold { innerPadding ->
 
         if (state.isLoading) CreateCharacterLoading()
@@ -44,18 +50,33 @@ fun CreateCharacterScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CreateCharacterTitle(title = state.step.getCreateCharacterTitle(context))
-            if (state.step == Constants.CC_CHOSE_RACE) RaceList(state.raceList, navController)
+            if (state.step == Constants.CC_CHOSE_RACE)
+                RaceList(state.raceList, navController, viewModel)
+
+            if (state.step == Constants.CC_CHOSE_SUB_RACE)
+                SubRaceList()
         }
     }
 }
 
 @Composable
-fun RaceList(raceList: RaceList, navController: NavHostController) {
+fun RaceList(
+    raceList: RaceList,
+    navController: NavHostController,
+    viewModel: CreateCharacterViewModel
+) {
     RaceDataList(raceList = raceList,
-        onItemSelected = {},
+        onItemSelected = { raceData ->
+            viewModel.nextStep(raceData)
+        },
         onItemInfoSelected = { raceIndex ->
             navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
         })
+}
+
+@Composable
+fun SubRaceList() {
+    RaceDataList(onItemSelected = {}, onItemInfoSelected = {}, raceList = RaceList())
 }
 
 @Preview
