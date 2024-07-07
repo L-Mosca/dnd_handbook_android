@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +31,6 @@ fun RaceDetailScreen(
                     .padding(innerPadding)
                     .fillMaxSize()
                     .background(colorResource(id = R.color.black_800)),
-                contentAlignment = Alignment.Center
             ) {
                 when {
                     isLoading -> RaceDetailLoading()
