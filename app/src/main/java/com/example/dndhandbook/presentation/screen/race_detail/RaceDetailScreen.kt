@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,18 +25,21 @@ fun RaceDetailScreen(
 
     val state = viewModel.state.value
 
-    Scaffold { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(colorResource(id = R.color.black_800))
-        ) {
-            when {
-                state.isLoading -> RaceDetailLoading()
-                state.error.isNotBlank() -> RaceDetailError(state.error)
-                state.raceDetail != null -> RaceDetailData(state.raceDetail)
-                else -> RaceDetailLoading()
+    with(state) {
+        Scaffold { innerPadding ->
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize()
+                    .background(colorResource(id = R.color.black_800)),
+                contentAlignment = Alignment.Center
+            ) {
+                when {
+                    isLoading -> RaceDetailLoading()
+                    error.isNotBlank() -> RaceDetailError(error)
+                    raceDetail != null -> RaceDetailData(raceDetail)
+                    else -> RaceDetailLoading()
+                }
             }
         }
     }

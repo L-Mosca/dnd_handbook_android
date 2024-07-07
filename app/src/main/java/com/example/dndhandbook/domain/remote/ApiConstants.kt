@@ -8,5 +8,9 @@ class ApiConstants {
 
         // Race
         const val FETCH_RACE_LIST = "/api/races"
+
+        // Sub Race
+        const val FETCH_SUB_RACE = "/api/races/{index}/subraces"
+        const val FETCH_SUB_RACE_DETAIL = "/api/subraces/{index}"
     }
 }

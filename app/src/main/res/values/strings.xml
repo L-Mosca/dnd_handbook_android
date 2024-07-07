@@ -18,6 +18,7 @@
 
     <!--Create Character Screen-->
     <string name="races">Races</string>
+    <string name="sub_races">Subraces</string>
     <string name="classes">Classes</string>
 
     <!--Race Detail Screen-->
