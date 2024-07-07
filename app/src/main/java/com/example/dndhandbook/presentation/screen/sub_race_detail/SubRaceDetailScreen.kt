@@ -31,7 +31,7 @@ fun SubRaceDetailScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(colorResource(id = R.color.black_800)),
+                .background(colorResource(id = R.color.black_800))
         ) {
             when {
                 state.isLoading -> SubRaceDetailLoading()
