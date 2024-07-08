@@ -3,14 +3,13 @@ package com.example.dndhandbook.presentation.screen.create_character.components.
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.dndhandbook.domain.models.race.RaceBasicData
-import com.example.dndhandbook.domain.models.race.RaceDetail
-import com.example.dndhandbook.domain.models.race.RaceList
+import com.example.dndhandbook.domain.models.base.DefaultList
+import com.example.dndhandbook.domain.models.base.DefaultObject
 
 @Composable
 fun RaceDataList(
-    raceList: RaceList = RaceList(),
-    onItemSelected: ((RaceBasicData) -> Unit),
+    raceList: DefaultList = DefaultList(),
+    onItemSelected: ((DefaultObject) -> Unit),
     onItemInfoSelected: ((String) -> Unit)
 ) {
     Column {
