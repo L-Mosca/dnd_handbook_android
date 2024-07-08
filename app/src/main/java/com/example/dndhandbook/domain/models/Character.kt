@@ -1,8 +1,8 @@
 package com.example.dndhandbook.domain.models
 
-import com.example.dndhandbook.domain.models.race.RaceBasicData
+import com.example.dndhandbook.domain.models.base.DefaultObject
 
 data class Character(
-    var race: RaceBasicData = RaceBasicData(),
-    var subRace: RaceBasicData = RaceBasicData()
+    var race: DefaultObject = DefaultObject(),
+    var subRace: DefaultObject = DefaultObject()
 )

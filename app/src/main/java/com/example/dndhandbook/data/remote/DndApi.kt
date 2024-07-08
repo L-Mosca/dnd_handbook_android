@@ -2,10 +2,9 @@ package com.example.dndhandbook.data.remote
 
 import com.example.dndhandbook.BuildConfig
 import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
-import com.example.dndhandbook.data.remote.dto.monster.MonsterListDto
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
-import com.example.dndhandbook.data.remote.dto.race.RaceListDto
 import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
+import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.remote.ApiConstants
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
@@ -52,13 +51,13 @@ interface DndApi {
     }
 
     @GET(ApiConstants.FETCH_MONSTERS)
-    suspend fun fetchAllMonsters(): MonsterListDto?
+    suspend fun fetchAllMonsters(): DefaultList?
 
     @GET(ApiConstants.FETCH_MONSTER_DETAIL)
     suspend fun fetchMonsterDetail(@Path("index") monsterIndex: String): MonsterDetailDto?
 
     @GET(ApiConstants.FETCH_RACE_LIST)
-    suspend fun fetchRaceList(): RaceListDto?
+    suspend fun fetchRaceList(): DefaultList?
 
     @GET("${ApiConstants.FETCH_RACE_LIST}/{index}")
     suspend fun fetchRaceDetail(@Path("index") raceIndex: String): RaceDetailDto?
@@ -67,5 +66,5 @@ interface DndApi {
     suspend fun fetchSubRaceDetail(@Path("index") subRaceIndex: String): SubRaceDetailDto?
 
     @GET(ApiConstants.FETCH_SUB_RACE)
-    suspend fun fetchSubRaceList(@Path("index") raceIndex: String): RaceListDto?
+    suspend fun fetchSubRaceList(@Path("index") raceIndex: String): DefaultList?
 }

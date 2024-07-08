@@ -21,14 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.race.RaceBasicData
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
 fun RaceItem(
-    onItemSelected: ((RaceBasicData) -> Unit),
+    onItemSelected: ((DefaultObject) -> Unit),
     onItemInfoSelected: ((String) -> Unit),
-    raceData: RaceBasicData = RaceBasicData(),
+    raceData: DefaultObject = DefaultObject(),
     index: Int = 0
 ) {
     val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
@@ -69,5 +69,5 @@ fun RaceItem(
 @Preview
 @Composable
 fun RaceItemPreview() {
-    RaceItem(onItemSelected = {}, raceData = RaceBasicData(name = "Dwarf"), onItemInfoSelected = {})
+    RaceItem(onItemSelected = {}, raceData = DefaultObject(name = "Dwarf"), onItemInfoSelected = {})
 }

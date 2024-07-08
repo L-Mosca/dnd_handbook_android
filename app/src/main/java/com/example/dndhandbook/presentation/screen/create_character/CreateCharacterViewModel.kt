@@ -7,8 +7,8 @@ import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.Character
-import com.example.dndhandbook.domain.models.race.RaceBasicData
-import com.example.dndhandbook.domain.models.race.RaceList
+import com.example.dndhandbook.domain.models.base.DefaultList
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.use_case.get_races.GetRacesUseCase
 import com.example.dndhandbook.domain.use_case.get_sub_races.GetSubRacesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +35,7 @@ class CreateCharacterViewModel @Inject constructor(
         getRacesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(raceList = result.data ?: RaceList())
+                    _state.value = _state.value.copy(raceList = result.data ?: DefaultList())
                 }
 
                 is Resource.Loading -> {
@@ -51,9 +51,9 @@ class CreateCharacterViewModel @Inject constructor(
 
     fun <T> nextStep(data: T?) {
         when (_state.value.step) {
-            Constants.CC_CHOSE_RACE -> updateSelectedRace(data as RaceBasicData)
+            Constants.CC_CHOSE_RACE -> updateSelectedRace(data as DefaultObject)
             Constants.CC_CHOSE_SUB_RACE -> {
-                updateSelectedSubRace(data as RaceBasicData)
+                updateSelectedSubRace(data as DefaultObject)
             }
 
             Constants.CC_CHOSE_CLASS -> {}
@@ -72,14 +72,14 @@ class CreateCharacterViewModel @Inject constructor(
         _state.value = _state.value.copy(step = previewStep)
     }
 
-    private fun updateSelectedRace(race: RaceBasicData) {
+    private fun updateSelectedRace(race: DefaultObject) {
         val character = _state.value.character ?: Character()
         character.race = race
-        _state.value = _state.value.copy(character = character, subRaceList = RaceList())
+        _state.value = _state.value.copy(character = character, subRaceList = DefaultList())
         getSubRaceList(race.index)
     }
 
-    private fun updateSelectedSubRace(race: RaceBasicData) {
+    private fun updateSelectedSubRace(race: DefaultObject) {
         val character = _state.value.character ?: Character()
         character.subRace = race
         _state.value = _state.value.copy(step = Constants.CC_CHOSE_CLASS, character = character)
@@ -93,11 +93,11 @@ class CreateCharacterViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         if (result.data?.results?.isEmpty() == true) {
-                            nextStep(RaceBasicData())
+                            nextStep(DefaultObject())
                         } else {
                             _state.value = _state.value.copy(
                                 step = Constants.CC_CHOSE_SUB_RACE,
-                                subRaceList = result.data ?: RaceList()
+                                subRaceList = result.data ?: DefaultList()
                             )
                         }
                     }
