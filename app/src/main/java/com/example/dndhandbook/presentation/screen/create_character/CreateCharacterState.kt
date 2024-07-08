@@ -2,7 +2,6 @@ package com.example.dndhandbook.presentation.screen.create_character
 
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.domain.models.Character
-import com.example.dndhandbook.domain.models.race.DefaultRaceObject
 import com.example.dndhandbook.domain.models.race.RaceList
 import com.example.dndhandbook.domain.models.sub_race.SubRaceDetail
 

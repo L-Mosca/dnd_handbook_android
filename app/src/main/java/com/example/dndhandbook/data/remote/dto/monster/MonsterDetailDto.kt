@@ -1,11 +1,11 @@
 package com.example.dndhandbook.data.remote.dto.monster
 
 import android.os.Parcelable
+import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
 import com.example.dndhandbook.domain.models.monster.Actions
 import com.example.dndhandbook.domain.models.monster.ArmorClass
 import com.example.dndhandbook.domain.models.monster.LegendaryActions
 import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
-import com.example.dndhandbook.domain.models.monster.MonsterImmunity
 import com.example.dndhandbook.domain.models.monster.MonsterProficiency
 import com.example.dndhandbook.domain.models.monster.MonsterReaction
 import com.google.gson.annotations.SerializedName
@@ -61,7 +61,7 @@ data class MonsterDetailDto(
     @SerializedName("challenge_rating")
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
     @SerializedName("condition_immunities")
-    val conditionImmunities: List<MonsterImmunity> = emptyList(),
+    val conditionImmunities: List<DefaultProficiencyObject> = emptyList(),
     @SerializedName("damage_immunities")
     val damageImmunities: List<String> = emptyList(),
     @SerializedName("damage_resistances")
