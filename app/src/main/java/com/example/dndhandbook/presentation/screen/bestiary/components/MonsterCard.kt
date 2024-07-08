@@ -21,16 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.monster.MonsterBasicData
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.base_components.BaseText
 
 @Composable
-fun MonsterCard(monster: MonsterBasicData, index: Int, onItemClick: (MonsterBasicData) -> Unit) {
+fun MonsterCard(monster: DefaultObject, index: Int, onItemClick: (DefaultObject) -> Unit) {
     MonsterLayout(monster, index, onItemClick)
 }
 
 @Composable
-fun MonsterLayout(monster: MonsterBasicData, index: Int, onItemCLick: (MonsterBasicData) -> Unit) {
+fun MonsterLayout(monster: DefaultObject, index: Int, onItemCLick: (DefaultObject) -> Unit) {
     val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
     val color = colorResource(id = colorResourceId)
     val paddingTop = if (index == 0) 50.dp else 20.dp
@@ -67,7 +67,7 @@ fun MonsterLayout(monster: MonsterBasicData, index: Int, onItemCLick: (MonsterBa
 @Composable
 fun MonsterCardPreview() {
     MonsterLayout(
-        MonsterBasicData(
+        DefaultObject(
             index = "adult-black-dragon",
             name = "Adult black dragon",
             url = "/adult_black_dragon"

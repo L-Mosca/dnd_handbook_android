@@ -1,7 +1,7 @@
 package com.example.dndhandbook.data.remote.dto.race
 
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.race.AbilityBonus
-import com.example.dndhandbook.domain.models.race.DefaultRaceObject
 import com.example.dndhandbook.domain.models.race.StartingProficiencyOptions
 import com.google.gson.annotations.SerializedName
 
@@ -17,7 +17,7 @@ data class RaceDetailDto(
     @SerializedName("language_desc")
     val languageDescription: String = "",
     @SerializedName("languages")
-    val languages: List<DefaultRaceObject> = emptyList(),
+    val languages: List<DefaultObject> = emptyList(),
     @SerializedName("name")
     val name: String = "",
     @SerializedName("size")
@@ -27,13 +27,13 @@ data class RaceDetailDto(
     @SerializedName("speed")
     val speed: Int = 0,
     @SerializedName("starting_proficiencies")
-    val startingProficiencies: List<DefaultRaceObject> = emptyList(),
+    val startingProficiencies: List<DefaultObject> = emptyList(),
     @SerializedName("starting_proficiency_options")
     val startingProficiencyOptions: StartingProficiencyOptions = StartingProficiencyOptions(),
     @SerializedName("subraces")
-    val subRaces: List<DefaultRaceObject> = emptyList(),
+    val subRaces: List<DefaultObject> = emptyList(),
     @SerializedName("traits")
-    val traits: List<DefaultRaceObject> = emptyList(),
+    val traits: List<DefaultObject> = emptyList(),
     @SerializedName("url")
     val url: String = "",
 )

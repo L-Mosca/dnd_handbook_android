@@ -5,8 +5,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.extractSavingThrows
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.monster.MonsterProficiency
-import com.example.dndhandbook.domain.models.monster.Proficiency
 import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
 @Composable
@@ -27,13 +27,13 @@ fun MonsterSavingThrowsPreview() {
     proficiencyList.add(
         MonsterProficiency(
             value = 7,
-            proficiency = Proficiency(name = "Saving Throw: DEX")
+            proficiency = DefaultObject(name = "Saving Throw: DEX")
         )
     )
     proficiencyList.add(
         MonsterProficiency(
             value = 10,
-            proficiency = Proficiency(name = "Saving Throw: CON")
+            proficiency = DefaultObject(name = "Saving Throw: CON")
         )
     )
     MonsterSavingThrows(proficiencies = proficiencyList)

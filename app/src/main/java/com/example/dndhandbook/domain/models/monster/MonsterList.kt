@@ -1,25 +1,14 @@
 package com.example.dndhandbook.domain.models.monster
 
 import android.os.Parcelable
-import com.example.dndhandbook.data.remote.dto.monster.MonsterBasicDataDto
 import com.example.dndhandbook.data.remote.dto.monster.MonsterListDto
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MonsterList(
     val count: Int = 0,
-    val results: List<MonsterBasicData> = emptyList(),
+    val results: List<DefaultObject> = emptyList(),
 ) : Parcelable
 
-fun MonsterListDto.toMonsterList(): MonsterList = MonsterList(
-    count = count,
-    results = results.toMonsterBasicDataList()
-)
-
-fun List<MonsterBasicDataDto>.toMonsterBasicDataList(): List<MonsterBasicData> {
-    val list = mutableListOf<MonsterBasicData>()
-    forEach {
-        list.add(it.toMonsterBasicData())
-    }
-    return list
-}
+fun MonsterListDto.toMonsterList(): MonsterList = MonsterList(count = count, results = results)

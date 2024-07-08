@@ -1,6 +1,7 @@
 package com.example.dndhandbook.domain.models.race
 
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.google.gson.annotations.SerializedName
 
 data class RaceDetail(
@@ -15,7 +16,7 @@ data class RaceDetail(
     @SerializedName("language_desc")
     val languageDescription: String = "",
     @SerializedName("languages")
-    val languages: List<DefaultRaceObject> = emptyList(),
+    val languages: List<DefaultObject> = emptyList(),
     @SerializedName("name")
     val name: String = "",
     @SerializedName("size")
@@ -25,13 +26,13 @@ data class RaceDetail(
     @SerializedName("speed")
     val speed: Int = 0,
     @SerializedName("starting_proficiencies")
-    val startingProficiencies: List<DefaultRaceObject> = emptyList(),
+    val startingProficiencies: List<DefaultObject> = emptyList(),
     @SerializedName("starting_proficiency_options")
     val startingProficiencyOptions: StartingProficiencyOptions = StartingProficiencyOptions(),
     @SerializedName("subraces")
-    val subRaces: List<DefaultRaceObject> = emptyList(),
+    val subRaces: List<DefaultObject> = emptyList(),
     @SerializedName("traits")
-    val traits: List<DefaultRaceObject> = emptyList(),
+    val traits: List<DefaultObject> = emptyList(),
     @SerializedName("url")
     val url: String = "",
 )
@@ -54,18 +55,9 @@ fun RaceDetailDto.toRaceDetail(): RaceDetail = RaceDetail(
     url = url
 )
 
-data class DefaultRaceObject(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-)
-
 data class AbilityBonus(
     @SerializedName("ability_score")
-    val abilityScore: DefaultRaceObject = DefaultRaceObject(),
+    val abilityScore: DefaultObject = DefaultObject(),
     @SerializedName("bonus")
     val bonus: Int = 0,
 )
@@ -90,7 +82,7 @@ data class ProficiencyDetail(
 
 data class ProficiencyOption(
     @SerializedName("item")
-    val item: DefaultRaceObject = DefaultRaceObject(),
+    val item: DefaultObject = DefaultObject(),
     @SerializedName("option_type")
     val optionType: String = ""
 )
