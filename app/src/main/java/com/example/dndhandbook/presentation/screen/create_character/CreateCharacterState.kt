@@ -10,6 +10,7 @@ data class CreateCharacterState(
     val raceList: DefaultList = DefaultList(),
     val subRaceList: DefaultList = DefaultList(),
     val subRaceDetail: SubRaceDetail = SubRaceDetail(),
+    val classList: DefaultList = DefaultList(),
     val step: Int = Constants.CC_CHOSE_RACE,
     val isLoading: Boolean = false,
     val error: String = ""

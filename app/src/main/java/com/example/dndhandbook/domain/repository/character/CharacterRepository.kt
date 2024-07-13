@@ -12,5 +12,7 @@ interface CharacterRepository {
 
     suspend fun fetchSubRaceDetail(index: String): SubRaceDetailDto
 
-    suspend fun fetchSubRaces(index: String) : DefaultList
+    suspend fun fetchSubRaces(index: String): DefaultList
+
+    suspend fun fetchClasses(): DefaultList
 }
