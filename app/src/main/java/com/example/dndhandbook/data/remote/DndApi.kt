@@ -70,4 +70,7 @@ interface DndApi {
 
     @GET(ApiConstants.FETCH_CLASSES)
     suspend fun fetchClasses() : DefaultList?
+
+    @GET(ApiConstants.FETCH_CLASS_DETAIL)
+    suspend fun fetchClassDetail(@Path("index") classIndex: String): Any?
 }
