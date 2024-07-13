@@ -91,6 +91,7 @@ class CreateCharacterViewModel @Inject constructor(
     private fun getSubRaceList(index: String) {
         if (index.isEmpty()) {
             _state.value = _state.value.copy(step = Constants.CC_CHOSE_CLASS)
+            getClassList()
         } else {
             getSubRacesUseCase(index).onEach { result ->
                 when (result) {
@@ -121,10 +122,15 @@ class CreateCharacterViewModel @Inject constructor(
         getClassUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = _state.value.copy(classList = result.data ?: DefaultList())
+                    _state.value = _state.value.copy(
+                        classList = result.data ?: DefaultList(),
+                        isLoading = false
+                    )
                 }
 
-                is Resource.Error -> _state.value = _state.value.copy(error = result.message!!)
+                is Resource.Error -> _state.value =
+                    _state.value.copy(error = result.message!!, isLoading = false)
+
                 is Resource.Loading -> _state.value = _state.value.copy(isLoading = true)
             }
         }.launchIn(viewModelScope)

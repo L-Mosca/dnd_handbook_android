@@ -15,5 +15,6 @@ class ApiConstants {
 
         // Classes
         const val FETCH_CLASSES = "/api/classes"
+        const val FETCH_CLASS_DETAIL = "/api/classes/{index}"
     }
 }

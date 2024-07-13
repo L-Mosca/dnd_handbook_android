@@ -29,4 +29,8 @@ class CharacterRepositoryImpl @Inject constructor(private val dndApi: DndApi) :
     override suspend fun fetchClasses(): DefaultList {
         return dndApi.fetchClasses() ?: DefaultList()
     }
+
+    override suspend fun fetchClassDetail(index: String): Any {
+        return dndApi.fetchClassDetail(index) ?: Any()
+    }
 }

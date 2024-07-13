@@ -118,7 +118,10 @@ fun ClassesList(
     navController: NavHostController,
     viewModel: CreateCharacterViewModel
 ) {
-    RaceDataList(onItemSelected = {}, onItemInfoSelected = {}, raceList = classesList)
+    RaceDataList(onItemSelected = {},
+        onItemInfoSelected = { index ->
+        navController.navigate(Screen.ClassDetail.route + "/$index")
+    }, raceList = classesList)
 }
 
 @Preview
