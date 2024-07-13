@@ -25,4 +25,8 @@ class CharacterRepositoryImpl @Inject constructor(private val dndApi: DndApi) :
     override suspend fun fetchSubRaces(index: String): DefaultList {
         return dndApi.fetchSubRaceList(index) ?: DefaultList()
     }
+
+    override suspend fun fetchClasses(): DefaultList {
+        return dndApi.fetchClasses() ?: DefaultList()
+    }
 }

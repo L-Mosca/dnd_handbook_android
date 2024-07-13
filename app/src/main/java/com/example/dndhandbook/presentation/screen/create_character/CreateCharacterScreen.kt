@@ -79,6 +79,7 @@ fun HandleCreateCharacterStep(
         when (step) {
             Constants.CC_CHOSE_RACE -> RaceList(raceList, navController, viewModel)
             Constants.CC_CHOSE_SUB_RACE -> SubRaceList(subRaceList, navController, viewModel)
+            Constants.CC_CHOSE_CLASS -> ClassesList(classList, navController, viewModel)
         }
     }
 }
@@ -109,6 +110,15 @@ fun SubRaceList(
         },
         raceList = raceList
     )
+}
+
+@Composable
+fun ClassesList(
+    classesList: DefaultList,
+    navController: NavHostController,
+    viewModel: CreateCharacterViewModel
+) {
+    RaceDataList(onItemSelected = {}, onItemInfoSelected = {}, raceList = classesList)
 }
 
 @Preview

@@ -67,4 +67,7 @@ interface DndApi {
 
     @GET(ApiConstants.FETCH_SUB_RACE)
     suspend fun fetchSubRaceList(@Path("index") raceIndex: String): DefaultList?
+
+    @GET(ApiConstants.FETCH_CLASSES)
+    suspend fun fetchClasses() : DefaultList?
 }

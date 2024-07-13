@@ -9,6 +9,7 @@ import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.Character
 import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.use_case.get_classes.GetClassesUseCase
 import com.example.dndhandbook.domain.use_case.get_races.GetRacesUseCase
 import com.example.dndhandbook.domain.use_case.get_sub_races.GetSubRacesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateCharacterViewModel @Inject constructor(
     private val getRacesUseCase: GetRacesUseCase,
-    private val getSubRacesUseCase: GetSubRacesUseCase
+    private val getSubRacesUseCase: GetSubRacesUseCase,
+    private val getClassUseCase: GetClassesUseCase,
 ) :
     BaseViewModel() {
 
@@ -83,6 +85,7 @@ class CreateCharacterViewModel @Inject constructor(
         val character = _state.value.character ?: Character()
         character.subRace = race
         _state.value = _state.value.copy(step = Constants.CC_CHOSE_CLASS, character = character)
+        getClassList()
     }
 
     private fun getSubRaceList(index: String) {
@@ -112,5 +115,18 @@ class CreateCharacterViewModel @Inject constructor(
                 }
             }.launchIn(viewModelScope)
         }
+    }
+
+    private fun getClassList() {
+        getClassUseCase().onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = _state.value.copy(classList = result.data ?: DefaultList())
+                }
+
+                is Resource.Error -> _state.value = _state.value.copy(error = result.message!!)
+                is Resource.Loading -> _state.value = _state.value.copy(isLoading = true)
+            }
+        }.launchIn(viewModelScope)
     }
 }
