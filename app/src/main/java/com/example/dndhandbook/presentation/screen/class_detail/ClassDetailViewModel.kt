@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.Resource
+import com.example.dndhandbook.domain.models.class_detail.ClassDetail
 import com.example.dndhandbook.domain.use_case.get_class_detail.GetClassDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -33,7 +34,7 @@ class ClassDetailViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value =
-                        _state.value.copy(classDetail = result.data ?: Any(), isLoading = false)
+                        _state.value.copy(classDetail = result.data ?: ClassDetail(), isLoading = false)
                 }
 
                 is Resource.Loading -> _state.value = _state.value.copy(isLoading = true)

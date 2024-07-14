@@ -1,6 +1,7 @@
 package com.example.dndhandbook.domain.repository.character
 
 
+import com.example.dndhandbook.data.remote.dto.class_detail.ClassDetailDto
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
 import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultList
@@ -16,5 +17,5 @@ interface CharacterRepository {
 
     suspend fun fetchClasses(): DefaultList
 
-    suspend fun fetchClassDetail(index: String): Any
+    suspend fun fetchClassDetail(index: String): ClassDetailDto
 }
