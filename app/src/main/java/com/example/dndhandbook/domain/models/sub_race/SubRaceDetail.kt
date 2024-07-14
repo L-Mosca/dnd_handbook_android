@@ -2,8 +2,8 @@ package com.example.dndhandbook.domain.models.sub_race
 
 import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
 import com.example.dndhandbook.domain.models.race.AbilityBonus
-import com.example.dndhandbook.domain.models.race.DefaultRaceObject
 import com.example.dndhandbook.domain.models.race.ProficiencyOption
 import com.google.gson.annotations.SerializedName
 
@@ -16,9 +16,9 @@ data class SubRaceDetail(
     val race: DefaultObject = DefaultObject(),
     val abilityBonuses: List<AbilityBonus> = emptyList(),
     val startingProficiencies: List<DefaultObject> = emptyList(),
-    val languages: List<Language> = emptyList(),
+    val languages: List<DefaultProficiencyObject> = emptyList(),
     val languageOptions: LanguageOption = LanguageOption(),
-    val racialTraits: List<Language> = emptyList(),
+    val racialTraits: List<DefaultProficiencyObject> = emptyList(),
 ) {
 
     fun getMockData(): SubRaceDetail {
@@ -27,16 +27,22 @@ data class SubRaceDetail(
             desc = "Versatile and adaptable, half-elves are a mix of elf and human.",
             race = DefaultObject(name = "Elf"),
             abilityBonuses = listOf(
-                AbilityBonus(abilityScore = DefaultRaceObject(index = "CHA")),
-                AbilityBonus(abilityScore = DefaultRaceObject(index = "DEX"))
+                AbilityBonus(abilityScore = DefaultObject(index = "CHA")),
+                AbilityBonus(abilityScore = DefaultObject(index = "DEX"))
             ),
             startingProficiencies = listOf(DefaultObject(name = "Perception")),
-            languages = listOf(Language(name = "Common"), Language(name = "Elvish")),
+            languages = listOf(
+                DefaultProficiencyObject(name = "Common"),
+                DefaultProficiencyObject(name = "Elvish")
+            ),
             languageOptions = LanguageOption(
                 desc = "Choose one additional language",
-                from = From(options = listOf(ProficiencyOption(item = DefaultRaceObject(name = "Dwarvish"))))
+                from = From(options = listOf(ProficiencyOption(item = DefaultObject(name = "Dwarvish"))))
             ),
-            racialTraits = listOf(Language(name = "Darkvision"), Language(name = "Fey Ancestry"))
+            racialTraits = listOf(
+                DefaultProficiencyObject(name = "Darkvision"),
+                DefaultProficiencyObject(name = "Fey Ancestry")
+            )
         )
     }
 }
@@ -56,21 +62,10 @@ fun SubRaceDetailDto.toSubRaceDetail(): SubRaceDetail =
         racialTraits = racialTraits
     )
 
-data class Language(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("level")
-    val level: Int = 0,
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-)
-
-fun List<Language>.toDefaultRaceObject(): List<DefaultRaceObject> {
-    val list = mutableListOf<DefaultRaceObject>()
+fun List<DefaultProficiencyObject>.toDefaultRaceObject(): List<DefaultObject> {
+    val list = mutableListOf<DefaultObject>()
     this.forEach {
-        list.add(DefaultRaceObject(index = it.index, name = it.name, url = it.url))
+        list.add(DefaultObject(index = it.index, name = it.name, url = it.url))
     }
     return list
 }

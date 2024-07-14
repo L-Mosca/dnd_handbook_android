@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +20,7 @@ import com.example.dndhandbook.presentation.screen.monster_detail.components.bas
 
 @Composable
 fun RaceDetailData(raceDetail: RaceDetail = RaceDetail()) {
-    Column(
+    LazyColumn(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
@@ -31,16 +32,21 @@ fun RaceDetailData(raceDetail: RaceDetail = RaceDetail()) {
             val size = "$size. $sizeDescription"
             val languages = languages.joinToString(separator = ", .") { it.name }
             val languageDesc = "$languages.\n$languageDescription"
-            MonsterName(name = name)
-            Spacer(modifier = Modifier.height(40.dp))
-            Topic(title = "${stringResource(id = R.string.size)}.", desc = size)
-            Topic(title = "${stringResource(id = R.string.age)}.", desc = age)
-            Topic(title = "${stringResource(id = R.string.languages)}.", desc = languageDesc)
-            Topic(title = stringResource(id = R.string.alignment), desc = alignment)
-            Spacer(modifier = Modifier.height(30.dp))
-            RaceDetailBonuses(abilityBonuses)
-            Spacer(modifier = Modifier.height(30.dp))
-            RaceDetailTraits(traits)
+            item { MonsterName(name = name) }
+            item { Spacer(modifier = Modifier.height(40.dp)) }
+            item { Topic(title = "${stringResource(id = R.string.size)}.", desc = size) }
+            item { Topic(title = "${stringResource(id = R.string.age)}.", desc = age) }
+            item {
+                Topic(
+                    title = "${stringResource(id = R.string.languages)}.",
+                    desc = languageDesc
+                )
+            }
+            item { Topic(title = stringResource(id = R.string.alignment), desc = alignment) }
+            item { Spacer(modifier = Modifier.height(30.dp)) }
+            item { RaceDetailBonuses(abilityBonuses) }
+            item { Spacer(modifier = Modifier.height(30.dp)) }
+            item { RaceDetailTraits(traits) }
         }
     }
 }
