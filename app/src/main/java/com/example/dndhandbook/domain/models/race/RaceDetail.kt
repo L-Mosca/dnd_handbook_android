@@ -80,7 +80,7 @@ data class ProficiencyDetail(
     val proficiencyOptions: List<ProficiencyOption> = emptyList()
 )
 
-data class ProficiencyOption(
+data class  ProficiencyOption(
     @SerializedName("item")
     val item: DefaultObject = DefaultObject(),
     @SerializedName("option_type")

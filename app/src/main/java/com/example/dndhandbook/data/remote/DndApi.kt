@@ -1,6 +1,7 @@
 package com.example.dndhandbook.data.remote
 
 import com.example.dndhandbook.BuildConfig
+import com.example.dndhandbook.data.remote.dto.class_detail.ClassDetailDto
 import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
 import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
@@ -72,5 +73,5 @@ interface DndApi {
     suspend fun fetchClasses() : DefaultList?
 
     @GET(ApiConstants.FETCH_CLASS_DETAIL)
-    suspend fun fetchClassDetail(@Path("index") classIndex: String): Any?
+    suspend fun fetchClassDetail(@Path("index") classIndex: String): ClassDetailDto?
 }

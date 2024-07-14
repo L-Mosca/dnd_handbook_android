@@ -1,6 +1,7 @@
 package com.example.dndhandbook.data.repository.character
 
 import com.example.dndhandbook.data.remote.DndApi
+import com.example.dndhandbook.data.remote.dto.class_detail.ClassDetailDto
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
 import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultList
@@ -30,7 +31,7 @@ class CharacterRepositoryImpl @Inject constructor(private val dndApi: DndApi) :
         return dndApi.fetchClasses() ?: DefaultList()
     }
 
-    override suspend fun fetchClassDetail(index: String): Any {
-        return dndApi.fetchClassDetail(index) ?: Any()
+    override suspend fun fetchClassDetail(index: String): ClassDetailDto {
+        return dndApi.fetchClassDetail(index) ?: ClassDetailDto()
     }
 }
