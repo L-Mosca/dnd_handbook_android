@@ -1,21 +1,21 @@
-package com.example.dndhandbook.domain.use_case.get_monsters
+package com.example.dndhandbook.domain.use_case.get_classes
 
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.base.DefaultList
-import com.example.dndhandbook.domain.repository.monster.MonsterRepository
+import com.example.dndhandbook.domain.repository.character.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetMonstersUseCase @Inject constructor(private val repository: MonsterRepository) {
+class GetClassesUseCase @Inject constructor(private val repository: CharacterRepository) {
 
     operator fun invoke(): Flow<Resource<DefaultList>> = flow {
         try {
             emit(Resource.Loading())
-            val monsterList = repository.fetchAllMonsters()
-            emit(Resource.Success(data = monsterList))
+            val classList = repository.fetchClasses()
+            emit(Resource.Success(data = classList))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {

@@ -1,8 +1,8 @@
 package com.example.dndhandbook.data.remote.dto.sub_race
 
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
 import com.example.dndhandbook.domain.models.race.AbilityBonus
-import com.example.dndhandbook.domain.models.sub_race.Language
 import com.example.dndhandbook.domain.models.sub_race.LanguageOption
 import com.google.gson.annotations.SerializedName
 
@@ -24,9 +24,9 @@ data class SubRaceDetailDto(
     @SerializedName("starting_proficiencies")
     val startingProficiencies: List<DefaultObject> = emptyList(),
     @SerializedName("languages")
-    val languages: List<Language> = emptyList(),
+    val languages: List<DefaultProficiencyObject> = emptyList(),
     @SerializedName("language_options")
     val languageOptions: LanguageOption = LanguageOption(),
     @SerializedName("racial_traits")
-    val racialTraits: List<Language> = emptyList(),
+    val racialTraits: List<DefaultProficiencyObject> = emptyList(),
 )

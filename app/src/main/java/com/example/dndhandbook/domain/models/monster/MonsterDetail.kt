@@ -2,6 +2,8 @@ package com.example.dndhandbook.domain.models.monster
 
 import android.os.Parcelable
 import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
+import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -31,7 +33,7 @@ data class MonsterDetail(
     val actions: List<Actions> = emptyList(),
     val legendaryActions: List<LegendaryActions> = emptyList(),
     val challengeRating: Double = 0.0, // Possible values: value ≤ 21
-    val conditionImmunities: List<MonsterImmunity> = emptyList(),
+    val conditionImmunities: List<DefaultProficiencyObject> = emptyList(),
     val damageImmunities: List<String> = emptyList(),
     val damageResistances: List<String> = emptyList(),
     val damageVulnerabilities: List<String> = emptyList(),
@@ -84,23 +86,11 @@ fun MonsterDetailDto.toMonsterDetail(): MonsterDetail = MonsterDetail(
 )
 
 @Parcelize
-data class MonsterImmunity(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("level")
-    val level: Int = 0,
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-) : Parcelable
-
-@Parcelize
 data class MonsterProficiency(
     @SerializedName("value")
     val value: Int = 0,
     @SerializedName("proficiency")
-    val proficiency: Proficiency = Proficiency(),
+    val proficiency: DefaultObject = DefaultObject(),
 ) : Parcelable {
     fun isSavingThrow(): Boolean =
         value > -1 && proficiency.name.isNotEmpty() && proficiency.name.contains(
@@ -112,16 +102,6 @@ data class MonsterProficiency(
             "Skill"
         )
 }
-
-@Parcelize
-data class Proficiency(
-    @SerializedName("index")
-    val index: String = "",
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("url")
-    val url: String = "",
-) : Parcelable
 
 @Parcelize
 data class MonsterReaction(

@@ -5,8 +5,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.extractSkills
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.monster.MonsterProficiency
-import com.example.dndhandbook.domain.models.monster.Proficiency
 import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
 @Composable
@@ -27,13 +27,13 @@ fun MonsterSkillsPreview() {
     proficiencyList.add(
         MonsterProficiency(
             value = 11,
-            proficiency = Proficiency(name = "Skill: Perception")
+            proficiency = DefaultObject(name = "Skill: Perception")
         )
     )
     proficiencyList.add(
         MonsterProficiency(
             value = 7,
-            proficiency = Proficiency(name = "Skill: Stealth")
+            proficiency = DefaultObject(name = "Skill: Stealth")
         )
     )
     MonsterSkills(proficiencies = proficiencyList)

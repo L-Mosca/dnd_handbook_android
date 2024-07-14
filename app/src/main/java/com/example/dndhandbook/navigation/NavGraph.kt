@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
+import com.example.dndhandbook.presentation.screen.class_detail.ClassDetailScreen
 import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
@@ -89,6 +90,19 @@ fun NavGraph(navController: NavHostController) {
             })
         ) {
             SubRaceDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.ClassDetail.route}/{${Constants.CLASS_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.CLASS_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            ClassDetailScreen(navController = navController)
         }
     }
 }
