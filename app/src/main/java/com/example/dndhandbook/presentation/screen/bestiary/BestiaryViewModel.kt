@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.domain.models.monster.MonsterList
+import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.use_case.get_monsters.GetMonstersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -29,8 +29,8 @@ class BestiaryViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value = BestiaryState(
-                        monsterList = result.data ?: MonsterList(),
-                        filterList = result.data ?: MonsterList()
+                        monsterList = result.data ?: DefaultList(),
+                        filterList = result.data ?: DefaultList()
                     )
                 }
 
@@ -54,6 +54,6 @@ class BestiaryViewModel @Inject constructor(
             }
         }
 
-        _state.value = _state.value.copy(filterList = MonsterList(results = filteredList))
+        _state.value = _state.value.copy(filterList = DefaultList(results = filteredList))
     }
 }

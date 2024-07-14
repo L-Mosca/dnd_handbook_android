@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.monster.MonsterBasicData
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.base_components.BaseErrorMessage
 import com.example.dndhandbook.presentation.base_components.BaseLoading
@@ -57,7 +57,7 @@ fun BestiaryScreen(
 }
 
 @Composable
-fun BestiaryList(list: List<MonsterBasicData>, navController: NavHostController) {
+fun BestiaryList(list: List<DefaultObject>, navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
