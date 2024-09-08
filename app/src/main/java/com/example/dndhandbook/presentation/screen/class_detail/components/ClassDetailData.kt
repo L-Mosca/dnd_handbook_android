@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.dndhandbook.common.util.MockData
 import com.example.dndhandbook.domain.models.class_detail.ClassDetail
 import com.example.dndhandbook.presentation.screen.monster_detail.components.basic_data.MonsterName
 
@@ -26,7 +27,12 @@ fun ClassDetailData(classDetail: ClassDetail? = null) {
     ) {
         with(classDetail) {
             item { MonsterName(name = name) }
-
+            item { ClassDetailSkillsOptions(proficiencyChoices = proficiencyChoices) }
+            item { ClassDetailProficiencies(proficiencies = proficiencies) }
+            item { ClassDetailSavingThrows(savingThrows = savingThrows) }
+            item { ClassDetailStartingEquipment(startingEquipments = startingEquipment) }
+            item { ClassDetailStartingEquipmentOptions(startingEquipmentOptions = startingEquipmentOptions) }
+            item { ClassDetailSubClasses(subClasses = subclasses) }
         }
     }
 }
@@ -34,5 +40,6 @@ fun ClassDetailData(classDetail: ClassDetail? = null) {
 @Preview
 @Composable
 fun ClassDetailDataPreview() {
-    ClassDetailData()
+    val mockData = MockData.getClassDetail()
+    ClassDetailData(classDetail = mockData)
 }

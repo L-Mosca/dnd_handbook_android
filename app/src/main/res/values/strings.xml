@@ -30,4 +30,10 @@
 
     <!--Sub Race Detail-->
     <string name="start_proficiencies">Start Proficiencies</string>
+
+    <!--Class Detail Screen-->
+    <string name="class_proficiencies">Proficiencies</string>
+    <string name="starting_equipments">Starting Equipments</string>
+    <string name="starting_equipments_options">Starting Equipment Options</string>
+    <string name="sub_classes">Sub Classes</string>
 </resources>
