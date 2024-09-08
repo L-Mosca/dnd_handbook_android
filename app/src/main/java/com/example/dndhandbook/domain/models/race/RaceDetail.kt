@@ -2,6 +2,7 @@ package com.example.dndhandbook.domain.models.race
 
 import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.sub_race.From
 import com.google.gson.annotations.SerializedName
 
 data class RaceDetail(
@@ -80,9 +81,27 @@ data class ProficiencyDetail(
     val proficiencyOptions: List<ProficiencyOption> = emptyList()
 )
 
-data class  ProficiencyOption(
+data class ProficiencyOption(
     @SerializedName("item")
     val item: DefaultObject = DefaultObject(),
     @SerializedName("option_type")
-    val optionType: String = ""
+    val optionType: String = "",
+    @SerializedName("count")
+    val count: Int = 0,
+    @SerializedName("of")
+    val of: DefaultObject = DefaultObject(),
+    @SerializedName("choice")
+    val choice: Choice = Choice()
+
+)
+
+data class Choice(
+    @SerializedName("desc")
+    val desc: String = "",
+    @SerializedName("choose")
+    val choose: Int = 0,
+    @SerializedName("type")
+    val type: String = "",
+    @SerializedName("from")
+    val from: From = From(),
 )
