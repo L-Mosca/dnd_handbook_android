@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.getMonsterActionTitle
-import com.example.dndhandbook.domain.models.Actions
+import com.example.dndhandbook.domain.models.monster.Actions
 import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monster_detail.components.base_components.MonsterBasicText
 
