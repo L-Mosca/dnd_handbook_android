@@ -2,7 +2,7 @@ package com.example.dndhandbook.domain.models.attributes
 
 import androidx.annotation.ColorRes
 import com.example.dndhandbook.R
-import com.example.dndhandbook.domain.models.MonsterDetail
+import com.example.dndhandbook.domain.models.monster.MonsterDetail
 
 data class GameAttribute(
     val name: String = "",

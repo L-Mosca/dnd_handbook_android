@@ -1,8 +1,11 @@
 package com.example.dndhandbook.data.remote
 
 import com.example.dndhandbook.BuildConfig
-import com.example.dndhandbook.data.remote.dto.MonsterDetailDto
-import com.example.dndhandbook.data.remote.dto.MonsterListDto
+import com.example.dndhandbook.data.remote.dto.class_detail.ClassDetailDto
+import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
+import com.example.dndhandbook.data.remote.dto.race.RaceDetailDto
+import com.example.dndhandbook.data.remote.dto.sub_race.SubRaceDetailDto
+import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.remote.ApiConstants
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
@@ -29,6 +32,7 @@ interface DndApi {
                 .baseUrl(url)
                 .build()
         }
+
         private fun getOkHttpClient(): OkHttpClient {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
@@ -48,8 +52,26 @@ interface DndApi {
     }
 
     @GET(ApiConstants.FETCH_MONSTERS)
-    suspend fun fetchAllMonsters(): MonsterListDto?
+    suspend fun fetchAllMonsters(): DefaultList?
 
     @GET(ApiConstants.FETCH_MONSTER_DETAIL)
     suspend fun fetchMonsterDetail(@Path("index") monsterIndex: String): MonsterDetailDto?
+
+    @GET(ApiConstants.FETCH_RACE_LIST)
+    suspend fun fetchRaceList(): DefaultList?
+
+    @GET("${ApiConstants.FETCH_RACE_LIST}/{index}")
+    suspend fun fetchRaceDetail(@Path("index") raceIndex: String): RaceDetailDto?
+
+    @GET(ApiConstants.FETCH_SUB_RACE_DETAIL)
+    suspend fun fetchSubRaceDetail(@Path("index") subRaceIndex: String): SubRaceDetailDto?
+
+    @GET(ApiConstants.FETCH_SUB_RACE)
+    suspend fun fetchSubRaceList(@Path("index") raceIndex: String): DefaultList?
+
+    @GET(ApiConstants.FETCH_CLASSES)
+    suspend fun fetchClasses() : DefaultList?
+
+    @GET(ApiConstants.FETCH_CLASS_DETAIL)
+    suspend fun fetchClassDetail(@Path("index") classIndex: String): ClassDetailDto?
 }

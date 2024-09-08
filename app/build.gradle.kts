@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
@@ -14,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.dndhandbook"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -112,19 +113,20 @@ dependencies {
     implementation(libs.gson)
 
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation ("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.moshi:moshi-kotlin:1.11.0")
-    kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.11.0")
+    implementation (libs.retrofit)
+    implementation (libs.logging.interceptor)
+    implementation (libs.converter.moshi)
+    implementation (libs.retrofit2.kotlin.coroutines.adapter)
+    implementation (libs.converter.gson)
+    implementation (libs.moshi.kotlin)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt (libs.moshi.kotlin.codegen)
 
     // Stetho
-    implementation ("com.facebook.stetho:stetho:1.6.0")
-    implementation ("com.facebook.stetho:stetho-okhttp3:1.5.1")
+    implementation (libs.stetho)
+    implementation (libs.stetho.okhttp3)
 
-    implementation ("io.grpc:grpc-okhttp:1.32.2")
+    implementation (libs.grpc.okhttp)
 }
 
 kapt {

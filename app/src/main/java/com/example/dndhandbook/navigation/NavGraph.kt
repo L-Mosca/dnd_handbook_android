@@ -10,9 +10,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
+import com.example.dndhandbook.presentation.screen.class_detail.ClassDetailScreen
+import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
+import com.example.dndhandbook.presentation.screen.race_detail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
+import com.example.dndhandbook.presentation.screen.sub_race_detail.SubRaceDetailScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -50,6 +54,55 @@ fun NavGraph(navController: NavHostController) {
             })
         ) {
             MonsterDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = Screen.CreateCharacter.route,
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+        ) {
+            CreateCharacterScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.RaceDetail.route}/{${Constants.RACE_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.RACE_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            RaceDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.SubRaceDetail.route}/{${Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            SubRaceDetailScreen(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.ClassDetail.route}/{${Constants.CLASS_DETAIL_SCREEN_ARGUMENT}}",
+            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+            arguments = listOf(navArgument(Constants.CLASS_DETAIL_SCREEN_ARGUMENT) {
+                type = NavType.StringType
+            })
+        ) {
+            ClassDetailScreen(navController = navController)
         }
     }
 }

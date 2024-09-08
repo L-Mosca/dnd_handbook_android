@@ -1,8 +1,8 @@
 package com.example.dndhandbook.domain.use_case.get_monster
 
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.domain.models.MonsterDetail
-import com.example.dndhandbook.domain.models.toMonsterDetail
+import com.example.dndhandbook.domain.models.monster.MonsterDetail
+import com.example.dndhandbook.domain.models.monster.toMonsterDetail
 import com.example.dndhandbook.domain.repository.monster.MonsterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
