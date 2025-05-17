@@ -127,5 +127,5 @@ fun ClassesList(
 @Preview
 @Composable
 fun CreateCharacterPreview() {
-    CreateCharacterScreen(rememberNavController())
+    CreateCharacterScreen(rememberNavController(), hiltViewModel())
 }
