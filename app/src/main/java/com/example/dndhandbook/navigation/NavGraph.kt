@@ -14,6 +14,7 @@ import com.example.dndhandbook.presentation.screen.classDetail.ClassDetailScreen
 import com.example.dndhandbook.presentation.screen.createCharacter.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
 import com.example.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
+import com.example.dndhandbook.presentation.screen.newCollection.NewCollectionScreen
 import com.example.dndhandbook.presentation.screen.raceDetail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
 import com.example.dndhandbook.presentation.screen.subRaceDetail.SubRaceDetailScreen
@@ -23,13 +24,13 @@ import kotlinx.serialization.Serializable
 sealed class Route(val route: String)
 
 @Serializable
-object SplashRoute : Route(route = "splashRoute")
+data object SplashRoute : Route(route = "splashRoute")
 
 @Serializable
-object HomeRoute : Route(route = "homeRoute")
+data object HomeRoute : Route(route = "homeRoute")
 
 @Serializable
-object BestiaryRoute : Route(route = "bestiaryRoute")
+data object BestiaryRoute : Route(route = "bestiaryRoute")
 
 @Serializable
 data class MonsterDetailRoute(val monsterIndex: String) : Route(route = "monsterDetailRoute")
@@ -45,6 +46,9 @@ data class SubRaceDetailRoute(val subRaceIndex: String) : Route(route = "subRace
 
 @Serializable
 data class ClassDetailRoute(val classIndex: String) : Route(route = "classDetailRoute")
+
+@Serializable
+data object NewCollectionRoute : Route(route = "newCollectionRoute")
 
 @Composable
 fun NavGraph(navController: NavHostController) {
@@ -80,6 +84,10 @@ fun NavGraph(navController: NavHostController) {
 
         animatedComposable<ClassDetailRoute> {
             ClassDetailScreen(navController)
+        }
+
+        animatedComposable<NewCollectionRoute> {
+            NewCollectionScreen(navController)
         }
     }
 }
