@@ -1,108 +1,97 @@
 package com.example.dndhandbook.navigation
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
-import com.example.dndhandbook.presentation.screen.class_detail.ClassDetailScreen
-import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
+import com.example.dndhandbook.presentation.screen.classDetail.ClassDetailScreen
+import com.example.dndhandbook.presentation.screen.createCharacter.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
-import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
-import com.example.dndhandbook.presentation.screen.race_detail.RaceDetailScreen
+import com.example.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
+import com.example.dndhandbook.presentation.screen.raceDetail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
-import com.example.dndhandbook.presentation.screen.sub_race_detail.SubRaceDetailScreen
+import com.example.dndhandbook.presentation.screen.subRaceDetail.SubRaceDetailScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class Route(val route: String)
+
+@Serializable
+object SplashRoute : Route(route = "splashRoute")
+
+@Serializable
+object HomeRoute : Route(route = "homeRoute")
+
+@Serializable
+object BestiaryRoute : Route(route = "bestiaryRoute")
+
+@Serializable
+data class MonsterDetailRoute(val monsterIndex: String) : Route(route = "monsterDetailRoute")
+
+@Serializable
+data object CreateCharacterRoute : Route(route = "createCharacterRoute")
+
+@Serializable
+data class RaceDetailRoute(val raceIndex: String) : Route(route = "raceDetailRoute")
+
+@Serializable
+data class SubRaceDetailRoute(val subRaceIndex: String) : Route(route = "subRaceDetailRoute")
+
+@Serializable
+data class ClassDetailRoute(val classIndex: String) : Route(route = "classDetailRoute")
 
 @Composable
 fun NavGraph(navController: NavHostController) {
 
-    NavHost(navController = navController, startDestination = Screen.Splash.route) {
-        composable(route = Screen.Splash.route) {
-            SplashScreen(navController = navController)
+    NavHost(navController = navController, startDestination = SplashRoute) {
+        animatedComposable<SplashRoute> {
+            SplashScreen(navController)
         }
 
-        composable(
-            route = Screen.Home.route,
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }) {
-            HomeScreen(navController = navController)
+        animatedComposable<HomeRoute> {
+            HomeScreen(navController)
         }
 
-        composable(route = Screen.Bestiary.route,
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) }) {
-            BestiaryScreen(navController = navController)
+        animatedComposable<BestiaryRoute> {
+            BestiaryScreen(navController)
         }
 
-        composable(
-            route = "${Screen.MonsterDetail.route}/{${Constants.MONSTER_DETAIL_SCREEN_ARGUMENT}}",
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
-            arguments = listOf(navArgument(Constants.MONSTER_DETAIL_SCREEN_ARGUMENT) {
-                type = NavType.StringType
-            })
-        ) {
-            MonsterDetailScreen(navController = navController)
+        animatedComposable<MonsterDetailRoute> {
+            MonsterDetailScreen(navController)
         }
 
-        composable(
-            route = Screen.CreateCharacter.route,
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
-        ) {
-            CreateCharacterScreen(navController = navController)
+        animatedComposable<CreateCharacterRoute> {
+            CreateCharacterScreen(navController)
         }
 
-        composable(
-            route = "${Screen.RaceDetail.route}/{${Constants.RACE_DETAIL_SCREEN_ARGUMENT}}",
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
-            arguments = listOf(navArgument(Constants.RACE_DETAIL_SCREEN_ARGUMENT) {
-                type = NavType.StringType
-            })
-        ) {
-            RaceDetailScreen(navController = navController)
+        animatedComposable<RaceDetailRoute> {
+            RaceDetailScreen(navController)
         }
 
-        composable(
-            route = "${Screen.SubRaceDetail.route}/{${Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT}}",
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
-            arguments = listOf(navArgument(Constants.SUB_RACE_DETAIL_SCREEN_ARGUMENT) {
-                type = NavType.StringType
-            })
-        ) {
-            SubRaceDetailScreen(navController = navController)
+        animatedComposable<SubRaceDetailRoute> {
+            SubRaceDetailScreen(navController)
         }
 
-        composable(
-            route = "${Screen.ClassDetail.route}/{${Constants.CLASS_DETAIL_SCREEN_ARGUMENT}}",
-            enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
-            exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
-            popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
-            popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
-            arguments = listOf(navArgument(Constants.CLASS_DETAIL_SCREEN_ARGUMENT) {
-                type = NavType.StringType
-            })
-        ) {
-            ClassDetailScreen(navController = navController)
+        animatedComposable<ClassDetailRoute> {
+            ClassDetailScreen(navController)
         }
     }
+}
+
+inline fun <reified T> NavGraphBuilder.animatedComposable(
+    noinline content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
+) where T : Route {
+    composable<T>(
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+        content = content,
+    )
 }
