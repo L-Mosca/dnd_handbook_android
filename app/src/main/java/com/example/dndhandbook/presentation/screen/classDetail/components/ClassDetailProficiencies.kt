@@ -14,6 +14,7 @@ import com.example.dndhandbook.common.util.MockData
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
+import com.example.dndhandbook.presentation.ui.theme.Gold700
 
 @Composable
 fun ClassDetailProficiencies(proficiencies: List<DefaultObject> = emptyList()) {
@@ -23,10 +24,10 @@ fun ClassDetailProficiencies(proficiencies: List<DefaultObject> = emptyList()) {
         Spacer(Modifier.height(30.dp))
         MonsterBaseSubtitle(
             title = stringResource(id = R.string.class_proficiencies),
-            titleColor = R.color.gold_700,
-            lineColor = R.color.gold_700,
+            titleColor = Gold700,
+            lineColor = Gold700,
         )
-        proficiencies.forEach { BaseText(text = it.name, color = colorResource(R.color.gold_700)) }
+        proficiencies.forEach { BaseText(text = it.name, color = Gold700) }
     }
 }
 

@@ -5,7 +5,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -15,13 +14,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndhandbook.R
+import com.example.dndhandbook.presentation.ui.theme.Gray100
 
 @Composable
 fun BaseText(
     text: String,
     fontSize: TextUnit = 14.sp,
-    color: Color = colorResource(id = R.color.gray_100),
+    color: Color = Gray100,
     fontStyle: FontStyle = FontStyle.Normal,
     fontWeight: FontWeight = FontWeight.W600,
     textAlign: TextAlign = TextAlign.Start,
@@ -49,7 +48,7 @@ fun BaseText(
 fun DndText(
     text: String,
     fontSize: TextUnit = 14.sp,
-    color: Color = colorResource(id = R.color.gray_100),
+    color: Color = Gray100,
     fontStyle: FontStyle = FontStyle.Normal,
     fontWeight: FontWeight = FontWeight.W600,
     textAlign: TextAlign = TextAlign.Start,

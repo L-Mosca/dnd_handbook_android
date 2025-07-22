@@ -7,15 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.screen.raceDetail.components.RaceDetailData
 import com.example.dndhandbook.presentation.screen.raceDetail.components.RaceDetailError
 import com.example.dndhandbook.presentation.screen.raceDetail.components.RaceDetailLoading
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun RaceDetailScreen(
@@ -30,7 +29,7 @@ fun RaceDetailScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
-                    .background(colorResource(id = R.color.black_800)),
+                    .background(Black800),
             ) {
                 when {
                     isLoading -> RaceDetailLoading()

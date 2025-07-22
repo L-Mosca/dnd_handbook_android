@@ -8,6 +8,8 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Green800
+import com.example.dndhandbook.presentation.ui.theme.Green900
 
 @Composable
 fun SubRaceStartProficiencies(data: List<DefaultObject> = emptyList()) {
@@ -16,11 +18,11 @@ fun SubRaceStartProficiencies(data: List<DefaultObject> = emptyList()) {
     Column {
         MonsterBaseSubtitle(
             title = stringResource(id = R.string.start_proficiencies),
-            titleColor = R.color.green_800,
-            lineColor = R.color.green_800
+            titleColor = Green800,
+            lineColor = Green800
         )
         data.forEach { trait ->
-            MonsterBasicText(title = trait.name, description = "", titleColor = R.color.green_900)
+            MonsterBasicText(title = trait.name, description = "", titleColor = Green900)
         }
     }
 }

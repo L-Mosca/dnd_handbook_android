@@ -19,6 +19,7 @@ import com.example.dndhandbook.common.extensions_functions.getMonsterActionTitle
 import com.example.dndhandbook.domain.models.monster.Actions
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Gold700
 
 @Composable
 fun MonsterActions(actions: List<Actions> = emptyList()) {
@@ -47,7 +48,7 @@ fun MonsterActionItem(action: Actions) {
     val context = LocalContext.current
     MonsterBasicText(
         title = action.getMonsterActionTitle(context),
-        titleColor = R.color.gold_700,
+        titleColor = Gold700,
         description = action.desc,
     )
 }

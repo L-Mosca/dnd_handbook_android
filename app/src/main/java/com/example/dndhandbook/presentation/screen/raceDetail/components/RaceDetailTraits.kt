@@ -8,6 +8,8 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Gold800
+import com.example.dndhandbook.presentation.ui.theme.Gold900
 
 @Composable
 fun RaceDetailTraits(data: List<DefaultObject> = emptyList()) {
@@ -16,11 +18,11 @@ fun RaceDetailTraits(data: List<DefaultObject> = emptyList()) {
     Column {
         MonsterBaseSubtitle(
             title = stringResource(id = R.string.traits),
-            titleColor = R.color.gold_800,
-            lineColor = R.color.gold_800
+            titleColor = Gold800,
+            lineColor = Gold800
         )
         data.forEach { trait ->
-            MonsterBasicText(title = trait.name, description = "", titleColor = R.color.gold_900)
+            MonsterBasicText(title = trait.name, description = "", titleColor = Gold900)
         }
     }
 }

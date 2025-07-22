@@ -17,6 +17,7 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.monster.LegendaryActions
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Gold700
 
 @Composable
 fun MonsterLegendaryActions(legendaryActions: List<LegendaryActions> = emptyList()) {
@@ -34,7 +35,7 @@ fun MonsterLegendaryActions(legendaryActions: List<LegendaryActions> = emptyList
             legendaryActions.forEach { action ->
                 MonsterBasicText(
                     title = "${action.name}.",
-                    titleColor = R.color.gold_700,
+                    titleColor = Gold700,
                     description = action.desc
                 )
                 Spacer(modifier = Modifier.height(14.dp))

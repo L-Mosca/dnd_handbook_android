@@ -7,16 +7,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.sub_race.SubRaceDetail
 import com.example.dndhandbook.presentation.screen.raceDetail.components.RaceDetailLoading
 import com.example.dndhandbook.presentation.screen.subRaceDetail.components.SubRaceDetailData
 import com.example.dndhandbook.presentation.screen.subRaceDetail.components.SubRaceDetailError
 import com.example.dndhandbook.presentation.screen.subRaceDetail.components.SubRaceDetailLoading
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun SubRaceDetailScreen(
@@ -31,7 +30,7 @@ fun SubRaceDetailScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(colorResource(id = R.color.black_800))
+                .background(Black800)
         ) {
             when {
                 state.isLoading -> SubRaceDetailLoading()
@@ -51,7 +50,7 @@ fun SubRaceDetailScreenPreview() {
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
-                .background(colorResource(id = R.color.black_800)),
+                .background(Black800),
         ) {
             SubRaceDetailData(SubRaceDetail().getMockData())
         }

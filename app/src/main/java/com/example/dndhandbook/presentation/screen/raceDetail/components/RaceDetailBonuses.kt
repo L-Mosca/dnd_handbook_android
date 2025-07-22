@@ -8,6 +8,9 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.race.AbilityBonus
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Blue800
+import com.example.dndhandbook.presentation.ui.theme.Blue900
+import com.example.dndhandbook.presentation.ui.theme.Green800
 
 @Composable
 fun RaceDetailBonuses(data: List<AbilityBonus> = emptyList()) {
@@ -16,15 +19,15 @@ fun RaceDetailBonuses(data: List<AbilityBonus> = emptyList()) {
     Column {
         MonsterBaseSubtitle(
             title = stringResource(id = R.string.ability_bonuses),
-            titleColor = R.color.blue_800,
-            lineColor = R.color.blue_800
+            titleColor = Blue800,
+            lineColor = Blue800
         )
         data.forEach { bonus ->
             MonsterBasicText(
                 title = bonus.abilityScore.name,
                 description = bonus.bonus.toString(),
-                titleColor = R.color.blue_900,
-                descriptionColor = R.color.green_800
+                titleColor = Blue900,
+                descriptionColor = Green800
             )
         }
     }

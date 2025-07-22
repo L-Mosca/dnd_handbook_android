@@ -12,18 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.extensions_functions.getCreateCharacterTitle
 import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
 import com.example.dndhandbook.presentation.screen.createCharacter.components.CreateCharacterTitle
 import com.example.dndhandbook.presentation.screen.createCharacter.components.race.RaceDataList
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun CreateCharacterScreen(
@@ -48,7 +47,7 @@ fun CreateCharacterScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(colorResource(id = R.color.black_800)),
+                    .background(Black800),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
 
@@ -89,7 +88,8 @@ fun RaceList(
     navController: NavHostController,
     viewModel: CreateCharacterViewModel
 ) {
-    RaceDataList(raceList = raceList,
+    RaceDataList(
+        raceList = raceList,
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
             //navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
@@ -117,10 +117,12 @@ fun ClassesList(
     navController: NavHostController,
     viewModel: CreateCharacterViewModel
 ) {
-    RaceDataList(onItemSelected = {},
+    RaceDataList(
+        onItemSelected = {},
         onItemInfoSelected = { index ->
-        //navController.navigate(Screen.ClassDetail.route + "/$index")
-    }, raceList = classesList)
+            //navController.navigate(Screen.ClassDetail.route + "/$index")
+        }, raceList = classesList
+    )
 }
 
 @Preview
