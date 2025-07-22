@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.presentation.base_components.BaseText
+import com.example.dndhandbook.presentation.baseComponents.BaseText
 
 @Composable
 fun MonsterCard(monster: DefaultObject, index: Int, onItemClick: (DefaultObject) -> Unit) {

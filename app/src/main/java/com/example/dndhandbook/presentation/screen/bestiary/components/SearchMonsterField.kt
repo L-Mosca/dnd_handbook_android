@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.dndhandbook.R
-import com.example.dndhandbook.presentation.base_components.BaseSearchTextField
+import com.example.dndhandbook.presentation.baseComponents.BaseSearchTextField
 
 @Composable
 fun SearchMonsterField(onValueChanged: ((String) -> Unit)) {
