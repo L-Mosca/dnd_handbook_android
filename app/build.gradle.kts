@@ -121,4 +121,7 @@ dependencies {
     implementation (libs.stetho)
     implementation (libs.stetho.okhttp3)
     implementation (libs.grpc.okhttp)
+
+    // Preferences Data Store
+    implementation(libs.androidx.datastore.preferences)
 }
