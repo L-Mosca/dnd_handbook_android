@@ -88,7 +88,7 @@ fun ScreenPreview() {
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            Column(modifier = Modifier.background(colorResource(id = R.color.black_800))) {
+            Column(modifier = Modifier.background(Black800)) {
                 Spacer(modifier = Modifier.height(30.dp))
                 SearchMonsterField(onValueChanged = {})
                 Spacer(modifier = Modifier.height((-10).dp))
