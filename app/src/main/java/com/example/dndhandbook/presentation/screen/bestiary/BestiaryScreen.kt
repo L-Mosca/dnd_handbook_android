@@ -78,5 +78,22 @@ private fun navigateToMonsterDetail(monsterIndex: String, navController: NavHost
 @Preview
 @Composable
 fun ScreenPreview() {
-    BestiaryScreen(navController = rememberNavController())
+    val list = mutableListOf<DefaultObject>()
+    repeat(20) { list.add(DefaultObject(name = "Nome do Monstro")) }
+
+    Scaffold { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(modifier = Modifier.background(Black800)) {
+                Spacer(modifier = Modifier.height(30.dp))
+                SearchMonsterField(onValueChanged = {})
+                Spacer(modifier = Modifier.height((-10).dp))
+                BestiaryList(list = list, rememberNavController())
+            }
+        }
+    }
 }

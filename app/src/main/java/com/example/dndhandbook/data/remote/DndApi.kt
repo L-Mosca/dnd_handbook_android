@@ -45,8 +45,7 @@ interface DndApi {
                     var newRequest = chain.request()
                     newRequest = newRequest.newBuilder().build()
                     chain.proceed(newRequest)
-                }
-                .build()
+                }.build()
         }
     }
 
@@ -69,7 +68,7 @@ interface DndApi {
     suspend fun fetchSubRaceList(@Path("index") raceIndex: String): DefaultList?
 
     @GET(ApiConstants.FETCH_CLASSES)
-    suspend fun fetchClasses() : DefaultList?
+    suspend fun fetchClasses(): DefaultList?
 
     @GET(ApiConstants.FETCH_CLASS_DETAIL)
     suspend fun fetchClassDetail(@Path("index") classIndex: String): ClassDetailDto?

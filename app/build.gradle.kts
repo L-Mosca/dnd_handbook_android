@@ -120,6 +120,5 @@ dependencies {
     // Stetho
     implementation (libs.stetho)
     implementation (libs.stetho.okhttp3)
-
     implementation (libs.grpc.okhttp)
 }
