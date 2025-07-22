@@ -19,6 +19,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.extensions_functions.getCreateCharacterTitle
 import com.example.dndhandbook.domain.models.base.DefaultList
+import com.example.dndhandbook.navigation.ClassDetailRoute
+import com.example.dndhandbook.navigation.RaceDetailRoute
+import com.example.dndhandbook.navigation.SubRaceDetailRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
 import com.example.dndhandbook.presentation.screen.createCharacter.components.CreateCharacterTitle
 import com.example.dndhandbook.presentation.screen.createCharacter.components.race.RaceDataList
@@ -92,7 +95,7 @@ fun RaceList(
         raceList = raceList,
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
-            //navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
+            navController.navigate(RaceDetailRoute(raceIndex))
         })
 }
 
@@ -105,7 +108,7 @@ fun SubRaceList(
     RaceDataList(
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
-            //navController.navigate(Screen.SubRaceDetail.route + "/$raceIndex")
+            navController.navigate(SubRaceDetailRoute(raceIndex))
         },
         raceList = raceList
     )
@@ -119,8 +122,8 @@ fun ClassesList(
 ) {
     RaceDataList(
         onItemSelected = {},
-        onItemInfoSelected = { index ->
-            //navController.navigate(Screen.ClassDetail.route + "/$index")
+        onItemInfoSelected = { classIndex ->
+            navController.navigate(ClassDetailRoute(classIndex))
         }, raceList = classesList
     )
 }
