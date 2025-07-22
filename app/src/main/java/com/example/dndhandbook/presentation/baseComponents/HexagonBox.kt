@@ -1,6 +1,5 @@
 package com.example.dndhandbook.presentation.baseComponents
 
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -13,24 +12,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.dndhandbook.R
+import com.example.dndhandbook.presentation.ui.theme.Crimson700
+import com.example.dndhandbook.presentation.ui.theme.Transparent
 import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
 fun HexagonBox(
-    @ColorRes color: Int = R.color.transparent,
-    @ColorRes borderColor: Int = R.color.crimson_700,
+    color: Color = Transparent,
+    borderColor: Color = Crimson700,
     borderWidth: Double = 4.0,
     internalPadding: Dp = 20.dp,
     items: @Composable () -> Unit
 ) {
-    val backgroundColor = colorResource(id = color)
-    val border = colorResource(id = borderColor)
+    val backgroundColor = color
+    val border = borderColor
 
     Box(
         contentAlignment = Alignment.Center,
@@ -74,7 +73,7 @@ fun DrawScope.drawHexagon(backgroundColor: Color, borderColor: Color, borderWidt
 @Preview
 @Composable
 fun PreviewHexagonBox() {
-    HexagonBox(color = R.color.transparent, borderWidth = 4.0) {
+    HexagonBox(color = Transparent, borderWidth = 4.0) {
         BaseText(text = "20")
     }
 }

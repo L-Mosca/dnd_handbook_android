@@ -17,7 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +26,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
+import com.example.dndhandbook.presentation.ui.theme.Black600
+import com.example.dndhandbook.presentation.ui.theme.Black700
+import com.example.dndhandbook.presentation.ui.theme.Crimson600
+import com.example.dndhandbook.presentation.ui.theme.Crimson700
+import com.example.dndhandbook.presentation.ui.theme.Crimson800
+import com.example.dndhandbook.presentation.ui.theme.Gold700
+import com.example.dndhandbook.presentation.ui.theme.Gray400
+import com.example.dndhandbook.presentation.ui.theme.Gray500
+import com.example.dndhandbook.presentation.ui.theme.Transparent
 
 @Composable
 fun BaseSearchTextField(
@@ -49,11 +57,11 @@ fun BaseSearchTextField(
         label = {
             BaseText(
                 text = hintText,
-                color = colorResource(id = R.color.gray_500)
+                color = Gray500,
             )
         },
         textStyle = TextStyle.Default.copy(
-            color = colorResource(id = R.color.crimson_800),
+            color = Crimson800,
             fontSize = 18.sp,
             fontWeight = FontWeight.W600
         ),
@@ -62,21 +70,21 @@ fun BaseSearchTextField(
             .fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = colorResource(id = R.color.black_700),
-            focusedContainerColor = colorResource(id = R.color.black_700),
-            disabledContainerColor = colorResource(id = R.color.black_600),
-            errorContainerColor = colorResource(id = R.color.black_700),
-            unfocusedTextColor = colorResource(id = R.color.gray_400),
-            focusedTextColor = colorResource(id = R.color.crimson_700),
-            disabledTextColor = colorResource(id = R.color.gray_500),
-            errorTextColor = colorResource(id = R.color.crimson_600),
-            cursorColor = colorResource(id = R.color.gold_700),
-            unfocusedTrailingIconColor = colorResource(id = R.color.gray_500),
-            focusedTrailingIconColor = colorResource(id = R.color.crimson_800),
-            unfocusedIndicatorColor = colorResource(id = R.color.transparent),
-            disabledIndicatorColor = colorResource(id = R.color.transparent),
-            focusedIndicatorColor = colorResource(id = R.color.transparent),
-            errorIndicatorColor = colorResource(id = R.color.transparent),
+            unfocusedContainerColor = Black700,
+            focusedContainerColor = Black700,
+            disabledContainerColor = Black600,
+            errorContainerColor = Black700,
+            unfocusedTextColor = Gray400,
+            focusedTextColor = Crimson700,
+            disabledTextColor = Gray500,
+            errorTextColor = Crimson600,
+            cursorColor = Gold700,
+            unfocusedTrailingIconColor = Gray500,
+            focusedTrailingIconColor = Crimson800,
+            unfocusedIndicatorColor = Transparent,
+            disabledIndicatorColor = Transparent,
+            focusedIndicatorColor = Transparent,
+            errorIndicatorColor = Transparent,
         ),
         trailingIcon = {
             Icon(

@@ -11,11 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.dndhandbook.R
 import com.example.dndhandbook.common.extensions_functions.extractTitle
 import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
 import com.example.dndhandbook.domain.models.monster.SpecialAbilityUsage
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
+import com.example.dndhandbook.presentation.ui.theme.Gold700
 
 @Composable
 fun MonsterSpecialAbilities(specialAbilities: List<MonsterSpecialAbility> = emptyList()) {
@@ -41,7 +41,7 @@ fun MonsterSpecialAbilities(specialAbilities: List<MonsterSpecialAbility> = empt
 fun MonsterSpecialAbility(ability: MonsterSpecialAbility) {
     MonsterBasicText(
         title = ability.extractTitle(),
-        titleColor = R.color.gold_700,
+        titleColor = Gold700,
         description = ability.desc,
     )
 }

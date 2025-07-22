@@ -13,19 +13,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
 import com.example.dndhandbook.presentation.baseComponents.BaseLoading
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 import com.example.dndhandbook.presentation.screen.bestiary.components.SearchMonsterField
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun BestiaryScreen(
@@ -41,7 +40,7 @@ fun BestiaryScreen(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center
         ) {
-            Column(modifier = Modifier.background(colorResource(id = R.color.black_800))) {
+            Column(modifier = Modifier.background(Black800)) {
                 Spacer(modifier = Modifier.height(30.dp))
                 SearchMonsterField(onValueChanged = { inputText ->
                     viewModel.filterMonster(inputText)
@@ -61,7 +60,7 @@ fun BestiaryList(list: List<DefaultObject>, navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.black_800))
+            .background(Black800)
     ) {
         itemsIndexed(list) { index, monster ->
             MonsterCard(

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,6 +14,8 @@ import com.example.dndhandbook.domain.models.sub_race.From
 import com.example.dndhandbook.domain.models.sub_race.LanguageOption
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBaseSubtitle
+import com.example.dndhandbook.presentation.ui.theme.Blue500
+import com.example.dndhandbook.presentation.ui.theme.Blue800
 
 @Composable
 fun ClassDetailSkillsOptions(proficiencyChoices: List<LanguageOption> = emptyList()) {
@@ -35,11 +36,11 @@ fun OptionList(option: From) {
     Column {
         MonsterBaseSubtitle(
             title = stringResource(id = R.string.ability_bonuses),
-            titleColor = R.color.blue_800,
-            lineColor = R.color.blue_800,
+            titleColor = Blue800,
+            lineColor = Blue800,
         )
         option.options.forEach { proficiency ->
-            BaseText(proficiency.item.name, color = colorResource(id = R.color.blue_500))
+            BaseText(proficiency.item.name, color = Blue500)
         }
     }
 }

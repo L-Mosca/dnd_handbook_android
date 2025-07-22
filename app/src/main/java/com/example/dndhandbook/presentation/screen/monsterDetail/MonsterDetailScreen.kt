@@ -12,12 +12,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.attributes.GameAttribute
 import com.example.dndhandbook.domain.models.attributes.buildMockList
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
@@ -49,6 +47,7 @@ import com.example.dndhandbook.presentation.screen.monsterDetail.components.skil
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSkillsPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilities
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilitiesPreview
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun MonsterDetailScreen(
@@ -64,7 +63,7 @@ fun MonsterDetailScreen(
             contentAlignment = Alignment.TopCenter,
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(id = R.color.black_800))
+                .background(Black800)
                 .padding(innerPadding)
         ) {
             LazyColumn(
@@ -105,7 +104,7 @@ fun ScreenPreview() {
             contentAlignment = Alignment.TopCenter,
             modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(id = R.color.black_800))
+                .background(Black800)
                 .padding(innerPadding)
         ) {
             LazyColumn(

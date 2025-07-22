@@ -6,13 +6,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.baseComponents.BaseText
+import com.example.dndhandbook.presentation.ui.theme.Crimson800
 
 @Composable
 fun CreateCharacterTitle(title: String = "") {
@@ -26,7 +25,7 @@ fun CreateCharacterTitle(title: String = "") {
             text = title,
             fontSize = 24.sp,
             fontWeight = FontWeight.W600,
-            color = colorResource(id = R.color.crimson_800),
+            color = Crimson800,
         )
     }
 }

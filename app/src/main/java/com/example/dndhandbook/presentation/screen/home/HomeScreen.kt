@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,6 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.navigation.BestiaryRoute
 import com.example.dndhandbook.navigation.CreateCharacterRoute
+import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
@@ -38,7 +38,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(colorResource(id = R.color.black_800)),
+                .background(Black800),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

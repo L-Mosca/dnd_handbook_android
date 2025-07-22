@@ -14,15 +14,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.baseComponents.BaseText
+import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.presentation.ui.theme.Black900
+import com.example.dndhandbook.presentation.ui.theme.Crimson800
 
 @Composable
 fun RaceItem(
@@ -31,8 +32,7 @@ fun RaceItem(
     raceData: DefaultObject = DefaultObject(),
     index: Int = 0
 ) {
-    val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
-    val color = colorResource(id = colorResourceId)
+    val color = if (index % 2 == 0) Black800 else Black900
 
     Box(modifier = Modifier.background(color)) {
         Row(
@@ -53,7 +53,7 @@ fun RaceItem(
             Icon(
                 imageVector = Icons.Outlined.Info,
                 contentDescription = raceData.name,
-                tint = colorResource(id = R.color.crimson_800),
+                tint = Crimson800,
                 modifier = Modifier
                     .size(width = 30.dp, height = 30.dp)
                     .clickable {
