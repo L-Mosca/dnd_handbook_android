@@ -21,7 +21,6 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.extensions_functions.getCreateCharacterTitle
 import com.example.dndhandbook.domain.models.base.DefaultList
-import com.example.dndhandbook.navigation.Screen
 import com.example.dndhandbook.presentation.base_components.BaseErrorMessage
 import com.example.dndhandbook.presentation.screen.create_character.components.CreateCharacterTitle
 import com.example.dndhandbook.presentation.screen.create_character.components.race.RaceDataList
@@ -93,7 +92,7 @@ fun RaceList(
     RaceDataList(raceList = raceList,
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
-            navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
+            //navController.navigate(Screen.RaceDetail.route + "/$raceIndex")
         })
 }
 
@@ -106,7 +105,7 @@ fun SubRaceList(
     RaceDataList(
         onItemSelected = { viewModel.nextStep(it) },
         onItemInfoSelected = { raceIndex ->
-            navController.navigate(Screen.SubRaceDetail.route + "/$raceIndex")
+            //navController.navigate(Screen.SubRaceDetail.route + "/$raceIndex")
         },
         raceList = raceList
     )
@@ -120,7 +119,7 @@ fun ClassesList(
 ) {
     RaceDataList(onItemSelected = {},
         onItemInfoSelected = { index ->
-        navController.navigate(Screen.ClassDetail.route + "/$index")
+        //navController.navigate(Screen.ClassDetail.route + "/$index")
     }, raceList = classesList)
 }
 

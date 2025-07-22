@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.navigation.Screen
+import com.example.dndhandbook.navigation.HomeRoute
+import com.example.dndhandbook.navigation.SplashRoute
 import com.example.dndhandbook.presentation.ui.theme.DNDHandbookTheme
 import kotlinx.coroutines.delay
 
@@ -34,8 +35,8 @@ fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel = 
 }
 
 private fun goToHomeScreen(navController: NavHostController) {
-    navController.navigate(Screen.Home.route) {
-        popUpTo(Screen.Splash.route) { inclusive = true }
+    navController.navigate(HomeRoute) {
+        popUpTo(SplashRoute) { inclusive = true }
     }
 }
 

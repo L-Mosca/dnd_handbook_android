@@ -7,16 +7,17 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
     namespace = "com.example.dndhandbook"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.dndhandbook"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
