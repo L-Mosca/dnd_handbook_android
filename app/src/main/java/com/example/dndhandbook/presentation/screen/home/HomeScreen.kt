@@ -42,7 +42,8 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CreateCharacterButton(navController = navController)
+            // Remove
+            //CreateCharacterButton(navController = navController)
             BestiaryButton(navController = navController)
         }
     }
