@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.base.DefaultList
-import com.example.dndhandbook.domain.use_case.get_monsters.GetMonstersUseCase
+import com.example.dndhandbook.domain.useCase.getMonsters.GetMonstersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

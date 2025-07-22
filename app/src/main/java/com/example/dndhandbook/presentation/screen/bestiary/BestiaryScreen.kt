@@ -22,8 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
-import com.example.dndhandbook.presentation.base_components.BaseErrorMessage
-import com.example.dndhandbook.presentation.base_components.BaseLoading
+import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
+import com.example.dndhandbook.presentation.baseComponents.BaseLoading
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 import com.example.dndhandbook.presentation.screen.bestiary.components.SearchMonsterField
 

@@ -10,13 +10,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.dndhandbook.presentation.screen.bestiary.BestiaryScreen
-import com.example.dndhandbook.presentation.screen.class_detail.ClassDetailScreen
-import com.example.dndhandbook.presentation.screen.create_character.CreateCharacterScreen
+import com.example.dndhandbook.presentation.screen.classDetail.ClassDetailScreen
+import com.example.dndhandbook.presentation.screen.createCharacter.CreateCharacterScreen
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
-import com.example.dndhandbook.presentation.screen.monster_detail.MonsterDetailScreen
-import com.example.dndhandbook.presentation.screen.race_detail.RaceDetailScreen
+import com.example.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
+import com.example.dndhandbook.presentation.screen.raceDetail.RaceDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
-import com.example.dndhandbook.presentation.screen.sub_race_detail.SubRaceDetailScreen
+import com.example.dndhandbook.presentation.screen.subRaceDetail.SubRaceDetailScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
