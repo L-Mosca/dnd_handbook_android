@@ -9,20 +9,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.presentation.base_components.BaseText
+import com.example.dndhandbook.presentation.baseComponents.BaseText
+import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.presentation.ui.theme.Black900
+import com.example.dndhandbook.presentation.ui.theme.Crimson800
 
 @Composable
 fun MonsterCard(monster: DefaultObject, index: Int, onItemClick: (DefaultObject) -> Unit) {
@@ -31,8 +32,8 @@ fun MonsterCard(monster: DefaultObject, index: Int, onItemClick: (DefaultObject)
 
 @Composable
 fun MonsterLayout(monster: DefaultObject, index: Int, onItemCLick: (DefaultObject) -> Unit) {
-    val colorResourceId = if (index % 2 == 0) R.color.black_800 else R.color.black_900
-    val color = colorResource(id = colorResourceId)
+    val colorResourceId = if (index % 2 == 0) Black800 else Black900
+    val color = colorResourceId
     val paddingTop = if (index == 0) 50.dp else 20.dp
     monster.apply {
         Box(modifier = Modifier.background(color)) {
@@ -53,9 +54,9 @@ fun MonsterLayout(monster: DefaultObject, index: Int, onItemCLick: (DefaultObjec
                 )
 
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowRight,
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = monster.name,
-                    tint = colorResource(id = R.color.crimson_800),
+                    tint = Crimson800,
                     modifier = Modifier.size(width = 30.dp, height = 30.dp)
                 )
             }
