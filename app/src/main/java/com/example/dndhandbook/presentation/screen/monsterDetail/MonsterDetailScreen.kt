@@ -36,6 +36,7 @@ import com.example.dndhandbook.presentation.screen.monsterDetail.components.attr
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSensesPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeed
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeedPreview
+import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterImage
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterName
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterNamePreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterSubtitle
@@ -76,7 +77,7 @@ fun MonsterDetailScreen(
                 with(monsterDetail) {
                     item { MonsterName(name) }
                     item { MonsterSubtitle(size = size, type = type, alignment = alignment) }
-                    item { Spacer(modifier = Modifier.height(30.dp)) }
+                    item { MonsterImage(url = image) }
                     item { MonsterArmorClass(armorClass) }
                     item { MonsterHitPoints(hitPoints.toString(), hitDice) }
                     item { MonsterSpeed(speed) }
