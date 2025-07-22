@@ -17,7 +17,7 @@ import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
 import com.example.dndhandbook.domain.models.race.AbilityBonus
 import com.example.dndhandbook.domain.models.sub_race.SubRaceDetail
 import com.example.dndhandbook.domain.models.sub_race.toDefaultRaceObject
-import com.example.dndhandbook.presentation.baseComponents.DndText
+import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterBasicText
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterName
 import com.example.dndhandbook.presentation.screen.raceDetail.components.RaceDetailBonuses
@@ -39,7 +39,7 @@ fun SubRaceDetailData(subRaceData: SubRaceDetail? = SubRaceDetail()) {
 
             item { MonsterName(name = name) }
             item { Spacer(modifier = Modifier.height(40.dp)) }
-            item { DndText(text = desc, fontSize = 18.sp) }
+            item { BaseText(text = desc, fontSize = 18.sp) }
             item { Spacer(modifier = Modifier.height(30.dp)) }
             item { SubRaceLanguages(languages) }
             item { SubRaceAbilityBonuses(bonuses = abilityBonuses) }
