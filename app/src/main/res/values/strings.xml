@@ -12,6 +12,7 @@
     <string name="actions">Actions</string>
     <string name="recharge">Recharge</string>
     <string name="legendary_actions">Legendary Actions</string>
+    <string name="network_image">imagem da internet</string>
 
     <!--Bestiary Screen-->
     <string name="search_monster">Find Monster</string>
