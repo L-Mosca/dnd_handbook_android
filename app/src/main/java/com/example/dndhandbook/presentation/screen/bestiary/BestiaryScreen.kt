@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +33,7 @@ fun BestiaryScreen(
     navController: NavHostController,
     viewModel: BestiaryViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold { innerPadding ->
         Box(
@@ -46,11 +48,11 @@ fun BestiaryScreen(
                     viewModel.filterMonster(inputText)
                 })
                 Spacer(modifier = Modifier.height((-10).dp))
-                BestiaryList(list = state.filterList.results, navController)
+                BestiaryList(list = uiState.filterList.results, navController)
             }
 
-            if (state.error.isNotBlank()) BaseErrorMessage(state.error)
-            if (state.isLoading) BaseLoading()
+            if (uiState.error.isNotBlank()) BaseErrorMessage(uiState.error)
+            if (uiState.isLoading) BaseLoading()
         }
     }
 }

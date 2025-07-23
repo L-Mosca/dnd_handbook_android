@@ -39,7 +39,7 @@
     <string name="sub_classes">Sub Classes</string>
 
     <!--Monster List Screen-->
-    <string name="create_new_collection">Nova coleção</string>
-    <string name="collection_name">Nome da coleção</string>
-    <string name="add_monster">Adicionar criatura</string>
+    <string name="create_new_collection">New collection</string>
+    <string name="collection_name">Collection name</string>
+    <string name="add_monster">Add creature</string>
 </resources>
