@@ -1,8 +1,5 @@
 package com.example.dndhandbook.presentation.screen.monsterDetail
 
-import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
@@ -12,8 +9,12 @@ import com.example.dndhandbook.domain.models.monster.MonsterDetail
 import com.example.dndhandbook.domain.useCase.getMonster.GetMonsterUseCase
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +23,8 @@ class MonsterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val _state = mutableStateOf(MonsterDetailState())
-    val state: State<MonsterDetailState> = _state
+    private val _uiState = MutableStateFlow(MonsterDetailState())
+    val uiState: StateFlow<MonsterDetailState> = _uiState.asStateFlow()
 
     private var isFromCollection = false
     private var monsterIndex: String
@@ -33,8 +34,7 @@ class MonsterDetailViewModel @Inject constructor(
             isFromCollection = it.isFromCollection
             monsterIndex = it.monsterIndex
 
-            Log.e("test", "veio da coleção: $isFromCollection")
-            _state.value = _state.value.copy(isFromCollection = isFromCollection)
+            _uiState.update { it.copy(isFromCollection = isFromCollection) }
 
             getMonsterDetail(it.monsterIndex)
         }
@@ -44,16 +44,15 @@ class MonsterDetailViewModel @Inject constructor(
         getMonsterDetailUseCase(monsterIndex).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value =
-                        MonsterDetailState(monsterDetail = result.data ?: MonsterDetail())
+                    _uiState.update { it.copy(monsterDetail = result.data ?: MonsterDetail()) }
                 }
 
                 is Resource.Loading -> {
-                    _state.value = MonsterDetailState(isLoading = true)
+                    _uiState.update { it.copy(isLoading = true) }
                 }
 
                 is Resource.Error -> {
-                    _state.value = MonsterDetailState(error = result.message!!)
+                    _uiState.update { it.copy(error = result.message!!) }
                 }
             }
         }.launchIn(viewModelScope)
