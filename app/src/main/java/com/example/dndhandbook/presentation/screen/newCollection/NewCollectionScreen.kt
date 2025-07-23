@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
+import com.example.dndhandbook.navigation.MonsterListRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
@@ -27,7 +28,7 @@ fun NewCollectionScreen(
     NewCollection(
         onBackPressed = { navController.popBackStack() },
         onNameChange = { },
-        onAddMonsterPressed = { },
+        onAddMonsterPressed = { navController.navigate(MonsterListRoute) },
     )
 }
 

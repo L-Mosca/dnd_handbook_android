@@ -72,7 +72,7 @@ fun BestiaryList(list: List<DefaultObject>, navController: NavHostController) {
 }
 
 private fun navigateToMonsterDetail(monsterIndex: String, navController: NavHostController) {
-    navController.navigate(MonsterDetailRoute(monsterIndex))
+    navController.navigate(MonsterDetailRoute(monsterIndex, false))
 }
 
 @Preview
