@@ -40,4 +40,6 @@
 
     <!--Monster List Screen-->
     <string name="create_new_collection">Nova coleção</string>
+    <string name="collection_name">Nome da coleção</string>
+    <string name="add_monster">Adicionar criatura</string>
 </resources>

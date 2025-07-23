@@ -1,9 +1,11 @@
 package com.example.dndhandbook.presentation.baseComponents
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,42 +24,20 @@ fun BaseButton(
     cornerRadius: Dp = 8.dp,
     colors: Color = Crimson800,
     text: String,
-    fontSize: TextUnit = 14.sp,
+    fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.W600,
     fontColor: Color = Gray100,
-) {
-    DndButton(
-        onClick = onClick,
-        text = text,
-        enabled = enabled,
-        elevation = elevation,
-        cornerRadius = cornerRadius,
-        colors = colors,
-        fontSize = fontSize,
-        fontWeight = fontWeight,
-        fontColor = fontColor
-    )
-}
-
-
-@Composable
-fun DndButton(
-    onClick: () -> Unit,
-    enabled: Boolean = true,
-    elevation: Dp = 2.dp,
-    cornerRadius: Dp = 8.dp,
-    colors: Color = Crimson800,
-    text: String,
-    fontSize: TextUnit = 14.sp,
-    fontWeight: FontWeight = FontWeight.W600,
-    fontColor: Color = Gray100,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(vertical = 14.dp),
 ) {
     Button(
         onClick = onClick,
         enabled = enabled,
         elevation = ButtonDefaults.buttonElevation(defaultElevation = elevation),
         shape = RoundedCornerShape(cornerRadius),
-        colors = ButtonDefaults.buttonColors(containerColor = colors)
+        colors = ButtonDefaults.buttonColors(containerColor = colors),
+        modifier = modifier,
+        contentPadding = contentPadding,
     ) {
         BaseText(text = text, fontSize = fontSize, fontWeight = fontWeight, color = fontColor)
     }
@@ -66,5 +46,5 @@ fun DndButton(
 @Preview
 @Composable
 fun BaseButtonPreview() {
-    DndButton(onClick = {}, text = "Texto do botão")
+    BaseButton(onClick = {}, text = "Texto do botão")
 }
