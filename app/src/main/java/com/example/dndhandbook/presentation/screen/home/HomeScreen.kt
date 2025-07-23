@@ -26,8 +26,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.navigation.BestiaryRoute
-import com.example.dndhandbook.navigation.NewCollectionRoute
+import com.example.dndhandbook.navigation.BestiaryNavGraph
+import com.example.dndhandbook.navigation.CreateCharacterNavGraph
+import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.ui.theme.Black800
 
@@ -49,14 +50,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Remove
-            //CreateCharacterButton(navController = navController)
+            CreateCharacterButton(navController = navController)
             BestiaryButton(navController = navController)
             Spacer(Modifier.height(20.dp))
             BaseText(
                 text = stringResource(R.string.create_new_collection),
                 fontSize = 20.sp,
                 modifier = Modifier
-                    .clickable { navController.navigate(NewCollectionRoute) }
+                    .clickable { navController.navigate(NewCollectionNavGraph) }
             )
         }
     }
@@ -68,19 +69,19 @@ fun BestiaryButton(navController: NavHostController) {
         painter = painterResource(id = R.drawable.img_bestiary),
         contentDescription = "image from drawable resource",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.clickable { navController.navigate(BestiaryRoute) },
+        modifier = Modifier.clickable { navController.navigate(BestiaryNavGraph) },
     )
 }
 
-/*@Composable
+@Composable
 fun CreateCharacterButton(navController: NavHostController) {
     Image(
         painter = painterResource(id = R.drawable.img_create_character),
         contentDescription = "image from drawable resource",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.clickable { navController.navigate(CreateCharacterRoute) },
+        modifier = Modifier.clickable { navController.navigate(CreateCharacterNavGraph) },
     )
-}*/
+}
 
 @Preview
 @Composable
