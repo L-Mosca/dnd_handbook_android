@@ -27,7 +27,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.navigation.BestiaryNavGraph
-import com.example.dndhandbook.navigation.CreateCharacterNavGraph
 import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.ui.theme.Black800
@@ -49,8 +48,7 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Remove
-            CreateCharacterButton(navController = navController)
+            //CreateCharacterButton(navController = navController)
             BestiaryButton(navController = navController)
             Spacer(Modifier.height(20.dp))
             BaseText(
@@ -73,7 +71,7 @@ fun BestiaryButton(navController: NavHostController) {
     )
 }
 
-@Composable
+/*@Composable
 fun CreateCharacterButton(navController: NavHostController) {
     Image(
         painter = painterResource(id = R.drawable.img_create_character),
@@ -81,7 +79,7 @@ fun CreateCharacterButton(navController: NavHostController) {
         contentScale = ContentScale.Fit,
         modifier = Modifier.clickable { navController.navigate(CreateCharacterNavGraph) },
     )
-}
+}*/
 
 @Preview
 @Composable
