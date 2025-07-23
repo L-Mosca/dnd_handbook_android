@@ -27,7 +27,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.navigation.BestiaryRoute
-import com.example.dndhandbook.navigation.CreateCharacterRoute
 import com.example.dndhandbook.navigation.NewCollectionRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.ui.theme.Black800
@@ -73,7 +72,7 @@ fun BestiaryButton(navController: NavHostController) {
     )
 }
 
-@Composable
+/*@Composable
 fun CreateCharacterButton(navController: NavHostController) {
     Image(
         painter = painterResource(id = R.drawable.img_create_character),
@@ -81,7 +80,7 @@ fun CreateCharacterButton(navController: NavHostController) {
         contentScale = ContentScale.Fit,
         modifier = Modifier.clickable { navController.navigate(CreateCharacterRoute) },
     )
-}
+}*/
 
 @Preview
 @Composable
