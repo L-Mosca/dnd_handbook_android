@@ -7,4 +7,5 @@ data class MonsterDetailState(
     val monsterDetail: MonsterDetail = MonsterDetail(),
     val error: String = "",
     val isFromCollection: Boolean = false,
+    val navigateBack: Boolean = false,
 )

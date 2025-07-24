@@ -13,7 +13,7 @@ import com.example.dndhandbook.presentation.baseComponents.BaseButton
 @Composable
 fun CollectionNewMonsterButton(onClick: (() -> Unit) = {}) {
     BaseButton(
-        text = stringResource(R.string.add_monster),
+        text = stringResource(R.string.add_creature),
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()

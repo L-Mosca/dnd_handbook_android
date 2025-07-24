@@ -43,7 +43,7 @@ fun MonsterListScreen(
         error = uiState.error,
         filterText = uiState.filter,
         onFilterChange = { viewModel.filterMonster(it) },
-        monsterList = uiState.monsterList.results,
+        monsterList = uiState.filterList.results,
         onItemClick = {
             navController.navigate(
                 MonsterDetailRoute(it.index, true)

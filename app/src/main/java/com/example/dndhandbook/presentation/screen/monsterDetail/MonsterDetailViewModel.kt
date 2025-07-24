@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
+import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
+import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.monster.MonsterDetail
 import com.example.dndhandbook.domain.useCase.getMonster.GetMonsterUseCase
 import com.example.dndhandbook.navigation.MonsterDetailRoute
@@ -15,11 +17,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MonsterDetailViewModel @Inject constructor(
     private val getMonsterDetailUseCase: GetMonsterUseCase,
+    private val monsterRepository: MonsterRepositoryContract,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -56,5 +60,12 @@ class MonsterDetailViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun saveMonsterDetail(monster: DefaultObject) {
+        viewModelScope.launch {
+            monsterRepository.saveMonsterDetail(monster)
+            _uiState.update { it.copy(navigateBack = true) }
+        }
     }
 }
