@@ -32,7 +32,12 @@ class MonsterListViewModel @Inject constructor(
                 is Resource.Success -> {
                     result.data?.let { data ->
                         _uiState.update {
-                            it.copy(isLoading = false, error = "", monsterList = data)
+                            it.copy(
+                                isLoading = false,
+                                error = "",
+                                monsterList = data,
+                                filterList = data
+                            )
                         }
                     }
                 }

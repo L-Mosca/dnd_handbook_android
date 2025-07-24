@@ -41,5 +41,5 @@
     <!--Monster List Screen-->
     <string name="create_new_collection">New collection</string>
     <string name="collection_name">Collection name</string>
-    <string name="add_monster">Add creature</string>
+    <string name="add_creature">Add creature</string>
 </resources>

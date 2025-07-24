@@ -1,12 +1,17 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,8 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
+import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.navigation.MonsterListRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
+import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionMonsterCard
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
 import com.example.dndhandbook.presentation.ui.theme.Black800
@@ -25,18 +33,35 @@ fun NewCollectionScreen(
     navController: NavHostController,
     viewModel: NewCollectionViewModel = hiltViewModel()
 ) {
+
+    val uiState by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(null) {
+        viewModel.getMonster()
+    }
+
     NewCollection(
+        monsterList = uiState.monsterList,
         onBackPressed = { navController.popBackStack() },
         onNameChange = { },
         onAddMonsterPressed = { navController.navigate(MonsterListRoute) },
+        onDeleteClicked = { viewModel.deleteMonster(it) },
+        onInfoClicked = {
+            navController.navigate(
+                MonsterDetailRoute(it.index, false)
+            )
+        },
     )
 }
 
 @Composable
 fun NewCollection(
+    monsterList: List<DefaultObject> = emptyList(),
     onBackPressed: (() -> Unit)? = null,
     onNameChange: ((String) -> Unit)? = null,
     onAddMonsterPressed: (() -> Unit) = {},
+    onDeleteClicked: ((DefaultObject) -> Unit)? = null,
+    onInfoClicked: ((DefaultObject) -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -46,11 +71,20 @@ fun NewCollection(
                 .fillMaxSize(),
         ) {
             TopBar(onBackPressed)
+
+            CollectionNameTextField(onNameChange)
+            CollectionNewMonsterButton(onAddMonsterPressed)
+
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 10.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 20.dp)
             ) {
-                item { CollectionNameTextField(onNameChange) }
-                item { CollectionNewMonsterButton(onAddMonsterPressed) }
+                itemsIndexed(monsterList) { index, monster ->
+                    CollectionMonsterCard(
+                        monster = monster,
+                        onDeleteClicked = { onDeleteClicked?.invoke(it) },
+                        onInfoClicked = { onInfoClicked?.invoke(it) })
+                }
             }
         }
     }
@@ -67,5 +101,11 @@ private fun TopBar(onBackPressed: (() -> Unit)? = null) {
 @Preview
 @Composable
 fun NewCollectionScreenPreview() {
-    NewCollection()
+    NewCollection(
+        monsterList = listOf(
+            DefaultObject(name = "Adult brass dragon"),
+            DefaultObject(name = "Adult brass dragon"),
+            DefaultObject(name = "Adult brass dragon")
+        )
+    )
 }

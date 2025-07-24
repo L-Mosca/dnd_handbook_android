@@ -3,9 +3,7 @@ package com.example.dndhandbook.presentation.screen.monsterDetail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
@@ -21,6 +19,8 @@ import androidx.navigation.NavHostController
 import com.example.dndhandbook.domain.models.attributes.GameAttribute
 import com.example.dndhandbook.domain.models.attributes.buildMockList
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
+import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.navigation.NewCollectionRoute
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterArmorClass
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterArmorClassPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterAttributes
@@ -39,6 +39,8 @@ import com.example.dndhandbook.presentation.screen.monsterDetail.components.attr
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeed
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeedPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterImage
+import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.AddMonsterButton
+import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.AddMonsterButtonPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterName
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterNamePreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterSubtitle
@@ -61,6 +63,10 @@ fun MonsterDetailScreen(
 
     val monsterDetail = uiState.monsterDetail
 
+    if (uiState.navigateBack) {
+        navController.popBackStack(NewCollectionRoute, false)
+    }
+
     Scaffold { innerPadding ->
         Box(
             contentAlignment = Alignment.TopCenter,
@@ -79,6 +85,11 @@ fun MonsterDetailScreen(
                 with(monsterDetail) {
                     item { MonsterName(name) }
                     item { MonsterSubtitle(size = size, type = type, alignment = alignment) }
+                    if (uiState.isFromCollection) item {
+                        AddMonsterButton(onClick = {
+                            viewModel.saveMonsterDetail(DefaultObject(index, name, url))
+                        })
+                    }
                     item { MonsterImage(url = image) }
                     item { MonsterArmorClass(armorClass) }
                     item { MonsterHitPoints(hitPoints.toString(), hitDice) }
@@ -119,7 +130,7 @@ fun ScreenPreview() {
             ) {
                 item { MonsterNamePreview() }
                 item { MonsterSubtitlePreview() }
-                item { Spacer(modifier = Modifier.height(30.dp)) }
+                item { AddMonsterButtonPreview() }
                 item { MonsterArmorClassPreview() }
                 item { MonsterHitPointsPreview() }
                 item { MonsterSpeedPreview() }
