@@ -13,6 +13,7 @@ class CollectionRepository @Inject constructor(
     }
 
     override suspend fun getCollections(): List<MonsterCollection> {
+
         return preferencesHelper.getCollections()
     }
 

@@ -51,7 +51,7 @@ fun NewCollectionScreen(
     NewCollection(
         monsterList = uiState.monsterList,
         onBackPressed = { navController.popBackStack() },
-        onNameChange = { },
+        onNameChange = { viewModel.updateCollectionName(it) },
         onAddMonsterPressed = { navController.navigate(MonsterListRoute) },
         onDeleteClicked = { viewModel.deleteMonster(it) },
         onInfoClicked = {
@@ -60,6 +60,7 @@ fun NewCollectionScreen(
             )
         },
         onSaveClicked = { viewModel.save() },
+        collectionName = uiState.collectionName,
     )
 }
 
@@ -72,6 +73,7 @@ fun NewCollection(
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
     onSaveClicked: (() -> Unit)? = null,
+    collectionName: String = "",
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -82,7 +84,7 @@ fun NewCollection(
         ) {
             TopBar(onBackPressed)
 
-            CollectionNameTextField(onNameChange)
+            CollectionNameTextField(collectionName, onNameChange)
             CollectionNewMonsterButton(onAddMonsterPressed)
 
             LazyColumn(
@@ -95,7 +97,8 @@ fun NewCollection(
                     CollectionMonsterCard(
                         monster = monster,
                         onDeleteClicked = { onDeleteClicked?.invoke(it) },
-                        onInfoClicked = { onInfoClicked?.invoke(it) })
+                        onInfoClicked = { onInfoClicked?.invoke(it) }
+                    )
                 }
             }
 

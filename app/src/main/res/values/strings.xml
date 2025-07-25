@@ -1,4 +1,7 @@
 <resources>
+    <!--Home-->
+    <string name="collections">Collections</string>
+
     <!--Monster Detail Screen-->
     <string name="armor_class">Armor Class</string>
     <string name="hit_points">Hit Points</string>

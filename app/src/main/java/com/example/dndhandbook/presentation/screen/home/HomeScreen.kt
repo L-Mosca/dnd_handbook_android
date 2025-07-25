@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,23 +27,43 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.navigation.BestiaryNavGraph
+import com.example.dndhandbook.domain.models.collection.MonsterCollection
+import com.example.dndhandbook.navigation.BestiaryRoute
 import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.baseComponents.BaseText
+import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
-    viewModel.getList()
+    LaunchedEffect(null) {
+        viewModel.getList()
+    }
+
+    val uiState by viewModel.uiState.collectAsState()
 
     BackHandler {
         (context as? Activity)?.moveTaskToBack(true)
     }
 
+    Home(
+        onBestiaryClicked = { navController.navigate(BestiaryRoute) },
+        onNewCollectionClicked = { navController.navigate(NewCollectionNavGraph) },
+        onCollectionClicked = {},
+        collectionList = uiState.collectionList,
+    )
+}
+
+@Composable
+private fun Home(
+    onBestiaryClicked: (() -> Unit)? = null,
+    onNewCollectionClicked: (() -> Unit)? = null,
+    onCollectionClicked: ((MonsterCollection) -> Unit)? = null,
+    collectionList: List<MonsterCollection> = emptyList(),
+) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -51,30 +74,37 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //CreateCharacterButton(navController = navController)
-            BestiaryButton(navController = navController)
+            BestiaryButton(onBestiaryClicked)
             Spacer(Modifier.height(20.dp))
             BaseText(
                 text = stringResource(R.string.create_new_collection),
                 fontSize = 20.sp,
                 modifier = Modifier
-                    .clickable { navController.navigate(NewCollectionNavGraph) }
+                    .clickable { onNewCollectionClicked?.invoke() }
+            )
+
+            Spacer(Modifier.weight(1f))
+
+            HomeCollection(
+                collectionList = collectionList,
+                onCollectionClicked = onCollectionClicked,
             )
         }
     }
 }
 
 @Composable
-fun BestiaryButton(navController: NavHostController) {
+private fun BestiaryButton(onBestiaryClicked: (() -> Unit)? = null) {
     Image(
         painter = painterResource(id = R.drawable.img_bestiary),
         contentDescription = "image from drawable resource",
         contentScale = ContentScale.Fit,
-        modifier = Modifier.clickable { navController.navigate(BestiaryNavGraph) },
+        modifier = Modifier.clickable { onBestiaryClicked?.invoke() },
     )
 }
 
 /*@Composable
-fun CreateCharacterButton(navController: NavHostController) {
+private fun CreateCharacterButton(navController: NavHostController) {
     Image(
         painter = painterResource(id = R.drawable.img_create_character),
         contentDescription = "image from drawable resource",
@@ -85,6 +115,6 @@ fun CreateCharacterButton(navController: NavHostController) {
 
 @Preview
 @Composable
-fun ScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+fun HomePreview() {
+    Home()
 }

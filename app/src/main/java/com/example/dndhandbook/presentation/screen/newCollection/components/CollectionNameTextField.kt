@@ -13,8 +13,12 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.baseComponents.BaseTextField
 
 @Composable
-fun CollectionNameTextField(onValueChange: ((String) -> Unit)? = null) {
+fun CollectionNameTextField(
+    text: String = "",
+    onValueChange: ((String) -> Unit)? = null,
+) {
     BaseTextField(
+        text = text,
         hint = stringResource(R.string.collection_name),
         keyboardActions = KeyboardActions(onDone = {}),
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
