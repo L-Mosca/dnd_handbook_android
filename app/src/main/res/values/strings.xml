@@ -42,4 +42,5 @@
     <string name="create_new_collection">New collection</string>
     <string name="collection_name">Collection name</string>
     <string name="add_creature">Add creature</string>
+    <string name="save">Save</string>
 </resources>
