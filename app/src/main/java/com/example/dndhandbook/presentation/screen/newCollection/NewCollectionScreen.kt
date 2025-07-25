@@ -2,12 +2,16 @@ package com.example.dndhandbook.presentation.screen.newCollection
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,10 +26,12 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.navigation.MonsterListRoute
+import com.example.dndhandbook.presentation.baseComponents.BaseButton
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionMonsterCard
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
+import com.example.dndhandbook.presentation.ui.theme.Black700
 import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
@@ -40,6 +46,8 @@ fun NewCollectionScreen(
         viewModel.getMonster()
     }
 
+    if (uiState.saveSuccess) navController.popBackStack()
+
     NewCollection(
         monsterList = uiState.monsterList,
         onBackPressed = { navController.popBackStack() },
@@ -51,6 +59,7 @@ fun NewCollectionScreen(
                 MonsterDetailRoute(it.index, false)
             )
         },
+        onSaveClicked = { viewModel.save() },
     )
 }
 
@@ -62,6 +71,7 @@ fun NewCollection(
     onAddMonsterPressed: (() -> Unit) = {},
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
+    onSaveClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -77,13 +87,29 @@ fun NewCollection(
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp),
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 20.dp)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 10.dp, vertical = 20.dp)
             ) {
                 itemsIndexed(monsterList) { index, monster ->
                     CollectionMonsterCard(
                         monster = monster,
                         onDeleteClicked = { onDeleteClicked?.invoke(it) },
                         onInfoClicked = { onInfoClicked?.invoke(it) })
+                }
+            }
+
+            Surface(
+                color = Black700,
+                shape = RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Box(modifier = Modifier.padding(vertical = 30.dp, horizontal = 20.dp)) {
+                    BaseButton(
+                        text = stringResource(R.string.save),
+                        onClick = { onSaveClicked?.invoke() },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         }

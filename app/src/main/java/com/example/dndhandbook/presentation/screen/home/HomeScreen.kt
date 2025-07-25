@@ -35,6 +35,8 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
+    viewModel.getList()
+
     BackHandler {
         (context as? Activity)?.moveTaskToBack(true)
     }

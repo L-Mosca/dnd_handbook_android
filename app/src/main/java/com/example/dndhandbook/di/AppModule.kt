@@ -7,6 +7,8 @@ import com.example.dndhandbook.data.local.PreferencesHelper
 import com.example.dndhandbook.data.remote.DndApi
 import com.example.dndhandbook.data.repository.character.CharacterRepository
 import com.example.dndhandbook.data.repository.character.CharacterRepositoryContract
+import com.example.dndhandbook.data.repository.collection.CollectionContract
+import com.example.dndhandbook.data.repository.collection.CollectionRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import dagger.Module
@@ -28,7 +30,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMonsterRepository(dndApi: DndApi, preferences: PreferencesContract): MonsterRepositoryContract {
+    fun provideMonsterRepository(
+        dndApi: DndApi,
+        preferences: PreferencesContract
+    ): MonsterRepositoryContract {
         return MonsterRepository(dndApi, preferences)
     }
 
@@ -36,6 +41,12 @@ object AppModule {
     @Singleton
     fun provideCharacterRepository(dndApi: DndApi): CharacterRepositoryContract {
         return CharacterRepository(dndApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionRepository(preferences: PreferencesContract): CollectionContract {
+        return CollectionRepository(preferences)
     }
 
     @Provides
