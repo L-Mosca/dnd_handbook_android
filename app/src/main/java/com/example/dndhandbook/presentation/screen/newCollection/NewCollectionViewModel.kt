@@ -46,6 +46,10 @@ class NewCollectionViewModel @Inject constructor(
         _uiState.update { it.copy(monsterList = newList) }
     }
 
+    fun updateCollectionName(name: String) {
+        _uiState.update { it.copy(collectionName = name) }
+    }
+
     fun save() {
         viewModelScope.launch {
             val collection = MonsterCollection(
