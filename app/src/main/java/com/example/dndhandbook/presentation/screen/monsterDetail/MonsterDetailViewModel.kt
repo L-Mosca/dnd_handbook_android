@@ -32,15 +32,22 @@ class MonsterDetailViewModel @Inject constructor(
 
     private var isFromCollection = false
     private var monsterIndex: String
+    private var collectionName: String
 
     init {
-        savedStateHandle.toRoute<MonsterDetailRoute>().let {
-            isFromCollection = it.isFromCollection
-            monsterIndex = it.monsterIndex
+        savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
+            isFromCollection = args.isFromCollection
+            monsterIndex = args.monsterIndex
+            collectionName = args.collectionName
 
-            _uiState.update { it.copy(isFromCollection = isFromCollection) }
+            _uiState.update {
+                it.copy(
+                    isFromCollection = isFromCollection,
+                    collectionName = collectionName,
+                )
+            }
 
-            getMonsterDetail(it.monsterIndex)
+            getMonsterDetail(args.monsterIndex)
         }
     }
 

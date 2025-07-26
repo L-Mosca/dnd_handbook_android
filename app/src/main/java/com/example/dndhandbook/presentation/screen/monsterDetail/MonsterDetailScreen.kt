@@ -64,7 +64,10 @@ fun MonsterDetailScreen(
     val monsterDetail = uiState.monsterDetail
 
     if (uiState.navigateBack) {
-        navController.popBackStack(NewCollectionRoute, false)
+        navController.popBackStack(
+            route = NewCollectionRoute(collectionName = uiState.collectionName),
+            inclusive = false,
+        )
     }
 
     Scaffold { innerPadding ->

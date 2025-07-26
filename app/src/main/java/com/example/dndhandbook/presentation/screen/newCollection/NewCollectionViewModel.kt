@@ -2,15 +2,21 @@ package com.example.dndhandbook.presentation.screen.newCollection
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
+import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.data.repository.collection.CollectionContract
 import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
+import com.example.dndhandbook.domain.useCase.getCollections.GetCollectionsUseCase
+import com.example.dndhandbook.navigation.NewCollectionRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,10 +26,37 @@ class NewCollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val monsterRepository: MonsterRepositoryContract,
     private val collectionRepository: CollectionContract,
+    private val getCollectionsUseCase: GetCollectionsUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()
+
+    val data = savedStateHandle.toRoute<NewCollectionRoute>().collectionName
+
+    init {
+        getCollection(collectionName = data)
+    }
+
+    fun getCollection(collectionName: String) {
+        getCollectionsUseCase.invoke(collectionName).onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    resource.data?.let { collection ->
+                        _uiState.update {
+                            it.copy(
+                                collectionName = collection.name,
+                                monsterList = collection.monsterList,
+                            )
+                        }
+                    }
+                }
+
+                is Resource.Loading -> {}
+                is Resource.Error -> {}
+            }
+        }.launchIn(viewModelScope)
+    }
 
     fun getMonster() {
         viewModelScope.launch {

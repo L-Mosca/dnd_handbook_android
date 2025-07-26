@@ -1,10 +1,13 @@
 package com.example.dndhandbook.presentation.screen.monsterList
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.useCase.getMonsters.GetMonstersUseCase
+import com.example.dndhandbook.navigation.MonsterListRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,12 +20,16 @@ import javax.inject.Inject
 @HiltViewModel
 class MonsterListViewModel @Inject constructor(
     private val getMonsterUseCase: GetMonstersUseCase,
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(MonsterListUIState())
     val uiState: StateFlow<MonsterListUIState> = _uiState.asStateFlow()
 
+    private var collectionName = savedStateHandle.toRoute<MonsterListRoute>().collectionName
+
     init {
+        _uiState.update { it.copy(collectionName = collectionName) }
         getMonsters()
     }
 

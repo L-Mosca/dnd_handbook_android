@@ -61,6 +61,10 @@ class PreferencesHelper @Inject constructor(@ApplicationContext context: Context
         return dataStore.getData<List<MonsterCollection>>(collectionKey) ?: emptyList()
     }
 
+    override suspend fun getCollection(collectionName: String): MonsterCollection? {
+        return getCollections().firstOrNull { it.name == collectionName }
+    }
+
     override suspend fun deleteCollection(collection: MonsterCollection) {
         val collectionList = getCollections().toMutableList()
         collectionList.remove(collection)

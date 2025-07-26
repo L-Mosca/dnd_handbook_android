@@ -9,17 +9,17 @@ import com.example.dndhandbook.presentation.screen.newCollection.NewCollectionSc
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object NewCollectionNavGraph
+data class NewCollectionNavGraph(val collectionName: String = "")
 
 @Serializable
-data object NewCollectionRoute : Route(route = "newCollectionRoute")
+data class NewCollectionRoute(val collectionName: String = "") : Route(route = "newCollectionRoute")
 
 @Serializable
-data object MonsterListRoute : Route(route = "monsterListRoute")
+data class MonsterListRoute(val collectionName: String = "") : Route(route = "monsterListRoute")
 
 fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
-    navigation<NewCollectionNavGraph>(startDestination = NewCollectionRoute) {
+    navigation<NewCollectionNavGraph>(startDestination = NewCollectionRoute()) {
         animatedComposable<NewCollectionRoute> {
             NewCollectionScreen(navController)
         }

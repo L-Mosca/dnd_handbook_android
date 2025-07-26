@@ -7,5 +7,6 @@ data class MonsterListUIState(
     val isLoading: Boolean = false,
     val monsterList: DefaultList = DefaultList(),
     val filterList: DefaultList = DefaultList(),
-    val error: String = ""
+    val error: String = "",
+    val collectionName: String = "",
 )
