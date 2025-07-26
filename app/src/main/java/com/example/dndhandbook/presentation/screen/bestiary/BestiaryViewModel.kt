@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BestiaryViewModel @Inject constructor(
-    private val getMonstersUseCase: GetMonstersUseCase
+    private val getMonstersUseCase: GetMonstersUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(BestiaryState())

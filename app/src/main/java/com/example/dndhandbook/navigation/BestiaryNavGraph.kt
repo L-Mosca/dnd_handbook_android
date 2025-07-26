@@ -14,7 +14,11 @@ data object BestiaryNavGraph
 data object BestiaryRoute : Route(route = "bestiaryRoute")
 
 @Serializable
-data class MonsterDetailRoute(val monsterIndex: String, val isFromCollection: Boolean) :
+data class MonsterDetailRoute(
+    val collectionName: String = "",
+    val monsterIndex: String,
+    val isFromCollection: Boolean
+) :
     Route(route = "monsterDetailRoute")
 
 fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {

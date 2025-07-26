@@ -56,7 +56,7 @@ fun HomeCollection(
 private fun Title() {
     BaseText(
         text = stringResource(R.string.collections),
-        fontSize = 22.sp,
+        fontSize = 20.sp,
         fontWeight = FontWeight.W700,
     )
 }

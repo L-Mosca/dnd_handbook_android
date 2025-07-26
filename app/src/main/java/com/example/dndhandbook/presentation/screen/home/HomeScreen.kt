@@ -51,8 +51,12 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
 
     Home(
         onBestiaryClicked = { navController.navigate(BestiaryRoute) },
-        onNewCollectionClicked = { navController.navigate(NewCollectionNavGraph) },
-        onCollectionClicked = {},
+        onNewCollectionClicked = {
+            navController.navigate(NewCollectionNavGraph(""))
+        },
+        onCollectionClicked = {
+            navController.navigate(NewCollectionNavGraph(it.name))
+        },
         collectionList = uiState.collectionList,
     )
 }
@@ -87,7 +91,7 @@ private fun Home(
 
             HomeCollection(
                 collectionList = collectionList,
-                onCollectionClicked = onCollectionClicked,
+                onCollectionClicked = { onCollectionClicked?.invoke(it) },
             )
         }
     }

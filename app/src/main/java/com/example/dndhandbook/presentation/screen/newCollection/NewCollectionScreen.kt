@@ -52,11 +52,19 @@ fun NewCollectionScreen(
         monsterList = uiState.monsterList,
         onBackPressed = { navController.popBackStack() },
         onNameChange = { viewModel.updateCollectionName(it) },
-        onAddMonsterPressed = { navController.navigate(MonsterListRoute) },
+        onAddMonsterPressed = {
+            navController.navigate(
+                route = MonsterListRoute(collectionName = uiState.collectionName)
+            )
+        },
         onDeleteClicked = { viewModel.deleteMonster(it) },
         onInfoClicked = {
             navController.navigate(
-                MonsterDetailRoute(it.index, false)
+                MonsterDetailRoute(
+                    collectionName = uiState.collectionName,
+                    monsterIndex = it.index,
+                    isFromCollection = false,
+                )
             )
         },
         onSaveClicked = { viewModel.save() },

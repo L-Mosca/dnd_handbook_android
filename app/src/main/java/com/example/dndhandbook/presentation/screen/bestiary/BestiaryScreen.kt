@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
@@ -35,6 +34,31 @@ fun BestiaryScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
+    Bestiary(
+        monsterList = uiState.filterList.results,
+        onFilterValueChange = { viewModel.filterMonster(it) },
+        onMonsterSelected = {
+            navController.navigate(
+                MonsterDetailRoute(
+                    monsterIndex = it,
+                    collectionName = "",
+                    isFromCollection = false,
+                )
+            )
+        },
+        errorMessage = uiState.error,
+        isLoading = uiState.isLoading,
+    )
+}
+
+@Composable
+private fun Bestiary(
+    monsterList: List<DefaultObject> = emptyList(),
+    onFilterValueChange: ((String) -> Unit)? = null,
+    onMonsterSelected: ((String) -> Unit)? = null,
+    errorMessage: String? = null,
+    isLoading: Boolean = false,
+) {
     Scaffold { innerPadding ->
         Box(
             modifier = Modifier
@@ -44,21 +68,25 @@ fun BestiaryScreen(
         ) {
             Column(modifier = Modifier.background(Black800)) {
                 Spacer(modifier = Modifier.height(30.dp))
-                SearchMonsterField(onValueChanged = { inputText ->
-                    viewModel.filterMonster(inputText)
-                })
+                SearchMonsterField(onValueChanged = { onFilterValueChange?.invoke(it) })
                 Spacer(modifier = Modifier.height((-10).dp))
-                BestiaryList(list = uiState.filterList.results, navController)
+                BestiaryList(
+                    list = monsterList,
+                    onMonsterSelected = { onMonsterSelected?.invoke(it) },
+                )
             }
 
-            if (uiState.error.isNotBlank()) BaseErrorMessage(uiState.error)
-            if (uiState.isLoading) BaseLoading()
+            if (!errorMessage.isNullOrBlank()) BaseErrorMessage(errorMessage)
+            if (isLoading) BaseLoading()
         }
     }
 }
 
 @Composable
-fun BestiaryList(list: List<DefaultObject>, navController: NavHostController) {
+private fun BestiaryList(
+    list: List<DefaultObject>,
+    onMonsterSelected: ((String) -> Unit)? = null,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -68,34 +96,16 @@ fun BestiaryList(list: List<DefaultObject>, navController: NavHostController) {
             MonsterCard(
                 monster = monster,
                 index = index,
-                onItemClick = { navigateToMonsterDetail(monster.index, navController) })
+                onItemClick = { onMonsterSelected?.invoke(it.index) })
         }
     }
-}
-
-private fun navigateToMonsterDetail(monsterIndex: String, navController: NavHostController) {
-    navController.navigate(MonsterDetailRoute(monsterIndex, false))
 }
 
 @Preview
 @Composable
-fun ScreenPreview() {
+private fun ScreenPreview() {
     val list = mutableListOf<DefaultObject>()
     repeat(20) { list.add(DefaultObject(name = "Nome do Monstro")) }
 
-    Scaffold { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(modifier = Modifier.background(Black800)) {
-                Spacer(modifier = Modifier.height(30.dp))
-                SearchMonsterField(onValueChanged = {})
-                Spacer(modifier = Modifier.height((-10).dp))
-                BestiaryList(list = list, rememberNavController())
-            }
-        }
-    }
+    Bestiary(monsterList = list)
 }
