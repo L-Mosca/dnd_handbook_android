@@ -1,0 +1,53 @@
+package com.example.dndhandbook.navigation
+
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.dndhandbook.presentation.screen.home.HomeScreen
+import com.example.dndhandbook.presentation.screen.splash.SplashScreen
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class Route(val route: String)
+
+@Serializable
+data object SplashRoute : Route(route = "splashRoute")
+
+@Serializable
+data object HomeRoute : Route(route = "homeRoute")
+
+@Composable
+fun MainNavGraph(navController: NavHostController) {
+
+    NavHost(navController = navController, startDestination = SplashRoute) {
+        animatedComposable<SplashRoute> {
+            SplashScreen(navController)
+        }
+
+        animatedComposable<HomeRoute> {
+            HomeScreen(navController)
+        }
+
+        createCharNavGraph(navController)
+        bestiaryNavGraph(navController)
+        newCollectionNavGraph(navController)
+    }
+}
+
+inline fun <reified T> NavGraphBuilder.animatedComposable(
+    noinline content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
+) where T : Route {
+    composable<T>(
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { it }) },
+        content = content,
+    )
+}

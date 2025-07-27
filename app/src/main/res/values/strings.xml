@@ -1,4 +1,7 @@
 <resources>
+    <!--Home-->
+    <string name="collections">Collections</string>
+
     <!--Monster Detail Screen-->
     <string name="armor_class">Armor Class</string>
     <string name="hit_points">Hit Points</string>
@@ -37,4 +40,15 @@
     <string name="starting_equipments">Starting Equipments</string>
     <string name="starting_equipments_options">Starting Equipment Options</string>
     <string name="sub_classes">Sub Classes</string>
+
+    <!--New Collection-->
+    <string name="create_new_collection">New collection</string>
+    <string name="collection_name">Collection name</string>
+    <string name="add_creature">Add creature</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+
+    <!--Exceptions-->
+    <string name="duplicate_monster_collection">A collection with this name already exists</string>
+    <string name="not_found_collection_exception">Collection not found</string>
 </resources>
