@@ -1,6 +1,7 @@
 package com.example.dndhandbook.domain.models.monster
 
 import android.os.Parcelable
+import com.example.dndhandbook.BuildConfig
 import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.base.DefaultProficiencyObject
@@ -59,7 +60,7 @@ fun MonsterDetailDto.toMonsterDetail(): MonsterDetail = MonsterDetail(
     intelligence = intelligence,
     strength = strength,
     wisdom = wisdom,
-    image = image,
+    image = "${BuildConfig.BASE_DND_URL}$image",
     size = size,
     type = type,
     alignment = alignment,
