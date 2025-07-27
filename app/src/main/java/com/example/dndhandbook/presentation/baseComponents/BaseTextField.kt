@@ -9,14 +9,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,9 +28,9 @@ import com.example.dndhandbook.presentation.ui.theme.Transparent
 @Composable
 fun BaseTextField(
     modifier: Modifier = Modifier,
-    text: String = "",
+    text: String,
     hint: String = "",
-    onValueChange: ((String) -> Unit)? = null,
+    onValueChange: (String) -> Unit = {},
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
@@ -43,14 +38,9 @@ fun BaseTextField(
     textStyle: TextStyle? = null,
 ) {
 
-    var textState by remember { mutableStateOf(TextFieldValue(text)) }
-
     TextField(
-        value = textState,
-        onValueChange = {
-            onValueChange?.invoke(it.text)
-            textState = it
-        },
+        value = text,
+        onValueChange = onValueChange,
         label = { BaseText(text = hint, color = Gray500) },
         textStyle = textStyle ?: TextStyle.Default.copy(
             color = Crimson800,
@@ -88,5 +78,5 @@ fun BaseTextField(
 @Preview
 @Composable
 fun BaseTextFieldPreview() {
-    BaseTextField(hint = "test hint text")
+    BaseTextField(text = "test text",hint = "test hint text")
 }

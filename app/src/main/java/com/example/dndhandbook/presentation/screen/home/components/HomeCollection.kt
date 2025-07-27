@@ -113,10 +113,10 @@ private fun CollectionList(
 @Composable
 fun HomeCollectionPreview() {
     val collections = listOf(
-        MonsterCollection("nome da coleção", emptyList()),
-        MonsterCollection("nome da coleção", emptyList()),
-        MonsterCollection("nome da coleção", emptyList()),
-        MonsterCollection("nome da coleção", emptyList()),
+        MonsterCollection(name ="nome da coleção", monsterList =  emptyList()),
+        MonsterCollection(name ="nome da coleção", monsterList =  emptyList()),
+        MonsterCollection(name ="nome da coleção", monsterList =  emptyList()),
+        MonsterCollection(name ="nome da coleção", monsterList =  emptyList()),
     )
     HomeCollection(collections)
 }

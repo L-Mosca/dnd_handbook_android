@@ -1,10 +1,10 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.collection.MonsterCollection
 
 data class NewCollectionUIState(
     val monster: DefaultObject? = null,
-    val monsterList: List<DefaultObject> = emptyList(),
-    val collectionName: String = "",
+    val collection: MonsterCollection = MonsterCollection(),
     val saveSuccess: Boolean = false,
 )

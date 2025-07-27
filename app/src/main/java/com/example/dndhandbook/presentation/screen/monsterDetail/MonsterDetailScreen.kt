@@ -65,7 +65,7 @@ fun MonsterDetailScreen(
 
     if (uiState.navigateBack) {
         navController.popBackStack(
-            route = NewCollectionRoute(collectionName = uiState.collectionName),
+            route = NewCollectionRoute(id = uiState.collectionId),
             inclusive = false,
         )
     }

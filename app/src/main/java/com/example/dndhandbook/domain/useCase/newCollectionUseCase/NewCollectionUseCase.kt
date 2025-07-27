@@ -15,14 +15,11 @@ class NewCollectionUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val collectionRepository: CollectionContract,
 ) {
-    operator fun invoke(collection: MonsterCollection): Flow<Resource<MonsterCollection?>> = flow {
+    operator fun invoke(collection: MonsterCollection): Flow<Resource<Int?>> = flow {
         try {
             emit(Resource.Loading())
-            collectionRepository.getCollection(collection.name)?.let {
-                throw DuplicateCollectionException()
-            }
-            collectionRepository.saveCollection(collection)
-            emit(Resource.Success(data = collection))
+            val id = collectionRepository.saveCollection(collection)
+            emit(Resource.Success(data = id))
         } catch (e: IOException) {
             emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: DuplicateCollectionException) {
