@@ -60,8 +60,8 @@ fun NewCollectionScreen(
                 )
             )
         },
-        onSaveClicked = { viewModel.save() },
         onDeleteCollectionClicked = { viewModel.deleteCollection() },
+        //onSaveClicked = { viewModel.save() },
     )
 }
 
@@ -73,8 +73,8 @@ fun NewCollection(
     onAddMonsterPressed: (() -> Unit) = {},
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
-    onSaveClicked: (() -> Unit)? = null,
     onDeleteCollectionClicked: (() -> Unit)? = null,
+    //onSaveClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -98,7 +98,7 @@ fun NewCollection(
             )
 
             CollectionButtons(
-                onSaveClicked = onSaveClicked,
+                //onSaveClicked = onSaveClicked,
                 onDeleteCollectionClicked = onDeleteCollectionClicked,
                 showDeleteButton = collection.id != null,
             )
@@ -119,6 +119,7 @@ private fun TopBar(onBackPressed: (() -> Unit)? = null) {
 fun NewCollectionScreenPreview() {
     NewCollection(
         collection = MonsterCollection(
+            id = 0,
             name = "collection name",
             monsterList = listOf(
                 DefaultObject(name = "Adult brass dragon"),
