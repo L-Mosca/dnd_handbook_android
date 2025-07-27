@@ -51,4 +51,5 @@
     <!--Exceptions-->
     <string name="duplicate_monster_collection">A collection with this name already exists</string>
     <string name="not_found_collection_exception">Collection not found</string>
+    <string name="not_collections_found">None collections found</string>
 </resources>
