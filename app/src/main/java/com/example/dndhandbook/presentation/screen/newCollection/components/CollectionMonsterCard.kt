@@ -2,12 +2,15 @@ package com.example.dndhandbook.presentation.screen.newCollection.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -30,7 +33,28 @@ import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Gray100
 
 @Composable
-fun CollectionMonsterCard(
+fun CollectionMonsterList(
+    modifier: Modifier = Modifier,
+    list: List<DefaultObject> = emptyList(),
+    onDeleteClicked: ((DefaultObject) -> Unit)? = null,
+    onInfoClicked: ((DefaultObject) -> Unit)? = null,
+) {
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = modifier
+    ) {
+        itemsIndexed(list) { index, monster ->
+            CollectionMonsterCard(
+                monster = monster,
+                onDeleteClicked = { onDeleteClicked?.invoke(it) },
+                onInfoClicked = { onInfoClicked?.invoke(it) }
+            )
+        }
+    }
+}
+
+@Composable
+private fun CollectionMonsterCard(
     monster: DefaultObject,
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
@@ -86,6 +110,12 @@ fun CollectionMonsterCard(
 
 @Preview
 @Composable
-fun CollectionMonsterCardPreview() {
-    CollectionMonsterCard(DefaultObject(name = "Adult Brass Dragon"))
+fun CollectionMonsterListPreview() {
+    CollectionMonsterList(
+        list = listOf(
+            DefaultObject(name = "Adult brass dragon"),
+            DefaultObject(name = "Adult brass dragon"),
+            DefaultObject(name = "Adult brass dragon"),
+        )
+    )
 }

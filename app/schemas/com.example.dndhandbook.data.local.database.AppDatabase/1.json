@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "18d23ccdd5812e5912c44aacf1c43880",
+    "identityHash": "f69a002950969adb91507074ada7e5ab",
     "entities": [
       {
         "tableName": "collection_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `monster_list` TEXT NOT NULL, `create_date` INTEGER NOT NULL, `modified_date` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `monster_list` TEXT, `create_date` INTEGER NOT NULL, `modified_date` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,8 +23,7 @@
           {
             "fieldPath": "monsterList",
             "columnName": "monster_list",
-            "affinity": "TEXT",
-            "notNull": true
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "date",
@@ -49,7 +48,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '18d23ccdd5812e5912c44aacf1c43880')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f69a002950969adb91507074ada7e5ab')"
     ]
   }
 }

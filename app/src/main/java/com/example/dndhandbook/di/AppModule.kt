@@ -49,11 +49,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMonsterRepository(
-        dndApi: DndApi,
-        preferences: PreferencesContract
-    ): MonsterRepositoryContract {
-        return MonsterRepository(dndApi, preferences)
+    fun provideMonsterRepository(dndApi: DndApi): MonsterRepositoryContract {
+        return MonsterRepository(dndApi)
     }
 
     @Provides

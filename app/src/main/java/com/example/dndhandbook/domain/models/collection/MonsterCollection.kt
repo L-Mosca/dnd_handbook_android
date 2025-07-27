@@ -7,16 +7,16 @@ import java.util.Date
 
 @Parcelize
 data class MonsterCollection(
-    var id: Int? = null,
+    var id: Long? = null,
     val name: String = "",
-    val monsterList: List<DefaultObject> = emptyList(),
+    val monsterList: List<DefaultObject>? = null,
     var date: Date = Date(),
     var modifiedDate: Date = Date(),
 ) : Parcelable {
 
     fun toCollectionEntity(): MonsterCollectionEntity {
         return MonsterCollectionEntity(
-            id = id ?: 0,
+            id = id ?: 0L,
             name = name,
             monsterList = monsterList,
             date = date,

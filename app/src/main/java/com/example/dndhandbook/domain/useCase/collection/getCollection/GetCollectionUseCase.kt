@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.useCase.getCollection
+package com.example.dndhandbook.domain.useCase.collection.getCollection
 
 import androidx.datastore.core.IOException
 import com.example.dndhandbook.common.Resource
@@ -10,11 +10,23 @@ import javax.inject.Inject
 
 class GetCollectionUseCase @Inject constructor(private val repository: CollectionContract) {
 
-    operator fun invoke(): Flow<Resource<List<MonsterCollection>>> = flow {
+    operator fun invoke(id: Long?): Flow<Resource<MonsterCollection>> = flow {
         try {
             emit(Resource.Loading())
-            val list = repository.getCollections()
-            emit(Resource.Success(data = list))
+
+            if (id == null) {
+                repository.saveCollection(MonsterCollection())?.let { newId ->
+                    repository.getCollection(newId)?.let {
+                        emit(Resource.Success(data = it))
+                    }
+                }
+            }
+
+            id?.let { id ->
+                repository.getCollection(id)?.let {
+                    emit(Resource.Success(data = it))
+                }
+            }
         } catch (e: IOException) {
             emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
         }

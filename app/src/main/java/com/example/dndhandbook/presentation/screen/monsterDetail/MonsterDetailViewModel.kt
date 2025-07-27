@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.monster.MonsterDetail
-import com.example.dndhandbook.domain.useCase.getMonster.GetMonsterUseCase
+import com.example.dndhandbook.domain.useCase.bestiary.getMonster.GetMonsterUseCase
+import com.example.dndhandbook.domain.useCase.collection.updateCollectionUseCase.UpdateCollectionUseCase
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MonsterDetailViewModel @Inject constructor(
     private val getMonsterDetailUseCase: GetMonsterUseCase,
-    private val monsterRepository: MonsterRepositoryContract,
+    private val updateCollectionUseCase: UpdateCollectionUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
@@ -32,7 +32,7 @@ class MonsterDetailViewModel @Inject constructor(
 
     private var isFromCollection = false
     private var monsterIndex: String
-    private var collectionId: Int? = null
+    private var collectionId: Long? = null
 
     init {
         savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
@@ -71,7 +71,7 @@ class MonsterDetailViewModel @Inject constructor(
 
     fun saveMonsterDetail(monster: DefaultObject) {
         viewModelScope.launch {
-            monsterRepository.saveMonsterDetail(monster)
+            updateCollectionUseCase.invoke(collectionId, monster)
             _uiState.update { it.copy(navigateBack = true) }
         }
     }

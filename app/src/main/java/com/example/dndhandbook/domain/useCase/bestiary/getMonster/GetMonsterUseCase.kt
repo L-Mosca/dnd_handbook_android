@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.useCase.getMonster
+package com.example.dndhandbook.domain.useCase.bestiary.getMonster
 
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.monster.MonsterDetail

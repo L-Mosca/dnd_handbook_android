@@ -14,7 +14,7 @@ interface CollectionsDao {
     suspend fun getCollections(): List<MonsterCollectionEntity>
 
     @Query("SELECT * FROM collection_table WHERE id = :id")
-    suspend fun getCollection(id: Int): MonsterCollectionEntity
+    suspend fun getCollection(id: Long): MonsterCollectionEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCollection(collection: MonsterCollectionEntity): Long?
@@ -23,5 +23,5 @@ interface CollectionsDao {
     suspend fun updateCollection(collection: MonsterCollectionEntity)
 
     @Query("DELETE FROM collection_table WHERE id = :id")
-    suspend fun deleteCollection(id: Int)
+    suspend fun deleteCollection(id: Long)
 }

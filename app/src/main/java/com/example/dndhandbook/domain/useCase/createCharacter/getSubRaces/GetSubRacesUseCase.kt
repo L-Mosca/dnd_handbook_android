@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.useCase.getSubRaces
+package com.example.dndhandbook.domain.useCase.createCharacter.getSubRaces
 
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.base.DefaultList

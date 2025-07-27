@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.useCase.getRaceDetail
+package com.example.dndhandbook.domain.useCase.createCharacter.getRaceDetail
 
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.race.RaceDetail

@@ -41,11 +41,12 @@
     <string name="starting_equipments_options">Starting Equipment Options</string>
     <string name="sub_classes">Sub Classes</string>
 
-    <!--Monster List Screen-->
+    <!--New Collection-->
     <string name="create_new_collection">New collection</string>
     <string name="collection_name">Collection name</string>
     <string name="add_creature">Add creature</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
 
     <!--Exceptions-->
     <string name="duplicate_monster_collection">A collection with this name already exists</string>

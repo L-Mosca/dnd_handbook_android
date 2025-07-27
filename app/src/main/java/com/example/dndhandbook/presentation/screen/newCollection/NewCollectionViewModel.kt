@@ -1,17 +1,18 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.domain.useCase.getCollections.GetCollectionsUseCase
-import com.example.dndhandbook.domain.useCase.newCollectionUseCase.NewCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.deleteCollectionUseCase.DeleteCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.getCollection.GetCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.newCollectionUseCase.NewCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.updateCollectionUseCase.UpdateCollectionUseCase
 import com.example.dndhandbook.navigation.NewCollectionRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,9 +25,10 @@ import javax.inject.Inject
 @HiltViewModel
 class NewCollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val monsterRepository: MonsterRepositoryContract,
-    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val getCollectionUseCase: GetCollectionUseCase,
     private val newCollectionUseCase: NewCollectionUseCase,
+    private val deleteCollectionUseCase: DeleteCollectionUseCase,
+    private val updateCollectionUseCase: UpdateCollectionUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(NewCollectionUIState())
@@ -34,19 +36,12 @@ class NewCollectionViewModel @Inject constructor(
 
     val collectionId = savedStateHandle.toRoute<NewCollectionRoute>().id
 
-    init {
-        collectionId?.let { getCollection(collectionId = it) }
-    }
-
-    fun getCollection(collectionId: Int) {
-        getCollectionsUseCase.invoke(collectionId).onEach { resource ->
+    fun getCollection() {
+        getCollectionUseCase.invoke(collectionId).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let { collection ->
-                        Log.e("test", "nome da coleção: ${collection.name}")
-                        _uiState.update {
-                            it.copy(collection = collection)
-                        }
+                        _uiState.update { it.copy(collection = collection) }
                     }
                 }
 
@@ -56,36 +51,36 @@ class NewCollectionViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getMonster() {
+    fun deleteMonster(monster: DefaultObject) {
         viewModelScope.launch {
-            monsterRepository.getMonsterDetail()?.let { monster ->
-                if (_uiState.value.collection.monsterList.contains(monster)) return@let
-
-                val newList = _uiState.value.collection.monsterList.toMutableList()
-                newList.add(monster)
-                _uiState.update { state ->
-                    state.copy(collection = state.collection.copy(monsterList = newList.sortedBy { it.name }))
-                }
-            }
-            monsterRepository.clearMonsterDetail()
+            val list = _uiState.value.collection.monsterList?.toMutableList()
+            list?.remove(monster)
+            val newData = _uiState.value.collection.copy(monsterList = list)
+            updateCollectionUseCase.invoke(newData)
+            _uiState.update { it.copy(collection = newData) }
         }
     }
 
-    fun deleteMonster(monster: DefaultObject) {
-
-    }
-
     fun updateCollectionName(name: String) {
-        _uiState.update { it.copy(collection = it.collection.copy(name = name)) }
+        val newData = _uiState.value.collection.copy(name = name)
+        _uiState.update { it.copy(collection = newData) }
+        viewModelScope.launch {
+            delay(1000)
+            updateCollectionUseCase.invoke(newData)
+        }
     }
 
     fun save() {
-        newCollectionUseCase.invoke(_uiState.value.collection).onEach { result ->
-            when (result) {
-                is Resource.Success -> _uiState.update { it.copy(saveSuccess = true) }
-                is Resource.Loading -> {}
-                is Resource.Error -> {}
-            }
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            newCollectionUseCase.invoke(_uiState.value.collection)
+            _uiState.update { it.copy(saveSuccess = true) }
+        }
+    }
+
+    fun deleteCollection() {
+        viewModelScope.launch {
+            deleteCollectionUseCase.invoke(collectionId)
+            _uiState.update { it.copy(saveSuccess = true) }
+        }
     }
 }

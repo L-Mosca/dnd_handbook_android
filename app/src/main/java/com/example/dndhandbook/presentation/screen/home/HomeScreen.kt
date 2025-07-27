@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,6 +35,7 @@ import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black800
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
@@ -49,14 +51,21 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
         (context as? Activity)?.moveTaskToBack(true)
     }
 
+    LaunchedEffect(Unit) {
+        snapshotFlow { uiState.collectionSelected }
+            .distinctUntilChanged()
+            .collect { selected ->
+                selected?.let {
+                    navController.navigate(NewCollectionNavGraph(it.id))
+                    viewModel.resetCollection()
+                }
+            }
+    }
+
     Home(
         onBestiaryClicked = { navController.navigate(BestiaryRoute) },
-        onNewCollectionClicked = {
-            navController.navigate(NewCollectionNavGraph(null))
-        },
-        onCollectionClicked = {
-            navController.navigate(NewCollectionNavGraph(it.id))
-        },
+        onNewCollectionClicked = { viewModel.selectCollection(null) },
+        onCollectionClicked = { viewModel.selectCollection(it) },
         collectionList = uiState.collectionList,
     )
 }

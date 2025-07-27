@@ -15,7 +15,7 @@ data object BestiaryRoute : Route(route = "bestiaryRoute")
 
 @Serializable
 data class MonsterDetailRoute(
-    val collectionId: Int? = null,
+    val collectionId: Long? = null,
     val monsterIndex: String,
     val isFromCollection: Boolean
 ) :
