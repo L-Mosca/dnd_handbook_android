@@ -10,10 +10,10 @@ import javax.inject.Inject
 
 class GetCollectionsUseCase @Inject constructor(private val repository: CollectionContract) {
 
-    operator fun invoke(collectionName: String): Flow<Resource<MonsterCollection>> = flow {
+    operator fun invoke(id: Int): Flow<Resource<MonsterCollection>> = flow {
         try {
             emit(Resource.Loading())
-            repository.getCollection(collectionName)?.let {
+            repository.getCollection(id)?.let {
                 emit(Resource.Success(data = it))
             }
         } catch (e: IOException) {

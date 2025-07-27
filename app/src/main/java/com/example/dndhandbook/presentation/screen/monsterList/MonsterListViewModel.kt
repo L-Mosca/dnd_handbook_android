@@ -26,10 +26,13 @@ class MonsterListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(MonsterListUIState())
     val uiState: StateFlow<MonsterListUIState> = _uiState.asStateFlow()
 
-    private var collectionName = savedStateHandle.toRoute<MonsterListRoute>().collectionName
+    private var collectionId = savedStateHandle.toRoute<MonsterListRoute>().id
 
     init {
-        _uiState.update { it.copy(collectionName = collectionName) }
+        collectionId?.let { id ->
+            _uiState.update { it.copy(collectionId = id) }
+        }
+
         getMonsters()
     }
 

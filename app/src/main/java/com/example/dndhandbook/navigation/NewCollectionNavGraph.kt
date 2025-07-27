@@ -9,13 +9,13 @@ import com.example.dndhandbook.presentation.screen.newCollection.NewCollectionSc
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewCollectionNavGraph(val collectionName: String = "")
+data class NewCollectionNavGraph(val id: Int? = null)
 
 @Serializable
-data class NewCollectionRoute(val collectionName: String = "") : Route(route = "newCollectionRoute")
+data class NewCollectionRoute(val id: Int? = null) : Route(route = "newCollectionRoute")
 
 @Serializable
-data class MonsterListRoute(val collectionName: String = "") : Route(route = "monsterListRoute")
+data class MonsterListRoute(val id: Int? = null) : Route(route = "monsterListRoute")
 
 fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
