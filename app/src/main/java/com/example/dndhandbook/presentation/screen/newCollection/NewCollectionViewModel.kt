@@ -10,6 +10,8 @@ import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.domain.useCase.getCollections.GetCollectionsUseCase
+import com.example.dndhandbook.domain.useCase.newCollectionUseCase.NewCollectionUseCase
+import com.example.dndhandbook.domain.useCase.updateCollectionUseCase.UpdateCollectionUseCase
 import com.example.dndhandbook.navigation.NewCollectionRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,15 +29,17 @@ class NewCollectionViewModel @Inject constructor(
     private val monsterRepository: MonsterRepositoryContract,
     private val collectionRepository: CollectionContract,
     private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val newCollectionUseCase: NewCollectionUseCase,
+    private val updateCollectionUseCase: UpdateCollectionUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()
 
-    val data = savedStateHandle.toRoute<NewCollectionRoute>().collectionName
+    val collectionName = savedStateHandle.toRoute<NewCollectionRoute>().collectionName
 
     init {
-        getCollection(collectionName = data)
+        getCollection(collectionName = collectionName)
     }
 
     fun getCollection(collectionName: String) {
@@ -84,13 +88,27 @@ class NewCollectionViewModel @Inject constructor(
     }
 
     fun save() {
-        viewModelScope.launch {
-            val collection = MonsterCollection(
-                name = _uiState.value.collectionName,
-                monsterList = _uiState.value.monsterList,
-            )
-            collectionRepository.saveCollection(collection)
-            _uiState.update { it.copy(saveSuccess = true) }
+        val collectionData = MonsterCollection(
+            name = _uiState.value.collectionName,
+            monsterList = _uiState.value.monsterList,
+        )
+
+        if (collectionName.isBlank()) {
+            newCollectionUseCase.invoke(collectionData).onEach { result ->
+                when (result) {
+                    is Resource.Success -> _uiState.update { it.copy(saveSuccess = true) }
+                    is Resource.Loading -> {}
+                    is Resource.Error -> {}
+                }
+            }.launchIn(viewModelScope)
+        } else {
+            updateCollectionUseCase.invoke(collectionData).onEach { result ->
+                when (result) {
+                    is Resource.Success -> _uiState.update { it.copy(saveSuccess = true) }
+                    is Resource.Loading -> {}
+                    is Resource.Error -> {}
+                }
+            }.launchIn(viewModelScope)
         }
     }
 }

@@ -46,4 +46,8 @@
     <string name="collection_name">Collection name</string>
     <string name="add_creature">Add creature</string>
     <string name="save">Save</string>
+
+    <!--Exceptions-->
+    <string name="duplicate_monster_collection">A collection with this name already exists</string>
+    <string name="not_found_collection_exception">Collection not found</string>
 </resources>
