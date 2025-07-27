@@ -47,7 +47,7 @@ fun MonsterListScreen(
         onItemClick = {
             navController.navigate(
                 MonsterDetailRoute(
-                    collectionName = uiState.collectionName,
+                    collectionId = uiState.collectionId,
                     monsterIndex = it.index,
                     isFromCollection = true,
                 )

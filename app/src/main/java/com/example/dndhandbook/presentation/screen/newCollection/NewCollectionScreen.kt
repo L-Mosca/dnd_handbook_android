@@ -49,26 +49,26 @@ fun NewCollectionScreen(
     if (uiState.saveSuccess) navController.popBackStack()
 
     NewCollection(
-        monsterList = uiState.monsterList,
+        monsterList = uiState.collection.monsterList,
         onBackPressed = { navController.popBackStack() },
         onNameChange = { viewModel.updateCollectionName(it) },
         onAddMonsterPressed = {
             navController.navigate(
-                route = MonsterListRoute(collectionName = uiState.collectionName)
+                route = MonsterListRoute(id = uiState.collection.id)
             )
         },
         onDeleteClicked = { viewModel.deleteMonster(it) },
         onInfoClicked = {
             navController.navigate(
                 MonsterDetailRoute(
-                    collectionName = uiState.collectionName,
+                    collectionId = uiState.collection.id,
                     monsterIndex = it.index,
                     isFromCollection = false,
                 )
             )
         },
         onSaveClicked = { viewModel.save() },
-        collectionName = uiState.collectionName,
+        collectionName = uiState.collection.name,
     )
 }
 
@@ -76,7 +76,7 @@ fun NewCollectionScreen(
 fun NewCollection(
     monsterList: List<DefaultObject> = emptyList(),
     onBackPressed: (() -> Unit)? = null,
-    onNameChange: ((String) -> Unit)? = null,
+    onNameChange: (String) -> Unit = {},
     onAddMonsterPressed: (() -> Unit) = {},
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,

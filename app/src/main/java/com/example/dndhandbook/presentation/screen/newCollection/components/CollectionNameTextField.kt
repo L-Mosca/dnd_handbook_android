@@ -15,7 +15,7 @@ import com.example.dndhandbook.presentation.baseComponents.BaseTextField
 @Composable
 fun CollectionNameTextField(
     text: String = "",
-    onValueChange: ((String) -> Unit)? = null,
+    onValueChange: (String) -> Unit = {},
 ) {
     BaseTextField(
         text = text,
@@ -30,5 +30,5 @@ fun CollectionNameTextField(
 @Preview
 @Composable
 fun CollectionNameTextFieldPreview() {
-    CollectionNameTextField()
+    CollectionNameTextField(text = "test")
 }

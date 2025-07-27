@@ -32,18 +32,18 @@ class MonsterDetailViewModel @Inject constructor(
 
     private var isFromCollection = false
     private var monsterIndex: String
-    private var collectionName: String
+    private var collectionId: Int? = null
 
     init {
         savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
             isFromCollection = args.isFromCollection
             monsterIndex = args.monsterIndex
-            collectionName = args.collectionName
+            collectionId = args.collectionId
 
             _uiState.update {
                 it.copy(
-                    isFromCollection = isFromCollection,
-                    collectionName = collectionName,
+                    isFromCollection = args.isFromCollection,
+                    collectionId = args.collectionId,
                 )
             }
 

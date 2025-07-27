@@ -41,7 +41,7 @@ fun BestiaryScreen(
             navController.navigate(
                 MonsterDetailRoute(
                     monsterIndex = it,
-                    collectionName = "",
+                    collectionId = null,
                     isFromCollection = false,
                 )
             )

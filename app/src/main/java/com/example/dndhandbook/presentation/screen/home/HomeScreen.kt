@@ -52,10 +52,10 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
     Home(
         onBestiaryClicked = { navController.navigate(BestiaryRoute) },
         onNewCollectionClicked = {
-            navController.navigate(NewCollectionNavGraph(""))
+            navController.navigate(NewCollectionNavGraph(null))
         },
         onCollectionClicked = {
-            navController.navigate(NewCollectionNavGraph(it.name))
+            navController.navigate(NewCollectionNavGraph(it.id))
         },
         collectionList = uiState.collectionList,
     )
