@@ -41,7 +41,6 @@ android {
             )
         }
         debug {
-            applicationIdSuffix = ".dev"
             isDebuggable = true
             isMinifyEnabled = false
         }

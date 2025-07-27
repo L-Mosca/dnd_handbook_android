@@ -1,8 +1,7 @@
-package com.example.dndhandbook.domain.useCase.getClassDetail
+package com.example.dndhandbook.domain.useCase.createCharacter.getClasses
 
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.domain.models.class_detail.ClassDetail
-import com.example.dndhandbook.domain.models.class_detail.toClassDetail
+import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.data.repository.character.CharacterRepositoryContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -10,13 +9,13 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetClassDetailUseCase @Inject constructor(private val repository: CharacterRepositoryContract) {
+class GetClassesUseCase @Inject constructor(private val repository: CharacterRepositoryContract) {
 
-    operator fun invoke(index: String): Flow<Resource<ClassDetail>> = flow {
+    operator fun invoke(): Flow<Resource<DefaultList>> = flow {
         try {
             emit(Resource.Loading())
-            val classDetail = repository.fetchClassDetail(index).toClassDetail()
-            emit(Resource.Success(data = classDetail))
+            val classList = repository.fetchClasses()
+            emit(Resource.Success(data = classList))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {

@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Resource
-import com.example.dndhandbook.domain.useCase.getCollection.GetCollectionUseCase
+import com.example.dndhandbook.domain.models.collection.MonsterCollection
+import com.example.dndhandbook.domain.useCase.collection.getCollection.GetCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.getCollections.GetCollectionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,17 +18,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCollectionUseCase: GetCollectionUseCase
+    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val getCollectionUseCase: GetCollectionUseCase,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUIState())
     val uiState: StateFlow<HomeUIState> = _uiState.asStateFlow()
 
     fun getList() {
-        getCollectionUseCase().onEach { resource ->
+        getCollectionsUseCase().onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
-                    Log.e("test", "${resource.data}")
                     _uiState.update {
                         it.copy(collectionList = resource.data ?: emptyList())
                     }
@@ -38,5 +40,17 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun selectCollection(collection: MonsterCollection? = null) {
+        getCollectionUseCase.invoke(collection?.id).onEach { result ->
+            if (result is Resource.Success) {
+                _uiState.update { it.copy(collectionSelected = result.data) }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun resetCollection() {
+        _uiState.update { it.copy(collectionSelected = null) }
     }
 }

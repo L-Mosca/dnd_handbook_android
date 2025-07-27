@@ -8,5 +8,5 @@ data class MonsterDetailState(
     val error: String = "",
     val isFromCollection: Boolean = false,
     val navigateBack: Boolean = false,
-    val collectionId: Int? = null,
+    val collectionId: Long? = null,
 )
