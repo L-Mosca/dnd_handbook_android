@@ -12,4 +12,4 @@ data class DefaultObject(
     val name: String = "",
     @SerializedName("url")
     val url: String = "",
-): Parcelable
+) : Parcelable

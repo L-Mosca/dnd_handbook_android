@@ -9,9 +9,9 @@ import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.Character
 import com.example.dndhandbook.domain.models.base.DefaultList
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.domain.useCase.getClasses.GetClassesUseCase
-import com.example.dndhandbook.domain.useCase.getRaces.GetRacesUseCase
-import com.example.dndhandbook.domain.useCase.getSubRaces.GetSubRacesUseCase
+import com.example.dndhandbook.domain.useCase.createCharacter.getClasses.GetClassesUseCase
+import com.example.dndhandbook.domain.useCase.createCharacter.getRaces.GetRacesUseCase
+import com.example.dndhandbook.domain.useCase.createCharacter.getSubRaces.GetSubRacesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
