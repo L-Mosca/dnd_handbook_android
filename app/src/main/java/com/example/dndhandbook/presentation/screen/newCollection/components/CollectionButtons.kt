@@ -17,7 +17,7 @@ import com.example.dndhandbook.presentation.ui.theme.Black700
 
 @Composable
 fun CollectionButtons(
-    onSaveClicked: (() -> Unit)? = null,
+    //onSaveClicked: (() -> Unit)? = null,
     onDeleteCollectionClicked: (() -> Unit)? = null,
     showDeleteButton: Boolean = true,
 ) {
@@ -30,7 +30,7 @@ fun CollectionButtons(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.padding(vertical = 30.dp, horizontal = 20.dp)
         ) {
-            CollectionSaveButton { onSaveClicked?.invoke() }
+            //CollectionSaveButton { onSaveClicked?.invoke() }
             if (showDeleteButton) CollectionDeleteButton { onDeleteCollectionClicked?.invoke() }
         }
     }
@@ -45,14 +45,14 @@ private fun CollectionDeleteButton(onDeleteClicked: () -> Unit = {}) {
     )
 }
 
-@Composable
+/*@Composable
 private fun CollectionSaveButton(onSaveClicked: () -> Unit = {}) {
     BaseButton(
         text = stringResource(R.string.save),
         onClick = { onSaveClicked.invoke() },
         modifier = Modifier.fillMaxWidth()
     )
-}
+}*/
 
 @Preview
 @Composable
