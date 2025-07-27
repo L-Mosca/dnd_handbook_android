@@ -1,6 +1,6 @@
 package com.example.dndhandbook.data.repository.monster
 
-import com.example.dndhandbook.data.local.PreferencesContract
+import com.example.dndhandbook.data.local.preferences.PreferencesContract
 import com.example.dndhandbook.data.remote.DndApi
 import com.example.dndhandbook.data.remote.dto.monster.MonsterDetailDto
 import com.example.dndhandbook.domain.models.base.DefaultList

@@ -7,11 +7,16 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.0.21"
+    id("androidx.room")
 }
 
 android {
     namespace = "com.example.dndhandbook"
     compileSdk = 36
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         applicationId = "com.example.dndhandbook"
@@ -124,4 +129,10 @@ dependencies {
 
     // Preferences Data Store
     implementation(libs.androidx.datastore.preferences)
+
+    // Room
+    implementation("androidx.room:room-runtime:2.7.2")
+    ksp("androidx.room:room-compiler:2.7.2")
+    implementation("androidx.room:room-ktx:2.7.2")
+    testImplementation("androidx.room:room-testing:2.7.2")
 }
