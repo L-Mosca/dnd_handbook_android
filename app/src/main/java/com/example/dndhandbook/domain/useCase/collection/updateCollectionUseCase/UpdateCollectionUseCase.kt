@@ -18,7 +18,7 @@ class UpdateCollectionUseCase @Inject constructor(
                 val list = data.monsterList?.toMutableList() ?: mutableListOf()
                 list.add(monster)
                 collectionRepository.saveCollection(
-                    data.copy(monsterList = list)
+                    data.copy(monsterList = list.distinct())
                 )
             }
         }
