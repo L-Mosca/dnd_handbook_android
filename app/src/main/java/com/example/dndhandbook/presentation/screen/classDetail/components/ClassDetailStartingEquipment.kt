@@ -28,7 +28,7 @@ fun ClassDetailStartingEquipment(startingEquipments: List<Equipment> = emptyList
         )
         startingEquipments.forEach {
             BaseText(
-                it.equipment.name,
+                text = it.equipment.name,
                 color = Orange800,
             )
         }

@@ -7,11 +7,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.example.dndhandbook.base.BaseActivity
 import com.example.dndhandbook.base.BaseViewModel
-import com.example.dndhandbook.navigation.NavGraph
+import com.example.dndhandbook.navigation.MainNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +21,7 @@ class MainActivity : BaseActivity() {
     override fun ScreenContent() {
         val navController = rememberNavController()
         Surface(color = MaterialTheme.colorScheme.background) {
-            NavGraph(navController = navController)
+            MainNavGraph(navController = navController)
         }
     }
 }

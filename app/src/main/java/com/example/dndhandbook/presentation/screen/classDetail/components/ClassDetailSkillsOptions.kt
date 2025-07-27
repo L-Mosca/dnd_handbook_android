@@ -40,7 +40,7 @@ fun OptionList(option: From) {
             lineColor = Blue800,
         )
         option.options.forEach { proficiency ->
-            BaseText(proficiency.item.name, color = Blue500)
+            BaseText(text = proficiency.item.name, color = Blue500)
         }
     }
 }

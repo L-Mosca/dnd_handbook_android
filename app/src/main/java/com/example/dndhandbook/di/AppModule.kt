@@ -1,12 +1,17 @@
 package com.example.dndhandbook.di
 
 import android.content.Context
+import androidx.room.Room
 import com.example.dndhandbook.BuildConfig
-import com.example.dndhandbook.data.local.PreferencesContract
-import com.example.dndhandbook.data.local.PreferencesHelper
+import com.example.dndhandbook.data.local.database.AppDatabase
+import com.example.dndhandbook.data.local.database.CollectionsDao
+import com.example.dndhandbook.data.local.preferences.PreferencesContract
+import com.example.dndhandbook.data.local.preferences.PreferencesHelper
 import com.example.dndhandbook.data.remote.DndApi
 import com.example.dndhandbook.data.repository.character.CharacterRepository
 import com.example.dndhandbook.data.repository.character.CharacterRepositoryContract
+import com.example.dndhandbook.data.repository.collection.CollectionContract
+import com.example.dndhandbook.data.repository.collection.CollectionRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import dagger.Module
@@ -28,6 +33,22 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesAppDatabase(
+        @ApplicationContext context: Context
+    ): AppDatabase = Room.databaseBuilder(
+        context,
+        AppDatabase::class.java,
+        "dnd-database-${BuildConfig.FLAVOR}-${BuildConfig.BUILD_TYPE}"
+    ).build()
+
+    @Provides
+    @Singleton
+    fun provideCollectionDao(
+        appDatabase: AppDatabase
+    ): CollectionsDao = appDatabase.collectionDao()
+
+    @Provides
+    @Singleton
     fun provideMonsterRepository(dndApi: DndApi): MonsterRepositoryContract {
         return MonsterRepository(dndApi)
     }
@@ -36,6 +57,16 @@ object AppModule {
     @Singleton
     fun provideCharacterRepository(dndApi: DndApi): CharacterRepositoryContract {
         return CharacterRepository(dndApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCollectionRepository(
+        collectionsDao: CollectionsDao
+    ): CollectionContract {
+        return CollectionRepository(
+            collectionsDao = collectionsDao,
+        )
     }
 
     @Provides

@@ -38,12 +38,13 @@ import com.example.dndhandbook.presentation.ui.theme.Transparent
 
 @Composable
 fun BaseSearchTextField(
+    text: String = "",
     hintText: String,
     onValueChange: ((String) -> Unit),
     onSearchClicked: ((String) -> Unit)
 ) {
 
-    var textState by remember { mutableStateOf(TextFieldValue("")) }
+    var textState by remember { mutableStateOf(TextFieldValue(text)) }
     var iconState by remember { mutableStateOf(Icons.Default.Search) }
 
     TextField(

@@ -8,7 +8,7 @@ import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.common.Constants
 import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.class_detail.ClassDetail
-import com.example.dndhandbook.domain.useCase.getClassDetail.GetClassDetailUseCase
+import com.example.dndhandbook.domain.useCase.createCharacter.getClassDetail.GetClassDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -1,6 +1,8 @@
 package com.example.dndhandbook.presentation.baseComponents
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -17,7 +19,7 @@ fun BaseErrorMessage(errorMessage: String = "") {
         fontWeight = FontWeight.W600,
         textAlign = TextAlign.Center,
         textOverflow = TextOverflow.Ellipsis,
-        padding = 20.dp,
+        modifier = Modifier.padding(20.dp),
         color = Crimson800,
     )
 }
