@@ -4,9 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Surface
@@ -14,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,13 +25,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
+import com.example.dndhandbook.presentation.baseComponents.BaseButton
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.baseComponents.gif.BaseGif
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Transparent
 
 @Composable
-fun EmptyContentPlaceHolder(
+fun ErrorContentPlaceHolder(
     modifier: Modifier = Modifier,
     message: String = "",
     fontSize: TextUnit = 20.sp,
@@ -36,6 +40,7 @@ fun EmptyContentPlaceHolder(
     fontStyle: FontStyle = FontStyle.Normal,
     fontWeight: FontWeight = FontWeight.W600,
     textAlign: TextAlign = TextAlign.Center,
+    onTryAgainClicked: () -> Unit = {},
     color: Color = Transparent,
     show: Boolean = true,
 ) {
@@ -52,9 +57,10 @@ fun EmptyContentPlaceHolder(
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(20.dp),
             ) {
                 BaseGif(
-                    gifRes = R.drawable.gif_ghost,
+                    gifRes = R.drawable.gif_error,
                     modifier = Modifier.size(180.dp),
                     contentDescription = message,
                     repeatCount = 0,
@@ -68,6 +74,13 @@ fun EmptyContentPlaceHolder(
                     fontWeight = fontWeight,
                     textAlign = textAlign,
                 )
+                Spacer(Modifier.height(14.dp))
+                BaseButton(
+                    onClick = { onTryAgainClicked.invoke() },
+                    text = stringResource(R.string.try_again),
+                    contentPadding = PaddingValues(horizontal = 20.dp),
+                    fontSize = 18.sp,
+                )
             }
         }
     }
@@ -76,8 +89,8 @@ fun EmptyContentPlaceHolder(
 @Preview
 @Composable
 private fun FadeInPreview() {
-    EmptyContentPlaceHolder(
-        message = "Empty data place holder",
+    ErrorContentPlaceHolder(
+        message = stringResource(R.string.unexpected_error),
         show = false,
     )
 }
@@ -85,8 +98,8 @@ private fun FadeInPreview() {
 @Preview
 @Composable
 private fun FadeOutPreview() {
-    EmptyContentPlaceHolder(
-        message = "Empty data place holder",
+    ErrorContentPlaceHolder(
+        message = stringResource(R.string.unexpected_error),
         show = true,
     )
 }
