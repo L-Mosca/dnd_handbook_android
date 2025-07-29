@@ -28,6 +28,7 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.navigation.BestiaryRoute
 import com.example.dndhandbook.navigation.NewCollectionNavGraph
+import com.example.dndhandbook.presentation.screen.home.components.HomeBestiary
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -82,7 +83,8 @@ private fun Home(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //CreateCharacterButton(navController = navController)
-            BestiaryButton(onBestiaryClicked)
+
+            HomeBestiary(onBestiaryClicked = onBestiaryClicked)
 
             Spacer(Modifier.weight(1f))
 
@@ -93,16 +95,6 @@ private fun Home(
             )
         }
     }
-}
-
-@Composable
-private fun BestiaryButton(onBestiaryClicked: (() -> Unit)? = null) {
-    Image(
-        painter = painterResource(id = R.drawable.img_bestiary),
-        contentDescription = "image from drawable resource",
-        contentScale = ContentScale.Fit,
-        modifier = Modifier.clickable { onBestiaryClicked?.invoke() },
-    )
 }
 
 /*@Composable

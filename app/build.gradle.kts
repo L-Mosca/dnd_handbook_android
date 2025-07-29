@@ -130,8 +130,13 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
 
     // Room
-    implementation("androidx.room:room-runtime:2.7.2")
-    ksp("androidx.room:room-compiler:2.7.2")
-    implementation("androidx.room:room-ktx:2.7.2")
-    testImplementation("androidx.room:room-testing:2.7.2")
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    testImplementation(libs.androidx.room.testing)
+
+    // Coil
+    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+    implementation("io.coil-kt:coil-gif:2.7.0")
 }
