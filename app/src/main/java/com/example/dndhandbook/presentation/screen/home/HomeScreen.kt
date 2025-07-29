@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -30,6 +31,7 @@ import com.example.dndhandbook.navigation.BestiaryRoute
 import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.screen.home.components.HomeBestiary
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
+import com.example.dndhandbook.presentation.ui.theme.Black600
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -78,15 +80,19 @@ private fun Home(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Black800),
+                .background(Black600),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //CreateCharacterButton(navController = navController)
 
-            HomeBestiary(onBestiaryClicked = onBestiaryClicked)
+            Spacer(Modifier
+                .weight(1f)
+                .background(Black800)
+                .fillMaxWidth()
+            )
 
-            Spacer(Modifier.weight(1f))
+            HomeBestiary(onBestiaryClicked = onBestiaryClicked)
 
             HomeCollection(
                 collectionList = collectionList,

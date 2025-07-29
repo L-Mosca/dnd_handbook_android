@@ -17,7 +17,7 @@ import com.example.dndhandbook.presentation.ui.theme.Gray100
 fun BaseText(
     modifier: Modifier = Modifier,
     text: String,
-    fontSize: TextUnit = 14.sp,
+    fontSize: TextUnit = 18.sp,
     color: Color = Gray100,
     fontStyle: FontStyle = FontStyle.Normal,
     fontWeight: FontWeight = FontWeight.W600,
