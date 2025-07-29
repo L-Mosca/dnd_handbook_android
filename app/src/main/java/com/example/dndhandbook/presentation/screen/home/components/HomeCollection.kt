@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,8 +31,8 @@ import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.presentation.baseComponents.BaseText
+import com.example.dndhandbook.presentation.ui.theme.Black600
 import com.example.dndhandbook.presentation.ui.theme.Black700
-import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Gold700
 import com.example.dndhandbook.presentation.ui.theme.Gray100
@@ -44,8 +45,10 @@ fun HomeCollection(
 ) {
     Surface(
         shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-        color = Black700,
-        modifier = Modifier.fillMaxWidth(),
+        color = Black600,
+        modifier = Modifier
+            .fillMaxWidth()
+            .offset(x = 0.dp, y = (-10).dp),
     ) {
         Column(
             modifier = Modifier.padding(20.dp)
@@ -73,7 +76,9 @@ private fun Title(addCollectionClicked: (() -> Unit)? = null) {
             painter = painterResource(R.drawable.ic_add),
             contentDescription = stringResource(R.string.create_new_collection),
             tint = Crimson800,
-            modifier = Modifier.size(30.dp).clickable { addCollectionClicked?.invoke() }
+            modifier = Modifier
+                .size(30.dp)
+                .clickable { addCollectionClicked?.invoke() }
         )
     }
 }
@@ -84,12 +89,12 @@ private fun CollectionList(
     onCollectionClicked: ((MonsterCollection) -> Unit)? = null,
 ) {
     LazyColumn(
-        modifier = Modifier.background(Black700),
+        modifier = Modifier.background(Black600),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         itemsIndexed(collectionList) { index, collection ->
             Surface(
-                color = Black800,
+                color = Black700,
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .fillMaxWidth()
