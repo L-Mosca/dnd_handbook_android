@@ -52,7 +52,6 @@ private fun CollectionSaveButton(onSaveClicked: () -> Unit = {}) {
         onClick = { onSaveClicked.invoke() },
         modifier = Modifier.fillMaxWidth()
     )
-
 }*/
 
 @Preview

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.dndhandbook.presentation.screen.main
 
 import androidx.activity.viewModels

@@ -1,6 +1,7 @@
 <resources>
     <!--Home-->
     <string name="collections">Collections</string>
+    <string name="bestiary">Bestiary</string>
 
     <!--Monster Detail Screen-->
     <string name="armor_class">Armor Class</string>
@@ -19,6 +20,7 @@
 
     <!--Bestiary Screen-->
     <string name="search_monster">Find Monster</string>
+    <string name="none_monster_match">Couldn\'t find any monsters for: %1$s</string>
 
     <!--Create Character Screen-->
     <string name="races">Races</string>
@@ -49,6 +51,15 @@
     <string name="delete">Delete</string>
 
     <!--Exceptions-->
+    <string name="empty_data">None data found</string>
     <string name="duplicate_monster_collection">A collection with this name already exists</string>
     <string name="not_found_collection_exception">Collection not found</string>
+    <string name="not_collections_found">None collections found</string>
+
+    <!--Content Descriptions-->
+    <string name="loading_description">Loading content</string>
+    <string name="unexpected_error">An unexpected error occurred</string>
+    <string name="try_again">Try again</string>
+    <string name="error_description">Error content</string>
+    <string name="gif">GIF</string>
 </resources>
