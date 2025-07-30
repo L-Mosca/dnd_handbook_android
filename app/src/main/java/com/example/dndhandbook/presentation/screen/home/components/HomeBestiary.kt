@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,9 +29,9 @@ fun HomeBestiary(onBestiaryClicked: (() -> Unit)? = null) {
     Surface(
         shape = RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp),
         color = Black700,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().offset(x = 0.dp, y = 10.dp)
     ) {
-        Column(modifier = Modifier.padding(20.dp)) {
+        Column(modifier = Modifier.padding(20.dp).fillMaxWidth()) {
             BaseText(
                 text = stringResource(R.string.bestiary),
                 fontSize = 20.sp,
@@ -41,7 +42,6 @@ fun HomeBestiary(onBestiaryClicked: (() -> Unit)? = null) {
                 rawRes = R.raw.monster_eye_anim,
                 iterations = 1,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
                     .size(180.dp)
                     .clickable { onBestiaryClicked?.invoke() },
