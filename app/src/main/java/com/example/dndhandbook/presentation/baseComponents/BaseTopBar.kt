@@ -63,7 +63,6 @@ private fun BackIcon(onBackPressed: (() -> Unit)? = null, contentDescription: St
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun BaseTopBarPreview() {

@@ -8,7 +8,6 @@ import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.useCase.collection.deleteCollectionUseCase.DeleteCollectionUseCase
 import com.example.dndhandbook.domain.useCase.collection.getCollection.GetCollectionUseCase
-import com.example.dndhandbook.domain.useCase.collection.newCollectionUseCase.NewCollectionUseCase
 import com.example.dndhandbook.domain.useCase.collection.updateCollectionUseCase.UpdateCollectionUseCase
 import com.example.dndhandbook.navigation.NewCollectionRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +25,6 @@ import javax.inject.Inject
 class NewCollectionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getCollectionUseCase: GetCollectionUseCase,
-    private val newCollectionUseCase: NewCollectionUseCase,
     private val deleteCollectionUseCase: DeleteCollectionUseCase,
     private val updateCollectionUseCase: UpdateCollectionUseCase,
 ) : BaseViewModel() {
@@ -67,13 +65,6 @@ class NewCollectionViewModel @Inject constructor(
         viewModelScope.launch {
             delay(1000)
             updateCollectionUseCase.invoke(newData)
-        }
-    }
-
-    fun save() {
-        viewModelScope.launch {
-            newCollectionUseCase.invoke(_uiState.value.collection)
-            _uiState.update { it.copy(saveSuccess = true) }
         }
     }
 
