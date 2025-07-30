@@ -26,39 +26,19 @@ class BestiaryViewModel @Inject constructor(
         getMonsters()
     }
 
-    private fun getMonsters() {
+    fun getMonsters() {
         getMonstersUseCase().onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    _uiState.update {
-                        it.copy(
-                            monsterList = result.data ?: DefaultList(),
-                            filterList = result.data ?: DefaultList(),
-                            isLoading = false,
-                            error = "",
-                        )
-                    }
-                }
-
-                is Resource.Loading -> {
-                    _uiState.update { it.copy(isLoading = true, error = "") }
-                }
-
-                is Resource.Error -> {
-                    _uiState.update {
-                        it.copy(
-                            error = result.message!!,
-                            isLoading = false,
-                            monsterList = DefaultList(),
-                            filterList = DefaultList(),
-                        )
-                    }
-                }
+                is Resource.Success -> addList(result.data ?: DefaultList())
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> showError()
             }
         }.launchIn(viewModelScope)
     }
 
     fun filterMonster(query: String) {
+        _uiState.update { it.copy(filterText = query) }
+
         val filteredList = if (query.isBlank()) {
             _uiState.value.monsterList.results
         } else {
@@ -67,6 +47,52 @@ class BestiaryViewModel @Inject constructor(
             }
         }
 
-        _uiState.update { it.copy(filterList = DefaultList(results = filteredList)) }
+        //_uiState.update { it.copy(filterList = DefaultList(results = filteredList)) }
+        updateFilterList(DefaultList(results = filteredList))
+    }
+
+    private fun addList(list: DefaultList) {
+        _uiState.update {
+            it.copy(
+                monsterList = list,
+                filterList = list,
+                isLoading = false,
+                showError = false,
+                showEmptyList = false,
+            )
+        }
+    }
+
+    private fun updateFilterList(list: DefaultList) {
+        _uiState.update {
+            it.copy(
+                filterList = list,
+                showEmptyList = list.results.isEmpty(),
+                showError = false,
+                isLoading = false,
+            )
+        }
+    }
+
+    private fun showError() {
+        _uiState.update {
+            it.copy(
+                showEmptyList = false,
+                showError = true,
+                isLoading = false,
+                monsterList = DefaultList(),
+                filterList = DefaultList(),
+            )
+        }
+    }
+
+    private fun showLoading() {
+        _uiState.update {
+            it.copy(
+                showEmptyList = false,
+                showError = false,
+                isLoading = true,
+            )
+        }
     }
 }

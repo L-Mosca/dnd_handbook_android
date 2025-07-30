@@ -89,7 +89,7 @@ fun BaseRemoteImage(
 }
 
 @Composable
-fun ErrorPlaceholder(modifier: Modifier, contentDescription: String) {
+private fun ErrorPlaceholder(modifier: Modifier, contentDescription: String) {
     Image(
         painter = painterResource(id = R.drawable.img_monster_error),
         contentDescription = contentDescription,
