@@ -2,15 +2,16 @@ package com.example.dndhandbook.presentation.screen.home
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,13 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.navigation.BestiaryRoute
 import com.example.dndhandbook.navigation.NewCollectionNavGraph
@@ -85,20 +84,33 @@ private fun Home(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             //CreateCharacterButton(navController = navController)
-
-            Spacer(Modifier
-                .weight(1f)
-                .background(Black800)
-                .fillMaxWidth()
+            Spacer(
+                Modifier
+                    .weight(1f)
+                    .background(Black800)
+                    .fillMaxWidth()
             )
 
-            HomeBestiary(onBestiaryClicked = onBestiaryClicked)
+            Box(
+                modifier = Modifier
+                    .background(Black800)
+                    .offset(x = 0.dp, y = 10.dp)
+                    .wrapContentHeight(),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(Black600)
+                        .offset(x = 0.dp, y = (-20).dp)
+                ) {
+                    HomeBestiary(onBestiaryClicked = onBestiaryClicked)
 
-            HomeCollection(
-                collectionList = collectionList,
-                onCollectionClicked = { onCollectionClicked?.invoke(it) },
-                addCollectionClicked = onNewCollectionClicked,
-            )
+                    HomeCollection(
+                        collectionList = collectionList,
+                        onCollectionClicked = { onCollectionClicked?.invoke(it) },
+                        addCollectionClicked = onNewCollectionClicked,
+                    )
+                }
+            }
         }
     }
 }

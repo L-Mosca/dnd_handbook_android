@@ -45,7 +45,7 @@ fun BaseLottieGif(
         cancellationBehavior = LottieCancellationBehavior.OnIterationFinish,
     )
 
-    AnimatedVisibility(visible = show, enter = fadeIn(), exit = fadeOut()) {
+    AnimatedVisibility(visible = show, enter = fadeIn(), exit = fadeOut(), modifier = modifier) {
         LottieAnimation(
             modifier = modifier,
             composition = composition.value,
