@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.baseComponents.BaseText
-import com.example.dndhandbook.presentation.baseComponents.gif.BaseGif
+import com.example.dndhandbook.presentation.baseComponents.gif.BaseLottieGif
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Transparent
 
@@ -53,11 +53,11 @@ fun EmptyContentPlaceHolder(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                BaseGif(
-                    gifRes = R.drawable.gif_ghost,
+                BaseLottieGif(
+                    rawRes = R.raw.ghost_anim,
                     modifier = Modifier.size(180.dp),
-                    contentDescription = message,
-                    repeatCount = 0,
+                    iterations = 1,
+                    show = show,
                 )
                 Spacer(Modifier.height(10.dp))
                 BaseText(

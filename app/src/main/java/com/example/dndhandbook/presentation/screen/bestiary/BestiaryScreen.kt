@@ -15,14 +15,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
-import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
-import com.example.dndhandbook.presentation.baseComponents.BaseLoading
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 import com.example.dndhandbook.presentation.screen.bestiary.components.SearchMonsterField
 import com.example.dndhandbook.presentation.ui.theme.Black800
@@ -46,8 +49,11 @@ fun BestiaryScreen(
                 )
             )
         },
-        errorMessage = uiState.error,
         isLoading = uiState.isLoading,
+        showEmptyList = uiState.showEmptyList,
+        showError = uiState.showError,
+        onTryAgainClicked = { viewModel.getMonsters() },
+        filterText = uiState.filterText,
     )
 }
 
@@ -56,8 +62,11 @@ private fun Bestiary(
     monsterList: List<DefaultObject> = emptyList(),
     onFilterValueChange: ((String) -> Unit)? = null,
     onMonsterSelected: ((String) -> Unit)? = null,
-    errorMessage: String? = null,
     isLoading: Boolean = false,
+    showEmptyList: Boolean = false,
+    showError: Boolean = false,
+    onTryAgainClicked: (() -> Unit)? = null,
+    filterText: String = "",
 ) {
     Scaffold { innerPadding ->
         Box(
@@ -76,8 +85,16 @@ private fun Bestiary(
                 )
             }
 
-            if (!errorMessage.isNullOrBlank()) BaseErrorMessage(errorMessage)
-            if (isLoading) BaseLoading()
+            ErrorContentPlaceHolder(
+                show = showError,
+                message = stringResource(R.string.unexpected_error),
+                onTryAgainClicked = onTryAgainClicked,
+            )
+            EmptyContentPlaceHolder(
+                show = showEmptyList,
+                message = stringResource(R.string.none_monster_match, filterText)
+            )
+            LoadingPlaceHolder(show = isLoading)
         }
     }
 }
@@ -107,5 +124,17 @@ private fun ScreenPreview() {
     val list = mutableListOf<DefaultObject>()
     repeat(20) { list.add(DefaultObject(name = "Nome do Monstro")) }
 
-    Bestiary(monsterList = list)
+    Bestiary(monsterList = list, showEmptyList = false, showError = false)
+}
+
+@Preview
+@Composable
+private fun EmptyListPreview() {
+    Bestiary(showEmptyList = true)
+}
+
+@Preview
+@Composable
+private fun ErrorPreview() {
+    Bestiary(showError = true)
 }

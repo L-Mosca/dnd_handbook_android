@@ -136,7 +136,10 @@ dependencies {
     testImplementation(libs.androidx.room.testing)
 
     // Coil
-    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
-    implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
-    implementation("io.coil-kt:coil-gif:2.7.0")
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.gif)
+
+    // Lottie
+    implementation(libs.lottie.compose)
 }

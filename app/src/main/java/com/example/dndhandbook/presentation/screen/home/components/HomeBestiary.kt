@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.baseComponents.BaseText
-import com.example.dndhandbook.presentation.baseComponents.gif.BaseGif
+import com.example.dndhandbook.presentation.baseComponents.gif.BaseLottieGif
 import com.example.dndhandbook.presentation.ui.theme.Black700
 
 @Composable
@@ -37,10 +37,9 @@ fun HomeBestiary(onBestiaryClicked: (() -> Unit)? = null) {
                 fontWeight = FontWeight.W700,
             )
             Spacer(Modifier.height(50.dp))
-            BaseGif(
-                gifRes = R.drawable.gif_beholder,
-                repeatCount = 0,
-                show = true,
+            BaseLottieGif(
+                rawRes = R.raw.monster_eye_anim,
+                iterations = 1,
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
