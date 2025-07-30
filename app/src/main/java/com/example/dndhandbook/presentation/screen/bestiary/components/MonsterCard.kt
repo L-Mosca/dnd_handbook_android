@@ -33,10 +33,9 @@ fun MonsterCard(monster: DefaultObject, index: Int, onItemClick: (DefaultObject)
 @Composable
 fun MonsterLayout(monster: DefaultObject, index: Int, onItemCLick: (DefaultObject) -> Unit) {
     val colorResourceId = if (index % 2 == 0) Black800 else Black900
-    val color = colorResourceId
     val paddingTop = if (index == 0) 50.dp else 20.dp
     monster.apply {
-        Box(modifier = Modifier.background(color)) {
+        Box(modifier = Modifier.background(colorResourceId)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

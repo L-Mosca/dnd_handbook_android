@@ -28,15 +28,13 @@ fun HexagonBox(
     internalPadding: Dp = 20.dp,
     items: @Composable () -> Unit
 ) {
-    val backgroundColor = color
-    val border = borderColor
 
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.wrapContentSize()
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
-            drawHexagon(backgroundColor, border, borderWidth)
+            drawHexagon(color, borderColor, borderWidth)
         }
         Box(modifier = Modifier.padding(internalPadding)) {
             items()
