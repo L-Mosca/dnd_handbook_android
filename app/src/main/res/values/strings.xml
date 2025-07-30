@@ -20,6 +20,7 @@
 
     <!--Bestiary Screen-->
     <string name="search_monster">Find Monster</string>
+    <string name="none_monster_match">Couldn\'t find any monsters for: %1$s</string>
 
     <!--Create Character Screen-->
     <string name="races">Races</string>
