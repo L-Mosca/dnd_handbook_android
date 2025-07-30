@@ -16,7 +16,7 @@ class CollectionRepository @Inject constructor(
         return collectionsDao.getCollections().map { it.toCollection() }
     }
 
-    override suspend fun getCollection(id: Long): MonsterCollection? {
+    override suspend fun getCollection(id: Long): MonsterCollection {
         return collectionsDao.getCollection(id).toCollection()
     }
 
