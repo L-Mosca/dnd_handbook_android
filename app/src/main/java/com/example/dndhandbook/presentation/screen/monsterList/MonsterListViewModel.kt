@@ -36,43 +36,71 @@ class MonsterListViewModel @Inject constructor(
         getMonsters()
     }
 
-    private fun getMonsters() {
+    fun getMonsters() {
         getMonsterUseCase.invoke().onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    result.data?.let { data ->
-                        _uiState.update {
-                            it.copy(
-                                isLoading = false,
-                                error = "",
-                                monsterList = data,
-                                filterList = data
-                            )
-                        }
-                    }
-                }
-
-                is Resource.Loading -> {
-                    _uiState.update { it.copy(isLoading = true, error = "") }
-                }
-
-                is Resource.Error -> {
-                    _uiState.update { it.copy(isLoading = false, error = result.message ?: "") }
-                }
+                is Resource.Success -> addList(result.data ?: DefaultList())
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> showError()
             }
         }.launchIn(viewModelScope)
     }
 
     fun filterMonster(query: String) {
-        val list = _uiState.value.monsterList.results
+        _uiState.update { it.copy(filterText = query) }
 
-        val filteredList = if (query.isBlank()) list
-        else list.filter { it.name.contains(query, ignoreCase = true) }
+        val filteredList = if (query.isBlank()) {
+            _uiState.value.monsterList.results
+        } else {
+            _uiState.value.monsterList.results.filter {
+                it.name.contains(query, ignoreCase = true)
+            }
+        }
 
+        updateFilterList(DefaultList(results = filteredList))
+    }
+
+    private fun addList(list: DefaultList) {
         _uiState.update {
             it.copy(
-                filterList = DefaultList(results = filteredList),
-                filter = query
+                monsterList = list,
+                filterList = list,
+                isLoading = false,
+                showError = false,
+                showEmptyList = false,
+            )
+        }
+    }
+
+    private fun updateFilterList(list: DefaultList) {
+        _uiState.update {
+            it.copy(
+                filterList = list,
+                showEmptyList = list.results.isEmpty(),
+                showError = false,
+                isLoading = false,
+            )
+        }
+    }
+
+    private fun showError() {
+        _uiState.update {
+            it.copy(
+                showEmptyList = false,
+                showError = true,
+                isLoading = false,
+                monsterList = DefaultList(),
+                filterList = DefaultList(),
+            )
+        }
+    }
+
+    private fun showLoading() {
+        _uiState.update {
+            it.copy(
+                showEmptyList = false,
+                showError = false,
+                isLoading = true,
             )
         }
     }
