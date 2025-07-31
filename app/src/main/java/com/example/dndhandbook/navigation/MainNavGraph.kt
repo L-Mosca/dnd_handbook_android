@@ -27,7 +27,13 @@ fun MainNavGraph(navController: NavHostController) {
 
     NavHost(navController = navController, startDestination = SplashRoute) {
         animatedComposable<SplashRoute> {
-            SplashScreen(navController)
+            SplashScreen(
+                navigateToHome = {
+                    navController.navigate(HomeRoute) {
+                        popUpTo(SplashRoute) { inclusive = true }
+                    }
+                }
+            )
         }
 
         animatedComposable<HomeRoute> {
