@@ -23,4 +23,8 @@ data class MonsterCollection(
             modifiedDate = modifiedDate,
         )
     }
+
+    fun isEmpty(): Boolean {
+        return name.isBlank() && monsterList.isNullOrEmpty()
+    }
 }

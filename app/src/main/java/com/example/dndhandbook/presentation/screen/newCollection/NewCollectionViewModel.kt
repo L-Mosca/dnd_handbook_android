@@ -74,4 +74,12 @@ class NewCollectionViewModel @Inject constructor(
             _uiState.update { it.copy(saveSuccess = true) }
         }
     }
+
+    fun deleteIfIsEmpty() {
+        if (_uiState.value.collection.isEmpty()) {
+            deleteCollection()
+        } else {
+            _uiState.update { it.copy(saveSuccess = true) }
+        }
+    }
 }
