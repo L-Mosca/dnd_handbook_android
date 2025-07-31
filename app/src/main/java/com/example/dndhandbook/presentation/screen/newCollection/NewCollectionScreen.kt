@@ -60,7 +60,6 @@ fun NewCollection(
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
     onDeleteCollectionClicked: (() -> Unit)? = null,
-    //onSaveClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
