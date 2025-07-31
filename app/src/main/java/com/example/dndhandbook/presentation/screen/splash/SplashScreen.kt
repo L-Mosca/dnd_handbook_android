@@ -16,32 +16,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
-import com.example.dndhandbook.navigation.HomeRoute
-import com.example.dndhandbook.navigation.SplashRoute
-import com.example.dndhandbook.presentation.ui.theme.DNDHandbookTheme
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel = hiltViewModel()) {
-
+fun SplashScreen(
+    viewModel: SplashViewModel = hiltViewModel(),
+    navigateToHome: (() -> Unit)? = null,
+) {
     LaunchedEffect(Unit) {
         delay(2000L)
-        goToHomeScreen(navController)
+        navigateToHome?.invoke()
     }
     AppLogo()
-
-}
-
-private fun goToHomeScreen(navController: NavHostController) {
-    navController.navigate(HomeRoute) {
-        popUpTo(SplashRoute) { inclusive = true }
-    }
 }
 
 @Composable
-fun AppLogo() {
+private fun AppLogo() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -58,8 +49,6 @@ fun AppLogo() {
 
 @Preview
 @Composable
-fun ScreenPreview() {
-    DNDHandbookTheme {
-        AppLogo()
-    }
+private fun ScreenPreview() {
+    AppLogo()
 }

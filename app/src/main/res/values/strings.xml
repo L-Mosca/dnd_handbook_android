@@ -50,6 +50,7 @@
     <string name="add_creature">Add creature</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="no_monsters_found">Couldn\'t find any monsters</string>
 
     <!--Exceptions-->
     <string name="empty_data">None data found</string>
