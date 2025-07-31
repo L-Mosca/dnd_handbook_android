@@ -47,7 +47,6 @@ class BestiaryViewModel @Inject constructor(
             }
         }
 
-        //_uiState.update { it.copy(filterList = DefaultList(results = filteredList)) }
         updateFilterList(DefaultList(results = filteredList))
     }
 

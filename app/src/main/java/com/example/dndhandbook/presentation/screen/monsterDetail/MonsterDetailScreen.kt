@@ -12,46 +12,41 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.dndhandbook.domain.models.attributes.GameAttribute
-import com.example.dndhandbook.domain.models.attributes.buildMockList
+import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.domain.models.monster.Actions
+import com.example.dndhandbook.domain.models.monster.ArmorClass
+import com.example.dndhandbook.domain.models.monster.LegendaryActions
+import com.example.dndhandbook.domain.models.monster.MonsterDetail
+import com.example.dndhandbook.domain.models.monster.MonsterProficiency
+import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
+import com.example.dndhandbook.domain.models.monster.SpecialAbilityUsage
 import com.example.dndhandbook.navigation.NewCollectionRoute
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterArmorClass
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterArmorClassPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterAttributes
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterChallenge
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterChallengePreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterDamageImmunities
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterDamageImmunitiesPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterHitPoints
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterHitPointsPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterLanguages
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterLanguagesPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSavingThrows
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSavingThrowsPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSenses
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSensesPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeed
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterSpeedPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.base_components.MonsterImage
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.AddMonsterButton
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.AddMonsterButtonPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterName
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterNamePreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterSubtitle
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data.MonsterSubtitlePreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterActions
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterLegendaryActions
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterLegendaryActionsPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSkills
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSkillsPreview
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilities
-import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilitiesPreview
 import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
@@ -61,8 +56,6 @@ fun MonsterDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    val monsterDetail = uiState.monsterDetail
-
     if (uiState.navigateBack) {
         navController.popBackStack(
             route = NewCollectionRoute(id = uiState.collectionId),
@@ -70,83 +63,154 @@ fun MonsterDetailScreen(
         )
     }
 
+    MonsterDetail(
+        monsterDetail = uiState.monsterDetail,
+        isFromCollection = uiState.isFromCollection,
+        onSaveMonsterClicked = { viewModel.saveMonsterDetail(it) },
+        showLoading = uiState.isLoading,
+        showError = uiState.showError,
+        onTryAgainClicked = { viewModel.getMonsterDetail() },
+    )
+}
+
+@Composable
+private fun MonsterDetail(
+    monsterDetail: MonsterDetail? = null,
+    isFromCollection: Boolean = false,
+    onSaveMonsterClicked: ((DefaultObject) -> Unit)? = null,
+    showLoading: Boolean = false,
+    showError: Boolean = false,
+    onTryAgainClicked: (() -> Unit)? = null,
+) {
     Scaffold { innerPadding ->
         Box(
-            contentAlignment = Alignment.TopCenter,
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .background(Black800)
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-                    .fillMaxSize(),
-            ) {
-                with(monsterDetail) {
-                    item { MonsterName(name) }
-                    item { MonsterSubtitle(size = size, type = type, alignment = alignment) }
-                    if (uiState.isFromCollection) item {
-                        AddMonsterButton(onClick = {
-                            viewModel.saveMonsterDetail(DefaultObject(index, name, url))
-                        })
+            Details(
+                monsterDetail = monsterDetail,
+                isFromCollection = isFromCollection,
+                onSaveMonsterClicked = onSaveMonsterClicked,
+            )
+
+            ErrorContentPlaceHolder(
+                show = showError,
+                message = stringResource(R.string.unexpected_error),
+                onTryAgainClicked = onTryAgainClicked,
+            )
+            LoadingPlaceHolder(show = showLoading)
+        }
+    }
+}
+
+@Composable
+private fun Details(
+    monsterDetail: MonsterDetail? = null,
+    isFromCollection: Boolean = false,
+    onSaveMonsterClicked: ((DefaultObject) -> Unit)?,
+) {
+    monsterDetail?.run {
+        LazyColumn(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                .fillMaxSize(),
+        ) {
+            item { MonsterName(name) }
+            item { MonsterSubtitle(size = size, type = type, alignment = alignment) }
+            item {
+                AddMonsterButton(
+                    isFromCollection = isFromCollection,
+                    onClick = {
+                        onSaveMonsterClicked?.invoke(DefaultObject(index, name, url))
                     }
-                    item { MonsterImage(url = image) }
-                    item { MonsterArmorClass(armorClass) }
-                    item { MonsterHitPoints(hitPoints.toString(), hitDice) }
-                    item { MonsterSpeed(speed) }
-                    item { MonsterAttributes(extractAttributes()) }
-                    item { MonsterSavingThrows(proficiencies) }
-                    item { MonsterSkills(proficiencies) }
-                    item { MonsterDamageImmunities(damageImmunities) }
-                    item { MonsterSenses(senses) }
-                    item { MonsterLanguages(languages) }
-                    item { MonsterChallenge(challengeRating, xp) }
-                    item { MonsterSpecialAbilities(specialAbilities) }
-                    item { MonsterActions(actions) }
-                    item { MonsterLegendaryActions(legendaryActions) }
-                }
+                )
             }
+            item { MonsterImage(url = image) }
+            item { MonsterArmorClass(armorClass) }
+            item { MonsterHitPoints(hitPoints.toString(), hitDice) }
+            item { MonsterSpeed(speed) }
+            item { MonsterAttributes(extractAttributes()) }
+            item { MonsterSavingThrows(proficiencies) }
+            item { MonsterSkills(proficiencies) }
+            item { MonsterDamageImmunities(damageImmunities) }
+            item { MonsterSenses(senses) }
+            item { MonsterLanguages(languages) }
+            item { MonsterChallenge(challengeRating, xp) }
+            item { MonsterSpecialAbilities(specialAbilities) }
+            item { MonsterActions(actions) }
+            item { MonsterLegendaryActions(legendaryActions) }
         }
     }
 }
 
 @Preview
 @Composable
-fun ScreenPreview() {
-    Scaffold { innerPadding ->
-        Box(
-            contentAlignment = Alignment.TopCenter,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Black800)
-                .padding(innerPadding)
-        ) {
-            LazyColumn(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-                    .fillMaxSize(),
-            ) {
-                item { MonsterNamePreview() }
-                item { MonsterSubtitlePreview() }
-                item { AddMonsterButtonPreview() }
-                item { MonsterArmorClassPreview() }
-                item { MonsterHitPointsPreview() }
-                item { MonsterSpeedPreview() }
-                item { MonsterAttributes(basicAttrs = GameAttribute().buildMockList()) }
-                item { MonsterSavingThrowsPreview() }
-                item { MonsterSkillsPreview() }
-                item { MonsterDamageImmunitiesPreview() }
-                item { MonsterSensesPreview() }
-                item { MonsterLanguagesPreview() }
-                item { MonsterChallengePreview() }
-                item { MonsterSpecialAbilitiesPreview() }
-                item { MonsterLegendaryActionsPreview() }
-            }
-        }
-    }
+private fun MonsterDetailPreview() {
+    MonsterDetail(
+        showError = false,
+        showLoading = false,
+        monsterDetail = MonsterDetail(
+            name = "monster name",
+            armorClass = listOf(ArmorClass(type = "type", value = 20)),
+            hitPoints = 10,
+            hitDice = "hit dice",
+            speed = mapOf(Pair("speed", "90 ft")),
+            strength = 10,
+            dexterity = 10,
+            intelligence = 10,
+            charisma = 10,
+            wisdom = 10,
+            constitution = 10,
+            proficiencies = listOf(
+                MonsterProficiency(
+                    value = 10,
+                    proficiency = DefaultObject(name = "proficiency")
+                )
+            ),
+            damageImmunities = listOf("immunity 1", "immunity 2"),
+            senses = mapOf(Pair("sense", "sense")),
+            languages = "languages",
+            challengeRating = 1000.0,
+            xp = 1000,
+            specialAbilities = listOf(
+                MonsterSpecialAbility(
+                    name = "abilities",
+                    desc = "description",
+                    usage = SpecialAbilityUsage(type = "usage", times = 2)
+                )
+            ),
+            actions = listOf(Actions(name = "actions", desc = "Description")),
+            legendaryActions = listOf(
+                LegendaryActions(
+                    name = "legendary actions",
+                    desc = "description"
+                )
+            )
+        ),
+    )
+}
+
+@Preview
+@Composable
+private fun LoadingPreview() {
+    MonsterDetail(
+        showError = false,
+        showLoading = true,
+        monsterDetail = null,
+    )
+}
+
+@Preview
+@Composable
+private fun ErrorPreview() {
+    MonsterDetail(
+        showError = true,
+        showLoading = false,
+        monsterDetail = null,
+    )
 }
