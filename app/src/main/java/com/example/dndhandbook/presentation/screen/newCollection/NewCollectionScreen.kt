@@ -14,12 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
-import com.example.dndhandbook.navigation.MonsterDetailRoute
-import com.example.dndhandbook.navigation.MonsterListRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionButtons
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionMonsterList
@@ -29,8 +26,10 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun NewCollectionScreen(
-    navController: NavHostController,
-    viewModel: NewCollectionViewModel = hiltViewModel()
+    viewModel: NewCollectionViewModel = hiltViewModel(),
+    onBackPressed: (() -> Unit) = {},
+    onAddMonsterPressed: ((Long?) -> Unit) = {},
+    onInfoClicked: ((Long?, String) -> Unit)? = null,
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
@@ -39,29 +38,16 @@ fun NewCollectionScreen(
         viewModel.getCollection()
     }
 
-    if (uiState.saveSuccess) navController.popBackStack()
+    if (uiState.saveSuccess) onBackPressed.invoke()
 
     NewCollection(
         collection = uiState.collection,
-        onBackPressed = { navController.popBackStack() },
+        onBackPressed = { onBackPressed.invoke() },
         onNameChange = { viewModel.updateCollectionName(it) },
-        onAddMonsterPressed = {
-            navController.navigate(
-                route = MonsterListRoute(id = uiState.collection.id)
-            )
-        },
+        onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
         onDeleteClicked = { viewModel.deleteMonster(it) },
-        onInfoClicked = {
-            navController.navigate(
-                MonsterDetailRoute(
-                    collectionId = uiState.collection.id,
-                    monsterIndex = it.index,
-                    isFromCollection = false,
-                )
-            )
-        },
+        onInfoClicked = { onInfoClicked?.invoke(uiState.collection.id, it.index) },
         onDeleteCollectionClicked = { viewModel.deleteCollection() },
-        //onSaveClicked = { viewModel.save() },
     )
 }
 
