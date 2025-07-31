@@ -19,10 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
@@ -32,23 +30,15 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun BestiaryScreen(
-    navController: NavHostController,
-    viewModel: BestiaryViewModel = hiltViewModel()
+    viewModel: BestiaryViewModel = hiltViewModel(),
+    navigateToMonsterDetail: ((String) -> Unit) = {},
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     Bestiary(
         monsterList = uiState.filterList.results,
         onFilterValueChange = { viewModel.filterMonster(it) },
-        onMonsterSelected = {
-            navController.navigate(
-                MonsterDetailRoute(
-                    monsterIndex = it,
-                    collectionId = null,
-                    isFromCollection = false,
-                )
-            )
-        },
+        onMonsterSelected = { navigateToMonsterDetail.invoke(it) },
         isLoading = uiState.isLoading,
         showEmptyList = uiState.showEmptyList,
         showError = uiState.showError,
