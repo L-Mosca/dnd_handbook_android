@@ -32,7 +32,7 @@ class NewCollectionViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()
 
-    val collectionId = savedStateHandle.toRoute<NewCollectionRoute>().id
+    private val collectionId = savedStateHandle.toRoute<NewCollectionRoute>().id
 
     fun getCollection() {
         getCollectionUseCase.invoke(collectionId).onEach { resource ->
