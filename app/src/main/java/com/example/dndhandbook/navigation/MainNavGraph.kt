@@ -31,7 +31,10 @@ fun MainNavGraph(navController: NavHostController) {
         }
 
         animatedComposable<HomeRoute> {
-            HomeScreen(navController)
+            HomeScreen(
+                navigateToCollection = { navController.navigate(NewCollectionNavGraph(it)) },
+                navigateToBestiary = { navController.navigate(BestiaryRoute) },
+            )
         }
 
         createCharNavGraph(navController)
