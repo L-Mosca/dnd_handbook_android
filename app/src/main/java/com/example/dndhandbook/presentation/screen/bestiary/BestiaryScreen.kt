@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
@@ -31,6 +32,7 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 @Composable
 fun BestiaryScreen(
     viewModel: BestiaryViewModel = hiltViewModel(),
+    onBackPressed: (() -> Unit)? = null,
     navigateToMonsterDetail: ((String) -> Unit) = {},
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -44,6 +46,7 @@ fun BestiaryScreen(
         showError = uiState.showError,
         onTryAgainClicked = { viewModel.getMonsters() },
         filterText = uiState.filterText,
+        onBackPressed = { onBackPressed?.invoke() }
     )
 }
 
@@ -57,16 +60,20 @@ private fun Bestiary(
     showError: Boolean = false,
     onTryAgainClicked: (() -> Unit)? = null,
     filterText: String = "",
+    onBackPressed: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            contentAlignment = Alignment.Center
         ) {
             Column(modifier = Modifier.background(Black800)) {
-                Spacer(modifier = Modifier.height(30.dp))
+                BaseTopBar(
+                    title = stringResource(R.string.bestiary),
+                    onBackPressed = onBackPressed,
+                )
                 SearchMonsterField(onValueChanged = { onFilterValueChange?.invoke(it) })
                 Spacer(modifier = Modifier.height((-10).dp))
                 BestiaryList(
