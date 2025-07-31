@@ -21,10 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
-import com.example.dndhandbook.navigation.MonsterDetailRoute
 import com.example.dndhandbook.presentation.baseComponents.BaseSearchTextField
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
@@ -34,8 +32,8 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun MonsterListScreen(
-    navController: NavHostController,
     viewModel: MonsterListViewModel = hiltViewModel(),
+    onMonsterClicked: ((Long?, String) -> Unit)? = null,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -46,15 +44,7 @@ fun MonsterListScreen(
         filterText = uiState.filterText,
         onFilterChange = { viewModel.filterMonster(it) },
         monsterList = uiState.filterList.results,
-        onItemClick = {
-            navController.navigate(
-                MonsterDetailRoute(
-                    collectionId = uiState.collectionId,
-                    monsterIndex = it.index,
-                    isFromCollection = true,
-                )
-            )
-        },
+        onItemClick = { onMonsterClicked?.invoke(uiState.collectionId, it.index) },
         onTryAgainClicked = { viewModel.getMonsters() },
     )
 }
