@@ -21,7 +21,19 @@ fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
     navigation<NewCollectionNavGraph>(startDestination = NewCollectionRoute()) {
         animatedComposable<NewCollectionRoute> {
-            NewCollectionScreen(navController)
+            NewCollectionScreen(
+                onBackPressed = { navController.navigateUp() },
+                onAddMonsterPressed = { navController.navigate(MonsterListRoute(it)) },
+                onInfoClicked = { collectionId, monsterIndex ->
+                    navController.navigate(
+                        MonsterDetailRoute(
+                            collectionId = collectionId,
+                            monsterIndex = monsterIndex,
+                            isFromCollection = false,
+                        )
+                    )
+                }
+            )
         }
 
         animatedComposable<MonsterListRoute> {
