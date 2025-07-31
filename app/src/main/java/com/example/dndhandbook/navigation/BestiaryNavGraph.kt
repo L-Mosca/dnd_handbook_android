@@ -25,11 +25,21 @@ fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {
 
     navigation<BestiaryNavGraph>(startDestination = BestiaryRoute) {
         animatedComposable<BestiaryRoute> {
-            BestiaryScreen(navController)
+            BestiaryScreen(
+                navigateToMonsterDetail = {
+                    navController.navigate(
+                        MonsterDetailRoute(
+                            monsterIndex = it,
+                            collectionId = null,
+                            isFromCollection = false,
+                        )
+                    )
+                }
+            )
         }
 
         animatedComposable<MonsterDetailRoute> {
-            MonsterDetailScreen(navController)
+            MonsterDetailScreen()
         }
     }
 }
