@@ -39,7 +39,9 @@ fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {
         }
 
         animatedComposable<MonsterDetailRoute> {
-            MonsterDetailScreen()
+            MonsterDetailScreen(
+                onBackPressed = { navController.navigateUp() }
+            )
         }
     }
 }

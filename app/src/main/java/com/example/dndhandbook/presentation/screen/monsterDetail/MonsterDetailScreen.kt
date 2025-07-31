@@ -3,9 +3,15 @@ package com.example.dndhandbook.presentation.screen.monsterDetail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -46,13 +52,14 @@ import com.example.dndhandbook.presentation.screen.monsterDetail.components.skil
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSkills
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilities
 import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.presentation.ui.theme.Gray100
 
 @Composable
 fun MonsterDetailScreen(
     viewModel: MonsterDetailViewModel = hiltViewModel(),
     onMonsterAdded: ((Long?) -> Unit)? = null,
-
-    ) {
+    onBackPressed: (() -> Unit)? = null,
+) {
     val uiState by viewModel.uiState.collectAsState()
 
     if (uiState.navigateBack) onMonsterAdded?.invoke(uiState.collectionId)
@@ -64,6 +71,7 @@ fun MonsterDetailScreen(
         showLoading = uiState.isLoading,
         showError = uiState.showError,
         onTryAgainClicked = { viewModel.getMonsterDetail() },
+        onBackPressed = { onBackPressed?.invoke() },
     )
 }
 
@@ -75,6 +83,7 @@ private fun MonsterDetail(
     showLoading: Boolean = false,
     showError: Boolean = false,
     onTryAgainClicked: (() -> Unit)? = null,
+    onBackPressed: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Box(
@@ -88,6 +97,7 @@ private fun MonsterDetail(
                 monsterDetail = monsterDetail,
                 isFromCollection = isFromCollection,
                 onSaveMonsterClicked = onSaveMonsterClicked,
+                onBackPressed = onBackPressed,
             )
 
             ErrorContentPlaceHolder(
@@ -105,39 +115,54 @@ private fun Details(
     monsterDetail: MonsterDetail? = null,
     isFromCollection: Boolean = false,
     onSaveMonsterClicked: ((DefaultObject) -> Unit)?,
+    onBackPressed: (() -> Unit)? = null,
 ) {
+
     monsterDetail?.run {
-        LazyColumn(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-                .fillMaxSize(),
-        ) {
-            item { MonsterName(name) }
-            item { MonsterSubtitle(size = size, type = type, alignment = alignment) }
-            item {
-                AddMonsterButton(
-                    isFromCollection = isFromCollection,
-                    onClick = {
-                        onSaveMonsterClicked?.invoke(DefaultObject(index, name, url))
-                    }
-                )
+        Column {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                IconButton(onClick = { onBackPressed?.invoke() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back),
+                        tint = Gray100,
+                    )
+                }
+                Column(modifier = Modifier.align(Alignment.Center)) {
+                    MonsterName(name)
+                    MonsterSubtitle(size = size, type = type, alignment = alignment)
+                }
             }
-            item { MonsterImage(url = image) }
-            item { MonsterArmorClass(armorClass) }
-            item { MonsterHitPoints(hitPoints.toString(), hitDice) }
-            item { MonsterSpeed(speed) }
-            item { MonsterAttributes(extractAttributes()) }
-            item { MonsterSavingThrows(proficiencies) }
-            item { MonsterSkills(proficiencies) }
-            item { MonsterDamageImmunities(damageImmunities) }
-            item { MonsterSenses(senses) }
-            item { MonsterLanguages(languages) }
-            item { MonsterChallenge(challengeRating, xp) }
-            item { MonsterSpecialAbilities(specialAbilities) }
-            item { MonsterActions(actions) }
-            item { MonsterLegendaryActions(legendaryActions) }
+            LazyColumn(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                    .fillMaxSize(),
+            ) {
+                item {
+                    AddMonsterButton(
+                        isFromCollection = isFromCollection,
+                        onClick = {
+                            onSaveMonsterClicked?.invoke(DefaultObject(index, name, url))
+                        }
+                    )
+                }
+                item { MonsterImage(url = image) }
+                item { MonsterArmorClass(armorClass) }
+                item { MonsterHitPoints(hitPoints.toString(), hitDice) }
+                item { MonsterSpeed(speed) }
+                item { MonsterAttributes(extractAttributes()) }
+                item { MonsterSavingThrows(proficiencies) }
+                item { MonsterSkills(proficiencies) }
+                item { MonsterDamageImmunities(damageImmunities) }
+                item { MonsterSenses(senses) }
+                item { MonsterLanguages(languages) }
+                item { MonsterChallenge(challengeRating, xp) }
+                item { MonsterSpecialAbilities(specialAbilities) }
+                item { MonsterActions(actions) }
+                item { MonsterLegendaryActions(legendaryActions) }
+            }
         }
     }
 }
@@ -150,6 +175,10 @@ private fun MonsterDetailPreview() {
         showLoading = false,
         monsterDetail = MonsterDetail(
             name = "monster name",
+            desc = "monster description",
+            alignment = "chaotic evil",
+            type = "beast",
+            size = "large",
             armorClass = listOf(ArmorClass(type = "type", value = 20)),
             hitPoints = 10,
             hitDice = "hit dice",
