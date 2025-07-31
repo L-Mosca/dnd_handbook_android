@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,6 +37,10 @@ fun NewCollectionScreen(
 
     LaunchedEffect(null) {
         viewModel.getCollection()
+    }
+
+    BackHandler {
+        viewModel.deleteIfIsEmpty()
     }
 
     if (uiState.saveSuccess) onBackPressed.invoke()
