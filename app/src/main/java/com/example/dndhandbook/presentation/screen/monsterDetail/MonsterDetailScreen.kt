@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.attributes.extractAttributes
 import com.example.dndhandbook.domain.models.base.DefaultObject
@@ -27,7 +26,6 @@ import com.example.dndhandbook.domain.models.monster.MonsterDetail
 import com.example.dndhandbook.domain.models.monster.MonsterProficiency
 import com.example.dndhandbook.domain.models.monster.MonsterSpecialAbility
 import com.example.dndhandbook.domain.models.monster.SpecialAbilityUsage
-import com.example.dndhandbook.navigation.NewCollectionRoute
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.attributes.MonsterArmorClass
@@ -51,17 +49,13 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 
 @Composable
 fun MonsterDetailScreen(
-    navController: NavHostController,
-    viewModel: MonsterDetailViewModel = hiltViewModel()
-) {
+    viewModel: MonsterDetailViewModel = hiltViewModel(),
+    onMonsterAdded: ((Long?) -> Unit)? = null,
+
+    ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    if (uiState.navigateBack) {
-        navController.popBackStack(
-            route = NewCollectionRoute(id = uiState.collectionId),
-            inclusive = false,
-        )
-    }
+    if (uiState.navigateBack) onMonsterAdded?.invoke(uiState.collectionId)
 
     MonsterDetail(
         monsterDetail = uiState.monsterDetail,
