@@ -25,9 +25,10 @@ import androidx.navigation.NavHostController
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.navigation.MonsterDetailRoute
-import com.example.dndhandbook.presentation.baseComponents.BaseErrorMessage
-import com.example.dndhandbook.presentation.baseComponents.BaseLoading
 import com.example.dndhandbook.presentation.baseComponents.BaseSearchTextField
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
+import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
 import com.example.dndhandbook.presentation.screen.bestiary.components.MonsterCard
 import com.example.dndhandbook.presentation.ui.theme.Black800
 
@@ -40,8 +41,9 @@ fun MonsterListScreen(
 
     MonsterList(
         isLoading = uiState.isLoading,
-        error = uiState.error,
-        filterText = uiState.filter,
+        showError = uiState.showError,
+        showEmptyPlaceHolder = uiState.showEmptyList,
+        filterText = uiState.filterText,
         onFilterChange = { viewModel.filterMonster(it) },
         monsterList = uiState.filterList.results,
         onItemClick = {
@@ -53,17 +55,20 @@ fun MonsterListScreen(
                 )
             )
         },
+        onTryAgainClicked = { viewModel.getMonsters() },
     )
 }
 
 @Composable
 private fun MonsterList(
     isLoading: Boolean = false,
-    error: String = "",
+    showError: Boolean = false,
+    showEmptyPlaceHolder: Boolean = false,
     filterText: String = "",
     onFilterChange: ((String) -> Unit)? = null,
     monsterList: List<DefaultObject> = emptyList(),
     onItemClick: ((DefaultObject) -> Unit)? = null,
+    onTryAgainClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Box(
@@ -81,8 +86,16 @@ private fun MonsterList(
                 CardList(list = monsterList, onItemClick = onItemClick)
             }
 
-            if (error.isNotBlank()) BaseErrorMessage(errorMessage = error)
-            if (isLoading) BaseLoading()
+            ErrorContentPlaceHolder(
+                show = showError,
+                message = stringResource(R.string.unexpected_error),
+                onTryAgainClicked = onTryAgainClicked,
+            )
+            EmptyContentPlaceHolder(
+                show = showEmptyPlaceHolder,
+                message = stringResource(R.string.none_monster_match, filterText)
+            )
+            LoadingPlaceHolder(show = isLoading)
         }
     }
 }
@@ -125,6 +138,26 @@ private fun CardList(
 
 @Preview
 @Composable
-fun MonsterListScreenPreview() {
-    MonsterList()
+private fun MonsterListScreenPreview() {
+    val list = mutableListOf<DefaultObject>()
+    repeat(20) { list.add(DefaultObject(name = "Nome do Monstro")) }
+
+    MonsterList(
+        monsterList = list,
+        showError = false,
+        showEmptyPlaceHolder = false,
+        isLoading = false,
+    )
+}
+
+@Preview
+@Composable
+private fun MonsterListEmptyPreview() {
+    MonsterList(showEmptyPlaceHolder = true, showError = false)
+}
+
+@Preview
+@Composable
+private fun MonsterListErrorPreview() {
+    MonsterList(showEmptyPlaceHolder = false, showError = true)
 }

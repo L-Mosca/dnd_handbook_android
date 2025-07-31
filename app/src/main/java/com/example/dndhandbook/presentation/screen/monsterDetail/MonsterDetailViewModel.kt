@@ -47,24 +47,16 @@ class MonsterDetailViewModel @Inject constructor(
                 )
             }
 
-            getMonsterDetail(args.monsterIndex)
+            getMonsterDetail()
         }
     }
 
-    private fun getMonsterDetail(monsterIndex: String) {
+    fun getMonsterDetail() {
         getMonsterDetailUseCase(monsterIndex).onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    _uiState.update { it.copy(monsterDetail = result.data ?: MonsterDetail()) }
-                }
-
-                is Resource.Loading -> {
-                    _uiState.update { it.copy(isLoading = true) }
-                }
-
-                is Resource.Error -> {
-                    _uiState.update { it.copy(error = result.message!!) }
-                }
+                is Resource.Success -> showMonsterDetail(result.data ?: MonsterDetail())
+                is Resource.Loading -> showLoading()
+                is Resource.Error -> showError()
             }
         }.launchIn(viewModelScope)
     }
@@ -74,5 +66,23 @@ class MonsterDetailViewModel @Inject constructor(
             updateCollectionUseCase.invoke(collectionId, monster)
             _uiState.update { it.copy(navigateBack = true) }
         }
+    }
+
+    private fun showMonsterDetail(monsterDetail: MonsterDetail) {
+        _uiState.update {
+            it.copy(
+                monsterDetail = monsterDetail,
+                isLoading = false,
+                showError = false,
+            )
+        }
+    }
+
+    private fun showLoading() {
+        _uiState.update { it.copy(isLoading = true, showError = false, monsterDetail = null) }
+    }
+
+    private fun showError() {
+        _uiState.update { it.copy(isLoading = false, showError = true, monsterDetail = null) }
     }
 }
