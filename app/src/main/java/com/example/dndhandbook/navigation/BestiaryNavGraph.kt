@@ -18,14 +18,14 @@ data class MonsterDetailRoute(
     val collectionId: Long? = null,
     val monsterIndex: String,
     val isFromCollection: Boolean
-) :
-    Route(route = "monsterDetailRoute")
+) : Route(route = "monsterDetailRoute")
 
 fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {
 
     navigation<BestiaryNavGraph>(startDestination = BestiaryRoute) {
         animatedComposable<BestiaryRoute> {
             BestiaryScreen(
+                onBackPressed = { navController.navigateUp() },
                 navigateToMonsterDetail = {
                     navController.navigate(
                         MonsterDetailRoute(
