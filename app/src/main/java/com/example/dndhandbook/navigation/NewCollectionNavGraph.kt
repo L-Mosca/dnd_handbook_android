@@ -37,7 +37,17 @@ fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
         }
 
         animatedComposable<MonsterListRoute> {
-            MonsterListScreen(navController)
+            MonsterListScreen(
+                onMonsterClicked = { collectionId, monsterIndex ->
+                    navController.navigate(
+                        MonsterDetailRoute(
+                            collectionId = collectionId,
+                            monsterIndex = monsterIndex,
+                            isFromCollection = true,
+                        )
+                    )
+                }
+            )
         }
 
         animatedComposable<MonsterDetailRoute> {
