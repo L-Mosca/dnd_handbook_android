@@ -51,7 +51,14 @@ fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
         }
 
         animatedComposable<MonsterDetailRoute> {
-            MonsterDetailScreen(navController)
+            MonsterDetailScreen(
+                onMonsterAdded = { collectionId ->
+                    navController.popBackStack(
+                        route = NewCollectionRoute(collectionId),
+                        inclusive = false,
+                    )
+                }
+            )
         }
     }
 }

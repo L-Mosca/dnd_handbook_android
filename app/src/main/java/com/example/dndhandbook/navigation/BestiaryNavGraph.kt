@@ -39,7 +39,7 @@ fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {
         }
 
         animatedComposable<MonsterDetailRoute> {
-            MonsterDetailScreen(navController)
+            MonsterDetailScreen()
         }
     }
 }
