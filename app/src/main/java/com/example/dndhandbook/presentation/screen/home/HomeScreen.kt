@@ -24,10 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
-import com.example.dndhandbook.navigation.BestiaryRoute
-import com.example.dndhandbook.navigation.NewCollectionNavGraph
 import com.example.dndhandbook.presentation.screen.home.components.HomeBestiary
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black600
@@ -35,7 +32,11 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToCollection: ((Long?) -> Unit) = {},
+    navigateToBestiary: (() -> Unit) = {},
+) {
     val context = LocalContext.current
 
     LaunchedEffect(null) {
@@ -53,14 +54,14 @@ fun HomeScreen(navController: NavHostController, viewModel: HomeViewModel = hilt
             .distinctUntilChanged()
             .collect { selected ->
                 selected?.let {
-                    navController.navigate(NewCollectionNavGraph(it.id))
+                    navigateToCollection.invoke(it.id)
                     viewModel.resetCollection()
                 }
             }
     }
 
     Home(
-        onBestiaryClicked = { navController.navigate(BestiaryRoute) },
+        onBestiaryClicked = { navigateToBestiary.invoke() },
         onNewCollectionClicked = { viewModel.selectCollection(null) },
         onCollectionClicked = { viewModel.selectCollection(it) },
         collectionList = uiState.collectionList,
