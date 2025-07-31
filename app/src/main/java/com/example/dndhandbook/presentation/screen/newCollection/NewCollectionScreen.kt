@@ -83,7 +83,6 @@ fun NewCollection(
             )
 
             CollectionButtons(
-                //onSaveClicked = onSaveClicked,
                 onDeleteCollectionClicked = onDeleteCollectionClicked,
                 showDeleteButton = collection.id != null,
             )
@@ -111,6 +110,18 @@ fun NewCollectionScreenPreview() {
                 DefaultObject(name = "Adult brass dragon"),
                 DefaultObject(name = "Adult brass dragon"),
             ),
+        ),
+    )
+}
+
+@Preview
+@Composable
+fun NewCollectionEmptyListPreview() {
+    NewCollection(
+        collection = MonsterCollection(
+            id = 0,
+            name = "collection name",
+            monsterList = emptyList(),
         ),
     )
 }
