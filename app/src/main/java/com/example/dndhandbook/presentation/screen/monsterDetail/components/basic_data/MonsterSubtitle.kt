@@ -1,6 +1,8 @@
 package com.example.dndhandbook.presentation.screen.monsterDetail.components.basic_data
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,7 +18,8 @@ fun MonsterSubtitle(size: String, type: String, alignment: String) {
         fontSize = 14.sp,
         color = Gray400,
         fontWeight = FontWeight.W600,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 

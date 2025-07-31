@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.presentation.baseComponents.BaseSearchTextField
+import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.LoadingPlaceHolder
@@ -34,6 +35,7 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 fun MonsterListScreen(
     viewModel: MonsterListViewModel = hiltViewModel(),
     onMonsterClicked: ((Long?, String) -> Unit)? = null,
+    onBackPressed: (() -> Unit)? = null,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -46,6 +48,7 @@ fun MonsterListScreen(
         monsterList = uiState.filterList.results,
         onItemClick = { onMonsterClicked?.invoke(uiState.collectionId, it.index) },
         onTryAgainClicked = { viewModel.getMonsters() },
+        onBackPressed = { onBackPressed?.invoke() },
     )
 }
 
@@ -59,6 +62,7 @@ private fun MonsterList(
     monsterList: List<DefaultObject> = emptyList(),
     onItemClick: ((DefaultObject) -> Unit)? = null,
     onTryAgainClicked: (() -> Unit)? = null,
+    onBackPressed: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Box(
@@ -70,7 +74,10 @@ private fun MonsterList(
         ) {
 
             Column(modifier = Modifier.fillMaxSize()) {
-                Spacer(Modifier.height(30.dp))
+                BaseTopBar(
+                    title = stringResource(R.string.bestiary),
+                    onBackPressed = onBackPressed,
+                )
                 SearchField(onValueChange = onFilterChange, text = filterText)
                 Spacer(Modifier.height((-10).dp))
                 CardList(list = monsterList, onItemClick = onItemClick)

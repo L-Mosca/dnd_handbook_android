@@ -38,6 +38,7 @@ fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
         animatedComposable<MonsterListRoute> {
             MonsterListScreen(
+                onBackPressed = { navController.navigateUp() },
                 onMonsterClicked = { collectionId, monsterIndex ->
                     navController.navigate(
                         MonsterDetailRoute(
@@ -52,6 +53,7 @@ fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
         animatedComposable<MonsterDetailRoute> {
             MonsterDetailScreen(
+                onBackPressed = { navController.navigateUp() },
                 onMonsterAdded = { collectionId ->
                     navController.popBackStack(
                         route = NewCollectionRoute(collectionId),
