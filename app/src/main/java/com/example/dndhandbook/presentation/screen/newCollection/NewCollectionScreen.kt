@@ -47,7 +47,7 @@ fun NewCollectionScreen(
 
     NewCollection(
         collection = uiState.collection,
-        onBackPressed = { onBackPressed.invoke() },
+        onBackPressed = { viewModel.deleteIfIsEmpty() },
         onNameChange = { viewModel.updateCollectionName(it) },
         onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
         onDeleteClicked = { viewModel.deleteMonster(it) },
