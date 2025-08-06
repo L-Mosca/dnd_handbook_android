@@ -1,18 +1,14 @@
 package com.example.dndhandbook.presentation.screen.monsterDetail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
-import com.example.dndhandbook.common.Resource
 import com.example.dndhandbook.domain.useCase.bestiary.getMonster.GetMonsterUseCase
 import com.example.dndhandbook.navigation.MonsterDetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -42,12 +38,17 @@ class MonsterDetailViewModel @Inject constructor(
     }
 
     fun getMonsterDetail() {
-        getMonsterDetailUseCase(monsterIndex).onEach { result ->
-            when (result) {
-                is Resource.Success -> _uiState.update { it.setMonsterDetail(result.data) }
-                is Resource.Loading -> _uiState.update { it.showLoading() }
-                is Resource.Error -> _uiState.update { it.showError() }
-            }
-        }.launchIn(viewModelScope)
+        defaultLaunch(
+            loadingStatus = { isLoading ->
+                if (isLoading) _uiState.update { it.showLoading() }
+            },
+            exceptionHandler = { _ ->
+                _uiState.update { it.showError() }
+            },
+            function = {
+                val monster = getMonsterDetailUseCase.invoke(monsterIndex)
+                _uiState.update { it.setMonsterDetail(monster) }
+            },
+        )
     }
 }
