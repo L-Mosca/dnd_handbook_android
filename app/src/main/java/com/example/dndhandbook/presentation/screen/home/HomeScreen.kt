@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,7 +29,6 @@ import com.example.dndhandbook.presentation.screen.home.components.HomeCollectio
 import com.example.dndhandbook.presentation.ui.theme.Black600
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.utils.getCollectionSharedViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
 fun HomeScreen(
@@ -53,28 +51,15 @@ fun HomeScreen(
         (context as? Activity)?.moveTaskToBack(true)
     }
 
-    /*LaunchedEffect(Unit) {
-        snapshotFlow { uiState.collectionSelected }
-            .distinctUntilChanged()
-            .collect { selected ->
-                selected?.let {
-                    navigateToCollection.invoke(it.id)
-                    viewModel.resetCollection()
-                }
-            }
-    }*/
-
     Home(
         onBestiaryClicked = { navigateToBestiary.invoke() },
         onNewCollectionClicked = {
             collectionViewModel.setCollection(MonsterCollection.newInstance())
             navigateToCollection.invoke(MonsterCollection.NEW_COLLECTION_ID)
-            //viewModel.selectCollection(null)
         },
         onCollectionClicked = {
             collectionViewModel.setCollection(it)
             navigateToCollection.invoke(it.id)
-            //viewModel.selectCollection(it)
         },
         collectionList = uiState.collectionList,
     )
