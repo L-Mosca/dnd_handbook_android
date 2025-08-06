@@ -66,8 +66,6 @@ fun MonsterDetailScreen(
     val uiState by viewModel.uiState.collectAsState()
     val newCollectionUiState by collectionSharedViewModel.uiState.collectAsState()
 
-    //if (uiState.navigateBack) onMonsterAdded?.invoke(/*uiState.collectionId*/0L)
-
     if (newCollectionUiState.addMonsterSuccess) onMonsterAdded?.invoke(newCollectionUiState.collection.id)
 
     MonsterDetail(
