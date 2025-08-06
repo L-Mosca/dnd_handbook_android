@@ -70,6 +70,10 @@ class CollectionSharedViewModel @Inject constructor(
     fun resetData() {
         _uiState.update { it.resetData() }
     }
+
+    fun resetAddMonsterSuccess() {
+        _uiState.update { it.copy(addMonsterSuccess = false) }
+    }
 }
 
 data class NewCollectionUIState(
