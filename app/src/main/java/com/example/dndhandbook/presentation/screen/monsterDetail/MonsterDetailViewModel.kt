@@ -32,18 +32,18 @@ class MonsterDetailViewModel @Inject constructor(
 
     private var isFromCollection = false
     private var monsterIndex: String
-    private var collectionId: Long? = null
+    //private var collectionId: Long? = null
 
     init {
         savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
             isFromCollection = args.isFromCollection
             monsterIndex = args.monsterIndex
-            collectionId = args.collectionId
+            //collectionId = args.collectionId
 
             _uiState.update {
                 it.copy(
                     isFromCollection = args.isFromCollection,
-                    collectionId = args.collectionId,
+                    //collectionId = args.collectionId,
                 )
             }
 
@@ -63,7 +63,7 @@ class MonsterDetailViewModel @Inject constructor(
 
     fun saveMonsterDetail(monster: DefaultObject) {
         viewModelScope.launch {
-            updateCollectionUseCase.invoke(collectionId, monster)
+            //updateCollectionUseCase.invoke(collectionId, monster)
             _uiState.update { it.copy(navigateBack = true) }
         }
     }

@@ -7,6 +7,8 @@ class DeleteCollectionUseCase @Inject constructor(
     private val collectionRepository: CollectionContract
 ) {
     suspend fun invoke(id: Long?) {
+        if (id == -1L) return
+        
         id?.let {
             collectionRepository.getCollection(it)?.let { collection ->
                 collectionRepository.deleteCollection(collection.id)

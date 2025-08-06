@@ -24,6 +24,7 @@ import com.example.dndhandbook.presentation.screen.newCollection.components.Coll
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
 import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
 @Composable
 fun NewCollectionScreen(
@@ -32,27 +33,28 @@ fun NewCollectionScreen(
     onAddMonsterPressed: ((Long?) -> Unit) = {},
     onInfoClicked: ((Long?, String) -> Unit)? = null,
 ) {
+    val collectionSharedViewModel = getCollectionSharedViewModel()
 
+    val collectionUiState by collectionSharedViewModel.uiState.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(null) {
         viewModel.getCollection()
     }
 
-    BackHandler {
-        viewModel.deleteIfIsEmpty()
-    }
+    if (collectionUiState.deleteSuccess || collectionUiState.saveSuccess) onBackPressed.invoke()
 
     if (uiState.saveSuccess) onBackPressed.invoke()
 
     NewCollection(
-        collection = uiState.collection,
-        onBackPressed = { viewModel.deleteIfIsEmpty() },
-        onNameChange = { viewModel.updateCollectionName(it) },
+        collection = collectionUiState.collection/*uiState.collection*/,
+        onBackPressed = { onBackPressed.invoke()/*viewModel.deleteIfIsEmpty()*/ },
+        onNameChange = { collectionSharedViewModel.updateName(it)/*viewModel.updateCollectionName(it)*/ },
         onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
-        onDeleteClicked = { viewModel.deleteMonster(it) },
+        onDeleteClicked = { collectionSharedViewModel.deleteMonster(it)/*viewModel.deleteMonster(it)*/ },
         onInfoClicked = { onInfoClicked?.invoke(uiState.collection.id, it.index) },
-        onDeleteCollectionClicked = { viewModel.deleteCollection() },
+        onDeleteCollectionClicked = { collectionSharedViewModel.deleteCollection()/*viewModel.deleteCollection()*/ },
+        onSaveCollectionClicked = { collectionSharedViewModel.saveCollection() }
     )
 }
 
@@ -65,6 +67,7 @@ fun NewCollection(
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
     onDeleteCollectionClicked: (() -> Unit)? = null,
+    onSaveCollectionClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -88,6 +91,7 @@ fun NewCollection(
             )
 
             CollectionButtons(
+                onSaveClicked = onSaveCollectionClicked,
                 onDeleteCollectionClicked = onDeleteCollectionClicked,
                 showDeleteButton = collection.id != null,
             )
