@@ -68,7 +68,7 @@ fun HomeScreen(
         onBestiaryClicked = { navigateToBestiary.invoke() },
         onNewCollectionClicked = {
             collectionViewModel.setCollection(MonsterCollection.newInstance())
-            navigateToCollection.invoke(-1L)
+            navigateToCollection.invoke(MonsterCollection.NEW_COLLECTION_ID)
             //viewModel.selectCollection(null)
         },
         onCollectionClicked = {
