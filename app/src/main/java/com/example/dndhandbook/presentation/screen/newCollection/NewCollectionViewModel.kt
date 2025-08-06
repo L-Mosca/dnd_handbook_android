@@ -35,7 +35,7 @@ class NewCollectionViewModel @Inject constructor(
     private val collectionId = savedStateHandle.toRoute<NewCollectionRoute>().id
 
     fun getCollection() {
-        getCollectionUseCase.invoke(collectionId).onEach { resource ->
+        /*getCollectionUseCase.invoke(collectionId).onEach { resource ->
             when (resource) {
                 is Resource.Success -> {
                     resource.data?.let { collection ->
@@ -46,7 +46,7 @@ class NewCollectionViewModel @Inject constructor(
                 is Resource.Loading -> {}
                 is Resource.Error -> {}
             }
-        }.launchIn(viewModelScope)
+        }.launchIn(viewModelScope)*/
     }
 
     fun deleteMonster(monster: DefaultObject) {
@@ -59,27 +59,27 @@ class NewCollectionViewModel @Inject constructor(
         }
     }
 
-    fun updateCollectionName(name: String) {
+   /* fun updateCollectionName(name: String) {
         val newData = _uiState.value.collection.copy(name = name)
         _uiState.update { it.copy(collection = newData) }
         viewModelScope.launch {
             delay(1000)
             updateCollectionUseCase.invoke(newData)
         }
-    }
+    }*/
 
-    fun deleteCollection() {
+    /*fun deleteCollection() {
         viewModelScope.launch {
             deleteCollectionUseCase.invoke(collectionId)
             _uiState.update { it.copy(saveSuccess = true) }
         }
-    }
+    }*/
 
-    fun deleteIfIsEmpty() {
+    /*fun deleteIfIsEmpty() {
         if (_uiState.value.collection.isEmpty()) {
             deleteCollection()
         } else {
             _uiState.update { it.copy(saveSuccess = true) }
         }
-    }
+    }*/
 }

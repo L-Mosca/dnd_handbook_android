@@ -29,6 +29,7 @@ import com.example.dndhandbook.presentation.screen.home.components.HomeBestiary
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black600
 import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.utils.getCollectionSharedViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
@@ -39,8 +40,11 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
 
+    val collectionViewModel = getCollectionSharedViewModel()
+
     LaunchedEffect(null) {
         viewModel.getList()
+        collectionViewModel.resetData()
     }
 
     val uiState by viewModel.uiState.collectAsState()
@@ -49,7 +53,7 @@ fun HomeScreen(
         (context as? Activity)?.moveTaskToBack(true)
     }
 
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         snapshotFlow { uiState.collectionSelected }
             .distinctUntilChanged()
             .collect { selected ->
@@ -58,12 +62,20 @@ fun HomeScreen(
                     viewModel.resetCollection()
                 }
             }
-    }
+    }*/
 
     Home(
         onBestiaryClicked = { navigateToBestiary.invoke() },
-        onNewCollectionClicked = { viewModel.selectCollection(null) },
-        onCollectionClicked = { viewModel.selectCollection(it) },
+        onNewCollectionClicked = {
+            collectionViewModel.setCollection(MonsterCollection.newInstance())
+            navigateToCollection.invoke(-1L)
+            //viewModel.selectCollection(null)
+        },
+        onCollectionClicked = {
+            collectionViewModel.setCollection(it)
+            navigateToCollection.invoke(it.id)
+            //viewModel.selectCollection(it)
+        },
         collectionList = uiState.collectionList,
     )
 }

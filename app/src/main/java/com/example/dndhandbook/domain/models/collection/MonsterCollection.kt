@@ -14,6 +14,18 @@ data class MonsterCollection(
     var modifiedDate: Date = Date(),
 ) : Parcelable {
 
+    companion object {
+        fun newInstance(): MonsterCollection {
+            return MonsterCollection(
+                id = -1,
+                name = "",
+                monsterList = emptyList(),
+                date = Date(),
+                modifiedDate = Date(),
+            )
+        }
+    }
+
     fun toCollectionEntity(): MonsterCollectionEntity {
         return MonsterCollectionEntity(
             id = id ?: 0L,

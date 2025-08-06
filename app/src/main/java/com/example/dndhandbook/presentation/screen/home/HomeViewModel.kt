@@ -42,13 +42,13 @@ class HomeViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun selectCollection(collection: MonsterCollection? = null) {
+    /*fun selectCollection(collection: MonsterCollection? = null) {
         getCollectionUseCase.invoke(collection?.id).onEach { result ->
             if (result is Resource.Success) {
                 _uiState.update { it.copy(collectionSelected = result.data) }
             }
         }.launchIn(viewModelScope)
-    }
+    }*/
 
     fun resetCollection() {
         _uiState.update { it.copy(collectionSelected = null) }

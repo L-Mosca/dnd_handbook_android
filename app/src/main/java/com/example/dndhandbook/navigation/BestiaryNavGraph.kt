@@ -30,7 +30,7 @@ fun NavGraphBuilder.bestiaryNavGraph(navController: NavHostController) {
                     navController.navigate(
                         MonsterDetailRoute(
                             monsterIndex = it,
-                            collectionId = null,
+                            collectionId = 0L,
                             isFromCollection = false,
                         )
                     )

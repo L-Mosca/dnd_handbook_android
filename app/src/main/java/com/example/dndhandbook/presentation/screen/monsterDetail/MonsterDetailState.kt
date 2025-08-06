@@ -7,6 +7,6 @@ data class MonsterDetailState(
     val monsterDetail: MonsterDetail? = null,
     val isFromCollection: Boolean = false,
     val navigateBack: Boolean = false,
-    val collectionId: Long? = null,
+    //val collectionId: Long? = null,
     val showError: Boolean = false,
 )
