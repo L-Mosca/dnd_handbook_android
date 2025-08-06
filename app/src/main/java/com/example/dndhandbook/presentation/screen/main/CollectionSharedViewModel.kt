@@ -1,6 +1,5 @@
 package com.example.dndhandbook.presentation.screen.main
 
-import androidx.lifecycle.viewModelScope
 import com.example.dndhandbook.base.BaseViewModel
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,14 +52,14 @@ class CollectionSharedViewModel @Inject constructor(
     }
 
     fun saveCollection() {
-        viewModelScope.launch {
+        defaultLaunch {
             newCollectionUseCase.invoke(_uiState.value.collection.copy())
             _uiState.update { it.saveSuccess() }
         }
     }
 
     fun deleteCollection() {
-        viewModelScope.launch {
+        defaultLaunch {
             deleteCollectionUseCase.invoke(_uiState.value.collection.id)
             _uiState.update { it.deleteSuccess() }
         }
