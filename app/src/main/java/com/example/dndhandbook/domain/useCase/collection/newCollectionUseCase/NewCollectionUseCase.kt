@@ -8,7 +8,9 @@ class NewCollectionUseCase @Inject constructor(
     private val collectionRepository: CollectionContract,
 ) {
     suspend fun invoke(collection: MonsterCollection): Long? {
-        val data = collection.setupCollectionId()
-        return collectionRepository.saveCollection(data)
+        with(collection) {
+            val data = setupCollectionId()
+            return collectionRepository.saveCollection(data)
+        }
     }
 }
