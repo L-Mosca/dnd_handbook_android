@@ -52,10 +52,12 @@ class CollectionSharedViewModel @Inject constructor(
     }
 
     fun saveCollection() {
-        defaultLaunch {
-            newCollectionUseCase.invoke(_uiState.value.collection.copy())
-            _uiState.update { it.saveSuccess() }
-        }
+        defaultLaunch(
+            function = {
+                newCollectionUseCase.invoke(_uiState.value.collection.copy())
+                _uiState.update { it.saveSuccess() }
+            }
+        )
     }
 
     fun deleteCollection() {
