@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.dndhandbook.presentation.screen.bestiary
 
 import androidx.compose.foundation.background
@@ -9,7 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.presentation.baseComponents.BaseScaffold
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.ErrorContentPlaceHolder
@@ -62,21 +65,30 @@ private fun Bestiary(
     filterText: String = "",
     onBackPressed: (() -> Unit)? = null,
 ) {
-    Scaffold { innerPadding ->
+    BaseScaffold(
+        topBar = { scrollBehavior ->
+            BaseTopBar(
+                title = stringResource(R.string.bestiary),
+                onBackClick = onBackPressed,
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { innerPadding, _ ->
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            Column(modifier = Modifier.background(Black800)) {
-                BaseTopBar(
-                    title = stringResource(R.string.bestiary),
-                    onBackPressed = onBackPressed,
-                )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Black800)
+            ) {
                 SearchMonsterField(onValueChanged = { onFilterValueChange?.invoke(it) })
                 Spacer(modifier = Modifier.height((-10).dp))
                 BestiaryList(
+                    modifier = Modifier.weight(1f),
                     list = monsterList,
                     onMonsterSelected = { onMonsterSelected?.invoke(it) },
                 )
@@ -98,11 +110,12 @@ private fun Bestiary(
 
 @Composable
 private fun BestiaryList(
+    modifier: Modifier = Modifier,
     list: List<DefaultObject>,
     onMonsterSelected: ((String) -> Unit)? = null,
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Black800)
     ) {
