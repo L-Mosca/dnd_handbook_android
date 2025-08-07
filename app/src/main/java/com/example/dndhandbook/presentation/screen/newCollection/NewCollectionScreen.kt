@@ -1,6 +1,5 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
@@ -24,35 +22,33 @@ import com.example.dndhandbook.presentation.screen.newCollection.components.Coll
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
 import com.example.dndhandbook.presentation.ui.theme.Black800
+import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
 @Composable
 fun NewCollectionScreen(
-    viewModel: NewCollectionViewModel = hiltViewModel(),
     onBackPressed: (() -> Unit) = {},
     onAddMonsterPressed: ((Long?) -> Unit) = {},
     onInfoClicked: ((Long?, String) -> Unit)? = null,
 ) {
+    val collectionSharedViewModel = getCollectionSharedViewModel()
 
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by collectionSharedViewModel.uiState.collectAsState()
 
-    LaunchedEffect(null) {
-        viewModel.getCollection()
+    LaunchedEffect(Unit) {
+        collectionSharedViewModel.resetAddMonsterSuccess()
     }
 
-    BackHandler {
-        viewModel.deleteIfIsEmpty()
-    }
-
-    if (uiState.saveSuccess) onBackPressed.invoke()
+    if (uiState.deleteSuccess || uiState.saveSuccess) onBackPressed.invoke()
 
     NewCollection(
         collection = uiState.collection,
-        onBackPressed = { viewModel.deleteIfIsEmpty() },
-        onNameChange = { viewModel.updateCollectionName(it) },
+        onBackPressed = { onBackPressed.invoke() },
+        onNameChange = { collectionSharedViewModel.updateName(it) },
         onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
-        onDeleteClicked = { viewModel.deleteMonster(it) },
+        onDeleteClicked = { collectionSharedViewModel.deleteMonster(it) },
         onInfoClicked = { onInfoClicked?.invoke(uiState.collection.id, it.index) },
-        onDeleteCollectionClicked = { viewModel.deleteCollection() },
+        onDeleteCollectionClicked = { collectionSharedViewModel.deleteCollection() },
+        onSaveCollectionClicked = { collectionSharedViewModel.saveCollection() },
     )
 }
 
@@ -65,6 +61,7 @@ fun NewCollection(
     onDeleteClicked: ((DefaultObject) -> Unit)? = null,
     onInfoClicked: ((DefaultObject) -> Unit)? = null,
     onDeleteCollectionClicked: (() -> Unit)? = null,
+    onSaveCollectionClicked: (() -> Unit)? = null,
 ) {
     Scaffold { innerPadding ->
         Column(
@@ -88,6 +85,7 @@ fun NewCollection(
             )
 
             CollectionButtons(
+                onSaveClicked = onSaveCollectionClicked,
                 onDeleteCollectionClicked = onDeleteCollectionClicked,
                 showDeleteButton = collection.id != null,
             )
