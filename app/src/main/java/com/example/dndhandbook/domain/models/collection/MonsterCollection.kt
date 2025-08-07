@@ -39,10 +39,6 @@ data class MonsterCollection(
         )
     }
 
-    fun isEmpty(): Boolean {
-        return name.isBlank() && monsterList.isNullOrEmpty()
-    }
-
     /**
      * Return new data with correct ID
      *

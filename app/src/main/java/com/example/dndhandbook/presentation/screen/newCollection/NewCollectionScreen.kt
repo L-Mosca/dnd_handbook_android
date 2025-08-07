@@ -31,7 +31,6 @@ fun NewCollectionScreen(
     onInfoClicked: ((Long?, String) -> Unit)? = null,
 ) {
     val collectionSharedViewModel = getCollectionSharedViewModel()
-
     val uiState by collectionSharedViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -63,6 +62,8 @@ fun NewCollection(
     onDeleteCollectionClicked: (() -> Unit)? = null,
     onSaveCollectionClicked: (() -> Unit)? = null,
 ) {
+
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier

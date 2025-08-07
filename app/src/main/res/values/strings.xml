@@ -2,6 +2,7 @@
     <!--Home-->
     <string name="collections">Collections</string>
     <string name="bestiary">Bestiary</string>
+    <string name="bestiary_detail">descriptions and statistics for a wide variety of creatures, monsters, and other beings that players and Dungeon Masters can encounter in their games.</string>
 
     <!--Monster Detail Screen-->
     <string name="armor_class">Armor Class</string>
@@ -51,6 +52,8 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="no_monsters_found">Couldn\'t find any monsters</string>
+    <string name="type_collection_name">Type a name</string>
+    <string name="unnamed_collection">Unnamed collection</string>
 
     <!--Exceptions-->
     <string name="empty_data">None data found</string>
