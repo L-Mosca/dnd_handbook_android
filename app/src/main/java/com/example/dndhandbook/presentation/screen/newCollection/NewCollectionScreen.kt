@@ -1,9 +1,12 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.dndhandbook.presentation.screen.newCollection
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -98,7 +101,7 @@ fun NewCollection(
 private fun TopBar(onBackPressed: (() -> Unit)? = null) {
     BaseTopBar(
         title = stringResource(R.string.create_new_collection),
-        onBackPressed = onBackPressed
+        onBackClick = onBackPressed
     )
 }
 
