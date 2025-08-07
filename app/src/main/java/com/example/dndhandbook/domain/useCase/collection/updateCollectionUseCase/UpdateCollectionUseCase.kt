@@ -3,6 +3,7 @@ package com.example.dndhandbook.domain.useCase.collection.updateCollectionUseCas
 import com.example.dndhandbook.data.repository.collection.CollectionContract
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
+import com.example.dndhandbook.domain.models.collection.isNewCollection
 import javax.inject.Inject
 
 class UpdateCollectionUseCase @Inject constructor(
@@ -13,6 +14,8 @@ class UpdateCollectionUseCase @Inject constructor(
     }
 
     suspend fun invoke(id: Long?, monster: DefaultObject) {
+        if (id.isNewCollection()) return
+
         id?.let {
             collectionRepository.getCollection(it)?.let { data ->
                 val list = data.monsterList?.toMutableList() ?: mutableListOf()

@@ -9,5 +9,33 @@ data class MonsterListUIState(
     val monsterList: DefaultList = DefaultList(),
     val filterList: DefaultList = DefaultList(),
     val filterText: String = "",
-    val collectionId: Long? = null,
-)
+) {
+    fun addList(list: DefaultList) = copy(
+        monsterList = list,
+        filterList = list,
+        isLoading = false,
+        showError = false,
+        showEmptyList = false,
+    )
+
+    fun updateFilterList(list: DefaultList) = copy(
+        filterList = list,
+        showEmptyList = list.results.isEmpty(),
+        showError = false,
+        isLoading = false,
+    )
+
+    fun showError() = copy(
+        showEmptyList = false,
+        showError = true,
+        isLoading = false,
+        monsterList = DefaultList(),
+        filterList = DefaultList(),
+    )
+
+    fun showLoading() = copy(
+        showEmptyList = false,
+        showError = false,
+        isLoading = true,
+    )
+}
