@@ -1,70 +1,65 @@
 package com.example.dndhandbook.presentation.baseComponents
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndhandbook.presentation.ui.theme.Black800
-import com.example.dndhandbook.presentation.ui.theme.Gray100
+import com.example.dndhandbook.presentation.ui.theme.Black700
+import com.example.dndhandbook.presentation.ui.theme.White
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseTopBar(
     modifier: Modifier = Modifier,
-    title: String = "",
-    onBackPressed: (() -> Unit)? = null,
+    title: String,
+    onBackClick: (() -> Unit)? = null,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Black800)
-            .padding(vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        BackIcon(onBackPressed, title)
-        Spacer(Modifier.width(10.dp))
-        Title(title)
-    }
+    TopAppBar(
+        modifier = modifier,
+        title = { Title(title) },
+        navigationIcon = { BackIcon(title, onBackClick) },
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Black700,
+            titleContentColor = White,
+            navigationIconContentColor = White,
+            scrolledContainerColor = Black700,
+        )
+    )
 }
 
 @Composable
 private fun Title(title: String) {
     BaseText(
         text = title,
+        fontSize = 22.sp,
+        fontWeight = FontWeight.W700,
         maxLines = 1,
         textOverflow = TextOverflow.Ellipsis,
-        fontSize = 20.sp,
-        fontWeight = FontWeight.W700
     )
 }
 
 @Composable
-private fun BackIcon(onBackPressed: (() -> Unit)? = null, contentDescription: String = "") {
-    IconButton(onClick = { onBackPressed?.invoke() }) {
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = contentDescription,
-            tint = Gray100,
-        )
+private fun BackIcon(title: String, onBackClick: (() -> Unit)? = null) {
+    IconButton(onClick = onBackClick ?: {}) {
+        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = title)
     }
 }
 
-@Preview
+@ExperimentalMaterial3Api
 @Composable
+@Preview
 fun BaseTopBarPreview() {
-    BaseTopBar(title = "Top bar preview")
+    BaseTopBar(title = "bar title")
 }

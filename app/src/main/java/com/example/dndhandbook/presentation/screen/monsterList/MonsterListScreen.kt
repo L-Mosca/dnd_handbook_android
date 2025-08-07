@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.dndhandbook.presentation.screen.monsterList
 
 import androidx.compose.foundation.background
@@ -11,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.base.DefaultObject
+import com.example.dndhandbook.presentation.baseComponents.BaseScaffold
 import com.example.dndhandbook.presentation.baseComponents.BaseSearchTextField
 import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
 import com.example.dndhandbook.presentation.baseComponents.placeHolders.EmptyContentPlaceHolder
@@ -64,7 +67,15 @@ private fun MonsterList(
     onTryAgainClicked: (() -> Unit)? = null,
     onBackPressed: (() -> Unit)? = null,
 ) {
-    Scaffold { innerPadding ->
+    BaseScaffold(
+        topBar = { scrollBehavior ->
+            BaseTopBar(
+                title = stringResource(R.string.bestiary),
+                onBackClick = onBackPressed,
+                scrollBehavior = scrollBehavior,
+            )
+        }
+    ) { innerPadding, _ ->
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -74,10 +85,6 @@ private fun MonsterList(
         ) {
 
             Column(modifier = Modifier.fillMaxSize()) {
-                BaseTopBar(
-                    title = stringResource(R.string.bestiary),
-                    onBackPressed = onBackPressed,
-                )
                 SearchField(onValueChange = onFilterChange, text = filterText)
                 Spacer(Modifier.height((-10).dp))
                 CardList(list = monsterList, onItemClick = onItemClick)
