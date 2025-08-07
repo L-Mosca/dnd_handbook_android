@@ -6,7 +6,6 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -36,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.presentation.baseComponents.BaseText
-import com.example.dndhandbook.presentation.ui.theme.Black600
 import com.example.dndhandbook.presentation.ui.theme.Black700
+import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Gold700
 import com.example.dndhandbook.presentation.ui.theme.Gray100
@@ -49,10 +46,11 @@ fun HomeCollection(
     addCollectionClicked: (() -> Unit)? = null,
 ) {
     Surface(
-        shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-        color = Black600,
+        shape = RoundedCornerShape(10.dp),
+        color = Black700,
         modifier = Modifier
             .fillMaxWidth()
+            .padding(bottom = 20.dp, start = 20.dp, end = 20.dp)
             .animateContentSize(
                 animationSpec = tween(
                     durationMillis = 500,
@@ -78,7 +76,7 @@ private fun Title(addCollectionClicked: (() -> Unit)? = null) {
     ) {
         BaseText(
             text = stringResource(R.string.collections),
-            fontSize = 20.sp,
+            fontSize = 22.sp,
             fontWeight = FontWeight.W700,
             modifier = Modifier.weight(1f)
         )
@@ -100,20 +98,19 @@ private fun CollectionList(
     show: Boolean = true,
 ) {
     AnimatedVisibility(visible = show, enter = fadeIn(), exit = fadeOut()) {
-        LazyColumn(
-            modifier = Modifier.background(Black600),
+        Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            itemsIndexed(collectionList) { index, collection ->
+            collectionList.forEachIndexed { index, collection ->
                 Surface(
-                    color = Black700,
+                    color = Black800,
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp)
                         .padding(
                             top = if (index == 0) 50.dp else 4.dp,
-                            bottom = if (index == collectionList.lastIndex) 30.dp else 0.dp,
+                            bottom = if (index == collectionList.lastIndex) 10.dp else 0.dp,
                         )
                         .clickable { onCollectionClicked?.invoke(collection) }
                 ) {
@@ -121,8 +118,10 @@ private fun CollectionList(
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
+                        val name =
+                            collection.name.ifBlank { stringResource(R.string.unnamed_collection) }
                         BaseText(
-                            text = collection.name,
+                            text = name,
                             color = Gray100,
                             fontSize = 16.sp,
                             maxLines = 1,
@@ -134,7 +133,7 @@ private fun CollectionList(
 
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                            contentDescription = collection.name,
+                            contentDescription = name,
                             tint = Crimson800,
                             modifier = Modifier.size(width = 30.dp, height = 30.dp)
                         )
