@@ -3,6 +3,7 @@ package com.example.dndhandbook.presentation.baseComponents
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -10,6 +11,8 @@ import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -17,15 +20,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.presentation.ui.theme.White
 import kotlinx.coroutines.launch
 
+@ExperimentalMaterial3Api
 @Composable
 fun BaseScaffold(
     modifier: Modifier = Modifier,
-    topBar: @Composable () -> Unit = {},
+    topBar: @Composable (TopAppBarScrollBehavior) -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
@@ -41,10 +46,12 @@ fun BaseScaffold(
     val snackBarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val currentSnackBarConfig = remember { mutableStateOf<BaseSnackBarConfig?>(null) }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val nestedScrollConnection = scrollBehavior.nestedScrollConnection
 
     Scaffold(
-        modifier = modifier,
-        topBar = topBar,
+        modifier = modifier.nestedScroll(nestedScrollConnection),
+        topBar = { topBar(scrollBehavior) },
         bottomBar = bottomBar,
         snackbarHost = { BuildSnackBar(snackBarHostState, currentSnackBarConfig.value) },
         floatingActionButton = floatingActionButton,
