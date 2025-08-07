@@ -46,7 +46,7 @@ fun MonsterListScreen(
         filterText = uiState.filterText,
         onFilterChange = { viewModel.filterMonster(it) },
         monsterList = uiState.filterList.results,
-        onItemClick = { onMonsterClicked?.invoke(uiState.collectionId, it.index) },
+        onItemClick = { onMonsterClicked?.invoke(/*uiState.collectionId*/0L, it.index) },
         onTryAgainClicked = { viewModel.getMonsters() },
         onBackPressed = { onBackPressed?.invoke() },
     )
