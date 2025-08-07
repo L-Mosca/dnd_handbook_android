@@ -53,6 +53,7 @@ import com.example.dndhandbook.presentation.screen.monsterDetail.components.skil
 import com.example.dndhandbook.presentation.screen.monsterDetail.components.skills.MonsterSpecialAbilities
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.presentation.ui.theme.Gray100
+import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
 @Composable
 fun MonsterDetailScreen(
@@ -60,14 +61,17 @@ fun MonsterDetailScreen(
     onMonsterAdded: ((Long?) -> Unit)? = null,
     onBackPressed: (() -> Unit)? = null,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val collectionSharedViewModel = getCollectionSharedViewModel()
 
-    if (uiState.navigateBack) onMonsterAdded?.invoke(uiState.collectionId)
+    val uiState by viewModel.uiState.collectAsState()
+    val newCollectionUiState by collectionSharedViewModel.uiState.collectAsState()
+
+    if (newCollectionUiState.addMonsterSuccess) onMonsterAdded?.invoke(newCollectionUiState.collection.id)
 
     MonsterDetail(
         monsterDetail = uiState.monsterDetail,
         isFromCollection = uiState.isFromCollection,
-        onSaveMonsterClicked = { viewModel.saveMonsterDetail(it) },
+        onSaveMonsterClicked = { collectionSharedViewModel.addMonster(it) },
         showLoading = uiState.isLoading,
         showError = uiState.showError,
         onTryAgainClicked = { viewModel.getMonsterDetail() },
