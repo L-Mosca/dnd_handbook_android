@@ -121,52 +121,73 @@ private fun Details(
     onSaveMonsterClicked: ((DefaultObject) -> Unit)?,
     onBackPressed: (() -> Unit)? = null,
 ) {
-
     monsterDetail?.run {
         Column {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                IconButton(onClick = { onBackPressed?.invoke() }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back),
-                        tint = Gray100,
-                    )
-                }
-                Column(modifier = Modifier.align(Alignment.Center)) {
-                    MonsterName(name)
-                    MonsterSubtitle(size = size, type = type, alignment = alignment)
-                }
-            }
+            TopBar(
+                onBackPressed = onBackPressed,
+                name = name,
+                size = size,
+                type = type,
+                alignment = alignment,
+            )
+
             LazyColumn(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
             ) {
                 item {
-                    AddMonsterButton(
-                        isFromCollection = isFromCollection,
-                        onClick = {
-                            onSaveMonsterClicked?.invoke(DefaultObject(index, name, url))
-                        }
-                    )
+                    Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+                        AddMonsterButton(
+                            isFromCollection = isFromCollection,
+                            onClick = {
+                                onSaveMonsterClicked?.invoke(DefaultObject(index, name, url))
+                            }
+                        )
+                        MonsterImage(url = image)
+                        MonsterArmorClass(armorClass)
+                        MonsterHitPoints(hitPoints.toString(), hitDice)
+                        MonsterSpeed(speed)
+                        MonsterAttributes(extractAttributes())
+                        MonsterSavingThrows(proficiencies)
+                        MonsterSkills(proficiencies)
+                        MonsterDamageImmunities(damageImmunities)
+                        MonsterSenses(senses)
+                        MonsterLanguages(languages)
+                        MonsterChallenge(challengeRating, xp)
+                        MonsterSpecialAbilities(specialAbilities)
+                        MonsterActions(actions)
+                        MonsterLegendaryActions(legendaryActions)
+                    }
                 }
-                item { MonsterImage(url = image) }
-                item { MonsterArmorClass(armorClass) }
-                item { MonsterHitPoints(hitPoints.toString(), hitDice) }
-                item { MonsterSpeed(speed) }
-                item { MonsterAttributes(extractAttributes()) }
-                item { MonsterSavingThrows(proficiencies) }
-                item { MonsterSkills(proficiencies) }
-                item { MonsterDamageImmunities(damageImmunities) }
-                item { MonsterSenses(senses) }
-                item { MonsterLanguages(languages) }
-                item { MonsterChallenge(challengeRating, xp) }
-                item { MonsterSpecialAbilities(specialAbilities) }
-                item { MonsterActions(actions) }
-                item { MonsterLegendaryActions(legendaryActions) }
             }
+        }
+    }
+}
+
+@Composable
+private fun TopBar(
+    onBackPressed: (() -> Unit)? = null,
+    name: String = "",
+    size: String = "",
+    type: String = "",
+    alignment: String = "",
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp, bottom = 30.dp)
+    ) {
+        IconButton(onClick = onBackPressed ?: {}) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = name,
+                tint = Gray100,
+            )
+        }
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            MonsterName(name)
+            MonsterSubtitle(size = size, type = type, alignment = alignment)
         }
     }
 }
@@ -175,6 +196,7 @@ private fun Details(
 @Composable
 private fun MonsterDetailPreview() {
     MonsterDetail(
+        isFromCollection = true,
         showError = false,
         showLoading = false,
         monsterDetail = MonsterDetail(
