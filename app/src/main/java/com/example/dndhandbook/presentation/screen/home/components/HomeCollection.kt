@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Gold700
 import com.example.dndhandbook.presentation.ui.theme.Gray100
+import com.example.dndhandbook.presentation.ui.theme.Gray300
 
 @Composable
 fun HomeCollection(
@@ -62,6 +64,12 @@ fun HomeCollection(
             modifier = Modifier.padding(20.dp)
         ) {
             Title(addCollectionClicked)
+            BaseText(
+                text = stringResource(R.string.collection_detail), fontSize = 20.sp,
+                textAlign = TextAlign.Start,
+                color = Gray300,
+                modifier = Modifier.padding(top = 12.dp),
+            )
             CollectionList(collectionList, onCollectionClicked, show = collectionList.isNotEmpty())
             CollectionEmptyList(show = collectionList.isEmpty())
         }
@@ -76,7 +84,8 @@ private fun Title(addCollectionClicked: (() -> Unit)? = null) {
     ) {
         BaseText(
             text = stringResource(R.string.collections),
-            fontSize = 22.sp,
+            fontSize = 24.sp,
+            color = Gold700,
             fontWeight = FontWeight.W700,
             modifier = Modifier.weight(1f)
         )
@@ -109,7 +118,7 @@ private fun CollectionList(
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp)
                         .padding(
-                            top = if (index == 0) 50.dp else 4.dp,
+                            top = if (index == 0) 30.dp else 4.dp,
                             bottom = if (index == collectionList.lastIndex) 10.dp else 0.dp,
                         )
                         .clickable { onCollectionClicked?.invoke(collection) }
