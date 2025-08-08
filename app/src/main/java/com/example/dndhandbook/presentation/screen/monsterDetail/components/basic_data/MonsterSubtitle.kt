@@ -11,11 +11,11 @@ import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.ui.theme.Gray400
 
 @Composable
-fun MonsterSubtitle(size: String, type: String, alignment: String) {
+fun MonsterSubtitle(size: String = "", type: String = "", alignment: String = "") {
     if (size.isBlank() && type.isBlank() && alignment.isBlank()) return
     BaseText(
         text = "$size $type, $alignment",
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         color = Gray400,
         fontWeight = FontWeight.W600,
         textAlign = TextAlign.Center,
