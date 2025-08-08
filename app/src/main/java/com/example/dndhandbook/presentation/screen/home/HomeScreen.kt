@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
@@ -32,7 +31,6 @@ import com.example.dndhandbook.presentation.screen.home.components.HomeBestiary
 import com.example.dndhandbook.presentation.screen.home.components.HomeCollection
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
-import com.example.dndhandbook.presentation.ui.theme.White
 import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
 @Composable
@@ -98,7 +96,7 @@ private fun Home(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 6.dp),
+                            .padding(vertical = 10.dp),
                     )
                 }
 

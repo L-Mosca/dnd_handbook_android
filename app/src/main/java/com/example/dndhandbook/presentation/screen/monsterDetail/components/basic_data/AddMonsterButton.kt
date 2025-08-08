@@ -6,7 +6,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,6 +20,7 @@ import com.example.dndhandbook.presentation.baseComponents.BaseButton
 
 @Composable
 fun AddMonsterButton(
+    modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     isFromCollection: Boolean = true,
 ) {
@@ -30,8 +34,11 @@ fun AddMonsterButton(
             BaseButton(
                 text = stringResource(R.string.add_creature),
                 onClick = { onClick?.invoke() },
-                contentPadding = PaddingValues(vertical = 14.dp, horizontal = 10.dp)
-
+                contentPadding = PaddingValues(vertical = 14.dp, horizontal = 10.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth()
+                    .padding(bottom = 20.dp),
             )
         }
     }
