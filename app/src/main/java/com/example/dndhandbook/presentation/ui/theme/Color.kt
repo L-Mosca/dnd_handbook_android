@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Teal200 = Color(0xFF03DAC5)
@@ -18,6 +19,16 @@ val Black600 = Color(0xFF1D1D1D)
 val Black700 = Color(0xFF161616)
 val Black800 = Color(0xFF0A0A0A)
 val Black900 = Color(0xFF000000)
+
+val TopShadow = Color(0xE6000000)
+val MidShadow = Color(0x4D000000)
+val BottomShadow = Color(0x33000000)
+
+val GradientShadowColor = Brush.verticalGradient(
+    colors = listOf(TopShadow, MidShadow, BottomShadow),
+    startY = 0f,
+    endY = Float.POSITIVE_INFINITY
+)
 
 // Gray
 val Gray100 = Color(0xFFE1E1E1)
