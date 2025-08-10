@@ -14,6 +14,8 @@ import com.example.dndhandbook.data.repository.collection.CollectionContract
 import com.example.dndhandbook.data.repository.collection.CollectionRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
+import com.example.dndhandbook.domain.helper.ConnectivityContract
+import com.example.dndhandbook.domain.helper.ConnectivityHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,4 +76,9 @@ object AppModule {
     fun providePreferencesHelper(@ApplicationContext context: Context): PreferencesContract {
         return PreferencesHelper(context)
     }
-}
+
+    @Provides
+    @Singleton
+    fun provideNetworkConnectivityHelper(
+        @ApplicationContext context: Context
+    ): ConnectivityContract = ConnectivityHelper(context)}
