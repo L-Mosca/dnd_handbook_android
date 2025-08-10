@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.example.dndhandbook.domain.models.BestiaryEntity
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollectionEntity
 import com.google.gson.Gson
@@ -11,12 +12,13 @@ import com.google.gson.reflect.TypeToken
 import java.util.Date
 
 @Database(
-    entities = [MonsterCollectionEntity::class],
+    entities = [MonsterCollectionEntity::class, BestiaryEntity::class],
     version = 1,
 )
 @TypeConverters(DateConverter::class, ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun collectionDao(): CollectionsDao
+    abstract fun bestiaryDao(): BestiaryDao
 }
 
 class ListConverter {

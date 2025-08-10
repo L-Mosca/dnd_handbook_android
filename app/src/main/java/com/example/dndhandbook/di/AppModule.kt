@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.dndhandbook.BuildConfig
 import com.example.dndhandbook.data.local.database.AppDatabase
+import com.example.dndhandbook.data.local.database.BestiaryDao
 import com.example.dndhandbook.data.local.database.CollectionsDao
 import com.example.dndhandbook.data.local.preferences.PreferencesContract
 import com.example.dndhandbook.data.local.preferences.PreferencesHelper
@@ -45,14 +46,19 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCollectionDao(
-        appDatabase: AppDatabase
-    ): CollectionsDao = appDatabase.collectionDao()
+    fun provideCollectionDao(appDatabase: AppDatabase): CollectionsDao = appDatabase.collectionDao()
 
     @Provides
     @Singleton
-    fun provideMonsterRepository(dndApi: DndApi): MonsterRepositoryContract {
-        return MonsterRepository(dndApi)
+    fun provideBestiaryDao(appDatabase: AppDatabase): BestiaryDao = appDatabase.bestiaryDao()
+
+    @Provides
+    @Singleton
+    fun provideMonsterRepository(
+        dndApi: DndApi,
+        bestiaryDao: BestiaryDao
+    ): MonsterRepositoryContract {
+        return MonsterRepository(dndApi, bestiaryDao)
     }
 
     @Provides
@@ -81,4 +87,5 @@ object AppModule {
     @Singleton
     fun provideNetworkConnectivityHelper(
         @ApplicationContext context: Context
-    ): ConnectivityContract = ConnectivityHelper(context)}
+    ): ConnectivityContract = ConnectivityHelper(context)
+}
