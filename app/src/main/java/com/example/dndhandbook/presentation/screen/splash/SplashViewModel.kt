@@ -15,13 +15,12 @@ class SplashViewModel @Inject constructor(
     private val monsterRepository: MonsterRepositoryContract
 ) : BaseViewModel() {
 
-    private val _showHome = MutableStateFlow<Boolean>(false)
+    private val _showHome = MutableStateFlow(false)
     val showHome: StateFlow<Boolean> = _showHome.asStateFlow()
 
     init {
         updateBestiaryData()
     }
-
 
     private fun updateBestiaryData() {
         defaultLaunch(
