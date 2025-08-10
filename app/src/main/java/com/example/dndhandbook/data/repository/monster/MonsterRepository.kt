@@ -12,7 +12,7 @@ class MonsterRepository @Inject constructor(
     private val bestiaryDao: BestiaryDao,
 ) : MonsterRepositoryContract {
     override suspend fun fetchAllMonsters(): DefaultList {
-        return dndApi.fetchAllMonsters() ?: DefaultList()
+        return bestiaryDao.getBestiary().toDefaultList()
     }
 
     override suspend fun fetchMonsterDetail(monsterIndex: String): MonsterDetailDto? {
@@ -21,8 +21,12 @@ class MonsterRepository @Inject constructor(
 
     override suspend fun saveAllMonsters() {
         bestiaryDao.clear()
-        val data = fetchAllMonsters()
+        val data = getAllMonstersFromApi()
         val bestiary = BestiaryEntity(count = data.count, results = data.results)
         bestiaryDao.insertBestiary(bestiary)
+    }
+
+    private suspend fun getAllMonstersFromApi(): DefaultList {
+        return dndApi.fetchAllMonsters() ?: DefaultList()
     }
 }
