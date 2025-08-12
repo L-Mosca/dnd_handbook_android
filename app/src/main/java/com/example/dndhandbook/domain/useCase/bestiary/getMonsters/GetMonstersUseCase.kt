@@ -7,7 +7,10 @@ import javax.inject.Inject
 class GetMonstersUseCase @Inject constructor(private val repository: MonsterRepositoryContract) {
 
     suspend fun invoke(): DefaultList {
-        val monsterList = repository.fetchAllMonsters()
-        return monsterList
+        return repository.fetchAllMonsters().apply {
+            if (results.isNotEmpty()) return@apply
+            repository.saveAllMonsters()
+            repository.fetchAllMonsters()
+        }
     }
 }
