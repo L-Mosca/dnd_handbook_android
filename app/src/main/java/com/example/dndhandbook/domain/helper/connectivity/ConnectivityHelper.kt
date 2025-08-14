@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.helper
+package com.example.dndhandbook.domain.helper.connectivity
 
 import android.content.Context
 import android.net.ConnectivityManager

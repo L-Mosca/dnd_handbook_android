@@ -1,4 +1,4 @@
-package com.example.dndhandbook.domain.helper
+package com.example.dndhandbook.domain.helper.connectivity
 
 import kotlinx.coroutines.flow.Flow
 

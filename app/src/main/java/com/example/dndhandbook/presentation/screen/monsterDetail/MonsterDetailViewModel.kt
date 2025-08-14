@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.screen.monsterDetail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.example.dndhandbook.base.BaseViewModel
@@ -24,17 +25,23 @@ class MonsterDetailViewModel @Inject constructor(
     private var isFromCollection = false
     private var monsterIndex: String
 
+    val deepLinkArg: String = savedStateHandle.get<String>("deepLinkMonsterIndex") ?: ""
+
     init {
-        savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
-            isFromCollection = args.isFromCollection
-            monsterIndex = args.monsterIndex
+        Log.e("test", "deepLink: $deepLinkArg")
+        if (deepLinkArg.isNotBlank()) {
+            monsterIndex = deepLinkArg
+        } else {
+            savedStateHandle.toRoute<MonsterDetailRoute>().let { args ->
+                isFromCollection = args.isFromCollection
+                monsterIndex = args.monsterIndex
 
-            _uiState.update {
-                it.copy(isFromCollection = args.isFromCollection)
+                _uiState.update {
+                    it.copy(isFromCollection = args.isFromCollection)
+                }
             }
-
-            getMonsterDetail()
         }
+        getMonsterDetail()
     }
 
     fun getMonsterDetail() {

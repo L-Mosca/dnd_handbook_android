@@ -108,7 +108,9 @@ private fun Home(
                         Column(
                             verticalArrangement = Arrangement.Bottom,
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxSize().padding(top = 30.dp)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(top = 30.dp)
                         ) {
                             //CreateCharacterButton(navController = navController)
                             HomeBestiary(onBestiaryClicked = onBestiaryClicked)
