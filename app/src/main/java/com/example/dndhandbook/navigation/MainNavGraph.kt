@@ -7,9 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.dndhandbook.presentation.screen.home.HomeScreen
+import com.example.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
 import com.example.dndhandbook.presentation.screen.splash.SplashScreen
 import kotlinx.serialization.Serializable
 
@@ -40,6 +44,22 @@ fun MainNavGraph(navController: NavHostController) {
             HomeScreen(
                 navigateToCollection = { navController.navigate(NewCollectionNavGraph(it)) },
                 navigateToBestiary = { navController.navigate(BestiaryRoute) },
+            )
+        }
+
+        composable(
+            route = "monsterDetailDeepRoute/{deepLinkMonsterIndex}",
+            arguments = listOf(
+                navArgument("deepLinkMonsterIndex") { type = NavType.StringType },
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "https://meuapp/monsterDetailDeepRoute/{deepLinkMonsterIndex}"
+                }
+            )
+        ) {
+            MonsterDetailScreen(
+                onBackPressed = { navController.navigateUp() }
             )
         }
 
