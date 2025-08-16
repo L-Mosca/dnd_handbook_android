@@ -37,7 +37,8 @@ class CollectionSharedViewModel @Inject constructor(
         if (newList.contains(monster)) return
 
         newList.add(monster)
-        val newCollection = _uiState.value.collection.copy(monsterList = newList)
+        val newCollection =
+            _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
         _uiState.update { it.addMonsterSuccess(newCollection) }
     }
 
@@ -47,7 +48,8 @@ class CollectionSharedViewModel @Inject constructor(
         if (!newList.contains(monster)) return
         newList.remove(monster)
 
-        val newCollection = _uiState.value.collection.copy(monsterList = newList)
+        val newCollection =
+            _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
         _uiState.update { it.deleteMonsterSuccess(newCollection) }
     }
 
