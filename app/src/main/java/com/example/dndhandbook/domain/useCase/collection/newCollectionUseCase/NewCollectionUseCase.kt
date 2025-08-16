@@ -10,7 +10,9 @@ class NewCollectionUseCase @Inject constructor(
     suspend fun invoke(collection: MonsterCollection): Long? {
         with(collection) {
             val data = setupCollectionId()
-            return collectionRepository.saveCollection(data)
+            return collectionRepository.saveCollection(
+                data.copy(monsterList = data.monsterList?.sortedBy { it.name })
+            )
         }
     }
 }
