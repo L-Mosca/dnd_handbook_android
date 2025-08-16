@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.packaging.defaultExcludes
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -31,6 +33,18 @@ android {
         }
     }
 
+    packaging {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/LICENSE")
+        exclude("META-INF/NOTICE")
+    }
+
+    /*packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE' // Often, LICENSE and NOTICE files also cause conflicts
+        exclude 'META-INF/NOTICE'
+    }*/
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -54,12 +68,14 @@ android {
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "[Dev] D&D Handbook")
             buildConfigField("String", "BASE_DND_URL", "\"https://www.dnd5eapi.co\"")
+            buildConfigField("String", "BASE_DEEP_LINK", "\"https://dnd_handbook/monsterDetailDeepRoute\"")
         }
 
         create("prod") {
             dimension = "version"
             resValue("string", "app_name", "D&D Handbook")
             buildConfigField("String", "BASE_DND_URL", "\"https://www.dnd5eapi.co\"")
+            buildConfigField("String", "BASE_DEEP_LINK", "\"https://dnd_handbook/monsterDetailDeepRoute\"")
         }
     }
 
@@ -142,4 +158,7 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
+
+    // Open PDF
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
 }

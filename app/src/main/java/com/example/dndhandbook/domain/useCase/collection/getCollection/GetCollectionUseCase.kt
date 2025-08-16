@@ -8,7 +8,9 @@ class GetCollectionUseCase @Inject constructor(private val repository: Collectio
 
     suspend fun invoke(id: Long?): MonsterCollection? {
         if (id == null) return null
-
-        return repository.getCollection(id)
+        val collection = repository.getCollection(id)
+        return collection?.copy(
+            monsterList = collection.monsterList?.sortedBy { it.name }
+        )
     }
 }

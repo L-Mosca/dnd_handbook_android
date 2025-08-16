@@ -19,7 +19,11 @@ class SplashViewModel @Inject constructor(
     val showHome: StateFlow<Boolean> = _showHome.asStateFlow()
 
     init {
-        updateBestiaryData()
+        //updateBestiaryData()
+        defaultLaunch {
+            delay(2000)
+            _showHome.update { true }
+        }
     }
 
     private fun updateBestiaryData() {

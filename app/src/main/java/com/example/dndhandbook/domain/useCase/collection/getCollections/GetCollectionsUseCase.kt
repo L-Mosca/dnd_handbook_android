@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class GetCollectionsUseCase @Inject constructor(private val repository: CollectionContract) {
     suspend fun invoke(): List<MonsterCollection> {
-        return repository.getCollections()
+        return repository.getCollections().sortedBy { it.name }
     }
 }
