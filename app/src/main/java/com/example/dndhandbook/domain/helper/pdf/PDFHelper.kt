@@ -52,9 +52,9 @@ class PDFHelper @Inject constructor(
         private const val MONSTERS_TO_OTHER_PAGES = 17
 
         // File constants
-        private const val APPLICATION_PDF = "application/pdf"
+        const val APPLICATION_PDF = "application/pdf"
         private const val FILE_PROVIDER = "fileprovider"
-        private const val PDF_EXTENSION = "pdf"
+        const val PDF_EXTENSION = "pdf"
     }
 
     override fun showPDFPreview(file: File) {
@@ -87,7 +87,8 @@ class PDFHelper @Inject constructor(
         }
 
         context.startActivity(
-            Intent.createChooser(shareIntent, "Compartilhar PDF")
+            Intent.createChooser(shareIntent, context.getString(R.string.share_collection))
+                .apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         )
     }
 

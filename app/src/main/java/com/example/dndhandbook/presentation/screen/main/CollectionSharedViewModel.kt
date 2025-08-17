@@ -1,10 +1,14 @@
 package com.example.dndhandbook.presentation.screen.main
 
+import android.net.Uri
 import com.example.dndhandbook.base.BaseViewModel
+import com.example.dndhandbook.domain.helper.file.FileContract
+import com.example.dndhandbook.domain.helper.pdf.PDFHelper
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
 import com.example.dndhandbook.domain.useCase.collection.deleteCollectionUseCase.DeleteCollectionUseCase
 import com.example.dndhandbook.domain.useCase.collection.newCollectionUseCase.NewCollectionUseCase
+import com.example.dndhandbook.domain.useCase.collection.pdfCollectionUseCase.PDFCollectionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +20,8 @@ import javax.inject.Inject
 class CollectionSharedViewModel @Inject constructor(
     private val newCollectionUseCase: NewCollectionUseCase,
     private val deleteCollectionUseCase: DeleteCollectionUseCase,
+    private val pdfCollectionUseCase: PDFCollectionUseCase,
+    private val fileHelper: FileContract,
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow(NewCollectionUIState())
@@ -75,6 +81,30 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun resetAddMonsterSuccess() {
         _uiState.update { it.copy(addMonsterSuccess = false) }
+    }
+
+    fun shareCollection() {
+        defaultLaunch {
+            newCollectionUseCase.invoke(_uiState.value.collection.copy())
+            pdfCollectionUseCase.shareFile(_uiState.value.collection)
+        }
+    }
+
+    fun downloadCollection(uri: Uri) {
+        defaultLaunch {
+            newCollectionUseCase.invoke(_uiState.value.collection.copy())
+            val file = pdfCollectionUseCase.generatePDF(_uiState.value.collection)
+            fileHelper.saveFile(file, uri)
+        }
+    }
+
+    fun getFileName(): String {
+        if (_uiState.value.collection.name.isBlank()) _uiState.update {
+            it.copy(
+                collection = it.collection.copy(name = "unnamed collection")
+            )
+        }
+        return "${_uiState.value.collection.name}.${PDFHelper.PDF_EXTENSION}"
     }
 }
 
