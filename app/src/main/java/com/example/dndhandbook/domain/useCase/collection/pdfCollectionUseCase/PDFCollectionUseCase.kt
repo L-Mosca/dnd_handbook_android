@@ -15,7 +15,15 @@ class PDFCollectionUseCase @Inject constructor(private val pdfContract: PDFContr
         pdfContract.showPDFPreview(file)
     }
 
+    fun showPreview(collection: MonsterCollection) {
+        pdfContract.showPDFPreview(generatePDF(collection))
+    }
+
     fun shareFile(file: File) {
         pdfContract.sharePDFFile(file)
+    }
+
+    fun shareFile(collection: MonsterCollection) {
+        pdfContract.sharePDFFile(generatePDF(collection))
     }
 }
