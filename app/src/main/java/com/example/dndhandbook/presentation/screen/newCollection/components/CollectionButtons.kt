@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.screen.newCollection.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.example.dndhandbook.R
 import com.example.dndhandbook.presentation.baseComponents.BaseButton
 import com.example.dndhandbook.presentation.ui.theme.Black700
+import com.example.dndhandbook.presentation.ui.theme.Crimson800
+import com.example.dndhandbook.presentation.ui.theme.Transparent
+import com.example.dndhandbook.presentation.ui.theme.White
 
 @Composable
 fun CollectionButtons(
@@ -41,7 +45,10 @@ private fun CollectionDeleteButton(onDeleteClicked: () -> Unit = {}) {
     BaseButton(
         text = stringResource(R.string.delete),
         onClick = { onDeleteClicked.invoke() },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        colors = Transparent,
+        fontColor = White,
+        border = BorderStroke(width = 1.dp, color = Crimson800),
     )
 }
 
