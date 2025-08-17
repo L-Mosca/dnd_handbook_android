@@ -1,5 +1,6 @@
 package com.example.dndhandbook.presentation.baseComponents
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -18,7 +19,7 @@ import com.example.dndhandbook.presentation.ui.theme.Gray100
 
 @Composable
 fun BaseButton(
-    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
     elevation: Dp = 2.dp,
     cornerRadius: Dp = 8.dp,
@@ -27,8 +28,9 @@ fun BaseButton(
     fontSize: TextUnit = 16.sp,
     fontWeight: FontWeight = FontWeight.W600,
     fontColor: Color = Gray100,
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(vertical = 14.dp),
+    border: BorderStroke? = null,
+    onClick: () -> Unit,
 ) {
     Button(
         onClick = onClick,
@@ -38,6 +40,7 @@ fun BaseButton(
         colors = ButtonDefaults.buttonColors(containerColor = colors),
         modifier = modifier,
         contentPadding = contentPadding,
+        border = border,
     ) {
         BaseText(text = text, fontSize = fontSize, fontWeight = fontWeight, color = fontColor)
     }

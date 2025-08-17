@@ -55,6 +55,9 @@
     <string name="no_monsters_found">Couldn\'t find any monsters</string>
     <string name="type_collection_name">Type a name</string>
     <string name="unnamed_collection">Unnamed collection</string>
+    <string name="share">Share</string>
+    <string name="share_collection">Share collection</string>
+    <string name="download">Download</string>
 
     <!--Exceptions-->
     <string name="empty_data">None data found</string>

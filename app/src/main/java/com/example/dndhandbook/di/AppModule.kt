@@ -17,6 +17,10 @@ import com.example.dndhandbook.data.repository.monster.MonsterRepository
 import com.example.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import com.example.dndhandbook.domain.helper.connectivity.ConnectivityContract
 import com.example.dndhandbook.domain.helper.connectivity.ConnectivityHelper
+import com.example.dndhandbook.domain.helper.file.FileContract
+import com.example.dndhandbook.domain.helper.file.FileHelper
+import com.example.dndhandbook.domain.helper.pdf.PDFContract
+import com.example.dndhandbook.domain.helper.pdf.PDFHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -88,4 +92,16 @@ object AppModule {
     fun provideNetworkConnectivityHelper(
         @ApplicationContext context: Context
     ): ConnectivityContract = ConnectivityHelper(context)
+
+    @Provides
+    @Singleton
+    fun provideFileHelper(
+        @ApplicationContext context: Context
+    ): FileContract = FileHelper(context)
+
+    @Provides
+    @Singleton
+    fun providePDFHelper(
+        @ApplicationContext context: Context
+    ): PDFContract = PDFHelper(context)
 }
