@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.presentation.baseComponents.BaseButton
+import com.example.dndhandbook.presentation.baseComponents.button.BaseButton
 import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.baseComponents.gif.BaseLottieGif
 import com.example.dndhandbook.presentation.ui.theme.Crimson800

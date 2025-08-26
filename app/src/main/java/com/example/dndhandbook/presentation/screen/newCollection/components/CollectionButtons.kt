@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.dndhandbook.R
-import com.example.dndhandbook.presentation.baseComponents.BaseButton
+import com.example.dndhandbook.presentation.baseComponents.button.BaseButton
 import com.example.dndhandbook.presentation.ui.theme.Black700
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Transparent
