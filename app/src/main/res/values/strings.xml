@@ -71,4 +71,8 @@
     <string name="try_again">Try again</string>
     <string name="error_description">Error content</string>
     <string name="gif">GIF</string>
+
+    <!--Dialog-->
+    <string name="confirm">Confirm</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

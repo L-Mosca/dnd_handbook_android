@@ -1,4 +1,4 @@
-package com.example.dndhandbook.presentation.baseComponents
+package com.example.dndhandbook.presentation.baseComponents.button
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.dndhandbook.presentation.baseComponents.BaseText
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
 import com.example.dndhandbook.presentation.ui.theme.Gray100
 
