@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -26,6 +27,7 @@ fun BaseText(
     maxLines: Int = Int.MAX_VALUE,
     minLines: Int = 1,
     lineHeight: TextUnit = TextUnit.Unspecified,
+    textDecoration: TextDecoration? = null,
 ) {
     return Text(
         text = text,
@@ -39,6 +41,7 @@ fun BaseText(
         minLines = minLines,
         modifier = modifier,
         lineHeight = lineHeight,
+        textDecoration = textDecoration,
     )
 }
 
