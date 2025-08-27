@@ -26,7 +26,7 @@ import com.example.dndhandbook.presentation.baseComponents.button.BaseButton
 import com.example.dndhandbook.presentation.baseComponents.button.BaseTextButton
 import com.example.dndhandbook.presentation.ui.theme.Black700
 import com.example.dndhandbook.presentation.ui.theme.Crimson800
-import com.example.dndhandbook.presentation.ui.theme.Gold600
+import com.example.dndhandbook.presentation.ui.theme.Gray100
 
 @Composable
 fun BaseAlertDialog(
@@ -104,7 +104,7 @@ private fun Text(text: String) {
     ) {
         BaseText(
             text = text,
-            color = Gold600,
+            color = Gray100,
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.wrapContentWidth()
