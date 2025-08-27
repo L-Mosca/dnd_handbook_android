@@ -100,11 +100,21 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun getFileName(): String {
         if (_uiState.value.collection.name.isBlank()) _uiState.update {
-            it.copy(
-                collection = it.collection.copy(name = "unnamed collection")
-            )
+            it.copy(collection = it.collection.copy(name = "unnamed collection"))
         }
         return "${_uiState.value.collection.name}.${PDFHelper.PDF_EXTENSION}"
+    }
+
+    fun showDownloadDialog(show: Boolean) {
+        _uiState.update { it.copy(showDownloadDialog = show) }
+    }
+
+    fun showShareDialog(show: Boolean) {
+        _uiState.update { it.copy(showShareDialog = show) }
+    }
+
+    fun showSaveSuccess(show: Boolean) {
+        _uiState.update { it.copy(showSaveSuccess = show) }
     }
 }
 
@@ -113,6 +123,9 @@ data class NewCollectionUIState(
     val saveSuccess: Boolean = false,
     val deleteSuccess: Boolean = false,
     val addMonsterSuccess: Boolean = false,
+    val showDownloadDialog: Boolean = false,
+    val showShareDialog: Boolean = false,
+    val showSaveSuccess: Boolean = false,
 ) {
     fun deleteSuccess() = copy(
         collection = MonsterCollection.newInstance(),
