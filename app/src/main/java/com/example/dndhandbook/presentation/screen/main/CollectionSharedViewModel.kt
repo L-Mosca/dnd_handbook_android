@@ -92,6 +92,7 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun downloadCollection(uri: Uri) {
         defaultLaunch {
+            showDownloadDialog(false)
             newCollectionUseCase.invoke(_uiState.value.collection.copy())
             val file = pdfCollectionUseCase.generatePDF(_uiState.value.collection)
             fileHelper.saveFile(file, uri)
@@ -109,12 +110,8 @@ class CollectionSharedViewModel @Inject constructor(
         _uiState.update { it.copy(showDownloadDialog = show) }
     }
 
-    fun showShareDialog(show: Boolean) {
-        _uiState.update { it.copy(showShareDialog = show) }
-    }
-
-    fun showSaveSuccess(show: Boolean) {
-        _uiState.update { it.copy(showSaveSuccess = show) }
+    fun showDeleteDialog(show: Boolean) {
+        _uiState.update { it.copy(showDeleteDialog = show) }
     }
 }
 
@@ -124,14 +121,14 @@ data class NewCollectionUIState(
     val deleteSuccess: Boolean = false,
     val addMonsterSuccess: Boolean = false,
     val showDownloadDialog: Boolean = false,
-    val showShareDialog: Boolean = false,
-    val showSaveSuccess: Boolean = false,
+    val showDeleteDialog: Boolean = false,
 ) {
     fun deleteSuccess() = copy(
         collection = MonsterCollection.newInstance(),
         saveSuccess = false,
         deleteSuccess = true,
         addMonsterSuccess = false,
+        showDeleteDialog = false,
     )
 
     fun saveSuccess() = copy(
@@ -160,5 +157,7 @@ data class NewCollectionUIState(
         saveSuccess = false,
         deleteSuccess = false,
         addMonsterSuccess = false,
+        showDeleteDialog = false,
+        showDownloadDialog = false,
     )
 }
