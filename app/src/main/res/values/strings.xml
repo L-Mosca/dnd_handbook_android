@@ -58,6 +58,7 @@
     <string name="share">Share</string>
     <string name="share_collection">Share collection</string>
     <string name="download">Download</string>
+    <string name="download_collection">Do you want to download collection: <b>%1$s</b></string>
 
     <!--Exceptions-->
     <string name="empty_data">None data found</string>
