@@ -36,12 +36,21 @@ fun BaseAlertDialog(
     dialogText: String,
     icon: @Composable (() -> Unit)? = null,
 ) {
+
+    val title: (@Composable () -> Unit)? = dialogTitle
+        .takeIf { it.isNotBlank() }
+        ?.let { { Title(it) } }
+
+    val text: (@Composable () -> Unit)? = dialogText
+        .takeIf { it.isNotBlank() }
+        ?.let { { Text(it) } }
+
     AlertDialog(
         containerColor = Black700,
         shape = RoundedCornerShape(10.dp),
         icon = icon,
-        title = { Title(dialogTitle) },
-        text = { Text(text = dialogText) },
+        title = title,
+        text = text,
         onDismissRequest = onDismissRequest,
         confirmButton = {
             Row(
