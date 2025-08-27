@@ -6,22 +6,16 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,13 +23,13 @@ import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.helper.pdf.PDFHelper
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
-import com.example.dndhandbook.presentation.baseComponents.BaseTopBar
+import com.example.dndhandbook.presentation.baseComponents.dialog.BaseAlertDialog
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionButtons
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionMonsterList
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
+import com.example.dndhandbook.presentation.screen.newCollection.components.NewCollectionTopBar
 import com.example.dndhandbook.presentation.ui.theme.Black800
-import com.example.dndhandbook.presentation.ui.theme.Gold700
 import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
 @Composable
@@ -51,9 +45,17 @@ fun NewCollectionScreen(
         contract = ActivityResultContracts.CreateDocument(PDFHelper.APPLICATION_PDF)
     ) { uri: Uri? ->
         uri?.let {
+            collectionSharedViewModel.showDownloadDialog(false)
             collectionSharedViewModel.downloadCollection(it)
         }
     }
+
+    ShowDownloadDialog(
+        show = uiState.showDownloadDialog,
+        onConfirmation = { launcher.launch(collectionSharedViewModel.getFileName()) },
+        onDismiss = { collectionSharedViewModel.showDownloadDialog(false) },
+        collectionName = uiState.collection.name,
+    )
 
     LaunchedEffect(Unit) {
         collectionSharedViewModel.resetAddMonsterSuccess()
@@ -70,7 +72,7 @@ fun NewCollectionScreen(
         onInfoClicked = { onInfoClicked?.invoke(uiState.collection.id, it.index) },
         onDeleteCollectionClicked = { collectionSharedViewModel.deleteCollection() },
         onSaveCollectionClicked = { collectionSharedViewModel.saveCollection() },
-        onDownloadPressed = { launcher.launch(collectionSharedViewModel.getFileName()) },
+        onDownloadPressed = { collectionSharedViewModel.showDownloadDialog(true) },
         onSharePressed = { collectionSharedViewModel.shareCollection() },
     )
 }
@@ -87,8 +89,7 @@ fun NewCollection(
     onSaveCollectionClicked: (() -> Unit)? = null,
     onDownloadPressed: (() -> Unit) = {},
     onSharePressed: (() -> Unit) = {},
-
-    ) {
+) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -96,7 +97,7 @@ fun NewCollection(
                 .background(color = Black800)
                 .fillMaxSize(),
         ) {
-            TopBar(onBackPressed, onDownloadPressed, onSharePressed)
+            NewCollectionTopBar(onBackPressed, onDownloadPressed, onSharePressed)
 
             CollectionNameTextField(collection.name, onNameChange)
             CollectionNewMonsterButton(onAddMonsterPressed)
@@ -120,34 +121,19 @@ fun NewCollection(
 }
 
 @Composable
-private fun TopBar(
-    onBackPressed: (() -> Unit)? = null,
-    onDownloadPressed: (() -> Unit) = {},
-    onSharePressed: (() -> Unit) = {},
+private fun ShowDownloadDialog(
+    show: Boolean,
+    onConfirmation: (() -> Unit) = {},
+    onDismiss: (() -> Unit) = {},
+    collectionName: String,
 ) {
-    BaseTopBar(
-        title = stringResource(R.string.create_new_collection),
-        onBackClick = onBackPressed,
-        actions = {
-            Icon(
-                painter = painterResource(R.drawable.ic_download),
-                tint = Gold700,
-                contentDescription = stringResource(R.string.download),
-                modifier = Modifier
-                    .size(28.dp)
-                    .clickable { onDownloadPressed.invoke() },
-            )
-            Spacer(Modifier.width(24.dp))
-            Icon(
-                painter = painterResource(R.drawable.ic_share),
-                tint = Gold700,
-                contentDescription = stringResource(R.string.share),
-                modifier = Modifier
-                    .size(28.dp)
-                    .clickable { onSharePressed.invoke() },
-            )
-            Spacer(Modifier.width(18.dp))
-        },
+    if (!show) return
+
+    BaseAlertDialog(
+        onConfirmation = onConfirmation,
+        onDismissRequest = onDismiss,
+        dialogTitle = stringResource(R.string.download),
+        dialogText = stringResource(R.string.download_collection, collectionName),
     )
 }
 
