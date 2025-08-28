@@ -1,0 +1,43 @@
+package com.moscatech.dndhandbook.presentation.screen.newCollection.components.dialogs
+
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.moscatech.dndhandbook.R
+import com.moscatech.dndhandbook.presentation.baseComponents.dialog.BaseAlertDialog
+import com.moscatech.dndhandbook.presentation.ui.theme.Gold700
+
+@Composable
+fun CollectionDeleteDialog(
+    show: Boolean,
+    onConfirmation: (() -> Unit) = {},
+    onDismiss: (() -> Unit) = {},
+) {
+    if (!show) return
+
+    BaseAlertDialog(
+        onConfirmation = onConfirmation,
+        onDismissRequest = onDismiss,
+        dialogTitle = stringResource(R.string.delete),
+        dialogText = stringResource(R.string.delete_collections),
+        icon = {
+            Icon(
+                painter = painterResource(R.drawable.ic_delete),
+                tint = Gold700,
+                modifier = Modifier.size(50.dp),
+                contentDescription = stringResource(R.string.download)
+            )
+        },
+    )
+}
+
+@Preview
+@Composable
+private fun CollectionDeleteDialogPreview() {
+    CollectionDeleteDialog(show = true)
+}
