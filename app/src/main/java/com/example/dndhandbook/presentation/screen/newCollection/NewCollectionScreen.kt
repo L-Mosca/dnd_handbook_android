@@ -3,6 +3,7 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -16,19 +17,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.dndhandbook.R
 import com.example.dndhandbook.domain.helper.pdf.PDFHelper
 import com.example.dndhandbook.domain.models.base.DefaultObject
 import com.example.dndhandbook.domain.models.collection.MonsterCollection
-import com.example.dndhandbook.presentation.baseComponents.dialog.BaseAlertDialog
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionButtons
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionMonsterList
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
 import com.example.dndhandbook.presentation.screen.newCollection.components.NewCollectionTopBar
+import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionChangesDialog
+import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionDeleteDialog
+import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionDownloadDialog
 import com.example.dndhandbook.presentation.ui.theme.Black800
 import com.example.dndhandbook.utils.getCollectionSharedViewModel
 
@@ -45,17 +46,9 @@ fun NewCollectionScreen(
         contract = ActivityResultContracts.CreateDocument(PDFHelper.APPLICATION_PDF)
     ) { uri: Uri? ->
         uri?.let {
-            collectionSharedViewModel.showDownloadDialog(false)
             collectionSharedViewModel.downloadCollection(it)
         }
     }
-
-    ShowDownloadDialog(
-        show = uiState.showDownloadDialog,
-        onConfirmation = { launcher.launch(collectionSharedViewModel.getFileName()) },
-        onDismiss = { collectionSharedViewModel.showDownloadDialog(false) },
-        collectionName = uiState.collection.name,
-    )
 
     LaunchedEffect(Unit) {
         collectionSharedViewModel.resetAddMonsterSuccess()
@@ -63,14 +56,47 @@ fun NewCollectionScreen(
 
     if (uiState.deleteSuccess || uiState.saveSuccess) onBackPressed.invoke()
 
+    CollectionDownloadDialog(
+        show = uiState.showDownloadDialog,
+        onConfirmation = { launcher.launch(collectionSharedViewModel.getFileName()) },
+        onDismiss = { collectionSharedViewModel.showDownloadDialog(false) },
+        collectionName = uiState.collection.name,
+    )
+
+    CollectionDeleteDialog(
+        show = uiState.showDeleteDialog,
+        onConfirmation = { collectionSharedViewModel.deleteCollection() },
+        onDismiss = { collectionSharedViewModel.showDeleteDialog(false) },
+    )
+
+    CollectionChangesDialog(
+        show = uiState.showChangesDialog,
+        onConfirmation = { collectionSharedViewModel.saveCollection() },
+        onDismiss = {
+            collectionSharedViewModel.showChangesDialog(false)
+            onBackPressed.invoke()
+        }
+    )
+
+    BackHandler {
+        if (collectionSharedViewModel.hasChanges()) {
+            collectionSharedViewModel.showChangesDialog(true)
+        } else onBackPressed.invoke()
+
+    }
+
     NewCollection(
         collection = uiState.collection,
-        onBackPressed = { onBackPressed.invoke() },
+        onBackPressed = {
+            if (collectionSharedViewModel.hasChanges()) {
+                collectionSharedViewModel.showChangesDialog(true)
+            } else onBackPressed.invoke()
+        },
         onNameChange = { collectionSharedViewModel.updateName(it) },
         onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
         onDeleteClicked = { collectionSharedViewModel.deleteMonster(it) },
         onInfoClicked = { onInfoClicked?.invoke(uiState.collection.id, it.index) },
-        onDeleteCollectionClicked = { collectionSharedViewModel.deleteCollection() },
+        onDeleteCollectionClicked = { collectionSharedViewModel.showDeleteDialog(true) },
         onSaveCollectionClicked = { collectionSharedViewModel.saveCollection() },
         onDownloadPressed = { collectionSharedViewModel.showDownloadDialog(true) },
         onSharePressed = { collectionSharedViewModel.shareCollection() },
@@ -114,27 +140,10 @@ fun NewCollection(
             CollectionButtons(
                 onSaveClicked = onSaveCollectionClicked,
                 onDeleteCollectionClicked = onDeleteCollectionClicked,
-                showDeleteButton = collection.id != null,
+                showDeleteButton = !collection.isNewCollection(),
             )
         }
     }
-}
-
-@Composable
-private fun ShowDownloadDialog(
-    show: Boolean,
-    onConfirmation: (() -> Unit) = {},
-    onDismiss: (() -> Unit) = {},
-    collectionName: String,
-) {
-    if (!show) return
-
-    BaseAlertDialog(
-        onConfirmation = onConfirmation,
-        onDismissRequest = onDismiss,
-        dialogTitle = stringResource(R.string.download),
-        dialogText = stringResource(R.string.download_collection, collectionName),
-    )
 }
 
 @Preview

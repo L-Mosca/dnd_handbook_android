@@ -29,6 +29,8 @@ data class MonsterCollection(
         }
     }
 
+    fun isNewCollection(): Boolean = id == NEW_COLLECTION_ID
+
     fun toCollectionEntity(): MonsterCollectionEntity {
         return MonsterCollectionEntity(
             id = id ?: 0L,
@@ -37,6 +39,13 @@ data class MonsterCollection(
             date = date,
             modifiedDate = modifiedDate,
         )
+    }
+
+    fun hasChanges(newData: MonsterCollection): Boolean {
+        return id != newData.id
+                || name != newData.name
+                || monsterList?.map { it.index }?.toSet() != newData.monsterList?.map { it.index }
+            ?.toSet()
     }
 
     /**
@@ -53,7 +62,5 @@ data class MonsterCollection(
         }
     }
 }
-
-fun MonsterCollection.isNewCollection(): Boolean = id == null || id == NEW_COLLECTION_ID
 
 fun Long?.isNewCollection(): Boolean = this == null || this == NEW_COLLECTION_ID
