@@ -27,14 +27,18 @@ class CollectionSharedViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()
 
+    private var hasChanges = false
+
     fun setCollection(newCollection: MonsterCollection) {
         _uiState.update { it.copy(collection = newCollection) }
     }
 
     fun updateName(name: String) {
+        val oldCollection = _uiState.value.collection.copy()
         _uiState.update {
             it.copy(collection = it.collection.copy(name = name))
         }
+        hasChanges = oldCollection.hasChanges(_uiState.value.collection)
     }
 
     fun addMonster(monster: DefaultObject) {
@@ -45,6 +49,7 @@ class CollectionSharedViewModel @Inject constructor(
         newList.add(monster)
         val newCollection =
             _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
+        hasChanges = _uiState.value.collection.hasChanges(newCollection)
         _uiState.update { it.addMonsterSuccess(newCollection) }
     }
 
@@ -56,6 +61,7 @@ class CollectionSharedViewModel @Inject constructor(
 
         val newCollection =
             _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
+        hasChanges = _uiState.value.collection.hasChanges(newCollection)
         _uiState.update { it.deleteMonsterSuccess(newCollection) }
     }
 
@@ -77,6 +83,7 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun resetData() {
         _uiState.update { it.resetData() }
+        hasChanges = false
     }
 
     fun resetAddMonsterSuccess() {
@@ -92,6 +99,7 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun downloadCollection(uri: Uri) {
         defaultLaunch {
+            showDownloadDialog(false)
             newCollectionUseCase.invoke(_uiState.value.collection.copy())
             val file = pdfCollectionUseCase.generatePDF(_uiState.value.collection)
             fileHelper.saveFile(file, uri)
@@ -109,13 +117,15 @@ class CollectionSharedViewModel @Inject constructor(
         _uiState.update { it.copy(showDownloadDialog = show) }
     }
 
-    fun showShareDialog(show: Boolean) {
-        _uiState.update { it.copy(showShareDialog = show) }
+    fun showDeleteDialog(show: Boolean) {
+        _uiState.update { it.copy(showDeleteDialog = show) }
     }
 
-    fun showSaveSuccess(show: Boolean) {
-        _uiState.update { it.copy(showSaveSuccess = show) }
+    fun showChangesDialog(show: Boolean) {
+        _uiState.update { it.copy(showChangesDialog = show) }
     }
+
+    fun hasChanges(): Boolean = hasChanges
 }
 
 data class NewCollectionUIState(
@@ -124,14 +134,15 @@ data class NewCollectionUIState(
     val deleteSuccess: Boolean = false,
     val addMonsterSuccess: Boolean = false,
     val showDownloadDialog: Boolean = false,
-    val showShareDialog: Boolean = false,
-    val showSaveSuccess: Boolean = false,
+    val showDeleteDialog: Boolean = false,
+    val showChangesDialog: Boolean = false,
 ) {
     fun deleteSuccess() = copy(
         collection = MonsterCollection.newInstance(),
         saveSuccess = false,
         deleteSuccess = true,
         addMonsterSuccess = false,
+        showDeleteDialog = false,
     )
 
     fun saveSuccess() = copy(
@@ -139,6 +150,9 @@ data class NewCollectionUIState(
         saveSuccess = true,
         deleteSuccess = false,
         addMonsterSuccess = false,
+        showChangesDialog = false,
+        showDownloadDialog =  false,
+        showDeleteDialog = false,
     )
 
     fun addMonsterSuccess(collection: MonsterCollection) = copy(
@@ -160,5 +174,8 @@ data class NewCollectionUIState(
         saveSuccess = false,
         deleteSuccess = false,
         addMonsterSuccess = false,
+        showDeleteDialog = false,
+        showDownloadDialog = false,
+        showChangesDialog = false,
     )
 }
