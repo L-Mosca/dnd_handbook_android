@@ -3,6 +3,7 @@
 package com.example.dndhandbook.presentation.screen.newCollection
 
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -26,6 +27,7 @@ import com.example.dndhandbook.presentation.screen.newCollection.components.Coll
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNameTextField
 import com.example.dndhandbook.presentation.screen.newCollection.components.CollectionNewMonsterButton
 import com.example.dndhandbook.presentation.screen.newCollection.components.NewCollectionTopBar
+import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionChangesDialog
 import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionDeleteDialog
 import com.example.dndhandbook.presentation.screen.newCollection.components.dialogs.CollectionDownloadDialog
 import com.example.dndhandbook.presentation.ui.theme.Black800
@@ -67,9 +69,29 @@ fun NewCollectionScreen(
         onDismiss = { collectionSharedViewModel.showDeleteDialog(false) },
     )
 
+    CollectionChangesDialog(
+        show = uiState.showChangesDialog,
+        onConfirmation = { collectionSharedViewModel.saveCollection() },
+        onDismiss = {
+            collectionSharedViewModel.showChangesDialog(false)
+            onBackPressed.invoke()
+        }
+    )
+
+    BackHandler {
+        if (collectionSharedViewModel.hasChanges()) {
+            collectionSharedViewModel.showChangesDialog(true)
+        } else onBackPressed.invoke()
+
+    }
+
     NewCollection(
         collection = uiState.collection,
-        onBackPressed = { onBackPressed.invoke() },
+        onBackPressed = {
+            if (collectionSharedViewModel.hasChanges()) {
+                collectionSharedViewModel.showChangesDialog(true)
+            } else onBackPressed.invoke()
+        },
         onNameChange = { collectionSharedViewModel.updateName(it) },
         onAddMonsterPressed = { onAddMonsterPressed.invoke(uiState.collection.id) },
         onDeleteClicked = { collectionSharedViewModel.deleteMonster(it) },
