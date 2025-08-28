@@ -1,0 +1,66 @@
+package com.moscatech.dndhandbook.domain.models.collection
+
+import android.os.Parcelable
+import com.moscatech.dndhandbook.domain.models.base.DefaultObject
+import com.moscatech.dndhandbook.domain.models.collection.MonsterCollection.Companion.NEW_COLLECTION_ID
+import kotlinx.parcelize.Parcelize
+import java.util.Date
+
+@Parcelize
+data class MonsterCollection(
+    var id: Long? = null,
+    val name: String = "",
+    val monsterList: List<DefaultObject>? = null,
+    var date: Date = Date(),
+    var modifiedDate: Date = Date(),
+) : Parcelable {
+
+    companion object {
+        const val NEW_COLLECTION_ID = -1L
+
+        fun newInstance(): MonsterCollection {
+            return MonsterCollection(
+                id = -1,
+                name = "",
+                monsterList = emptyList(),
+                date = Date(),
+                modifiedDate = Date(),
+            )
+        }
+    }
+
+    fun isNewCollection(): Boolean = id == NEW_COLLECTION_ID
+
+    fun toCollectionEntity(): MonsterCollectionEntity {
+        return MonsterCollectionEntity(
+            id = id ?: 0L,
+            name = name,
+            monsterList = monsterList,
+            date = date,
+            modifiedDate = modifiedDate,
+        )
+    }
+
+    fun hasChanges(newData: MonsterCollection): Boolean {
+        return id != newData.id
+                || name != newData.name
+                || monsterList?.map { it.index }?.toSet() != newData.monsterList?.map { it.index }
+            ?.toSet()
+    }
+
+    /**
+     * Return new data with correct ID
+     *
+     * When it's new collection, id == [NEW_COLLECTION_ID], in this case set null on id (id is set by Room).
+     *
+     * else, return the same data
+     */
+    fun setupCollectionId(): MonsterCollection {
+        return when {
+            isNewCollection() -> copy(id = null)
+            else -> copy()
+        }
+    }
+}
+
+fun Long?.isNewCollection(): Boolean = this == null || this == NEW_COLLECTION_ID
