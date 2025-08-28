@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dndhandbook"
+    namespace = "com.moscatech.dndhandbook"
     compileSdk = 36
 
     room {
@@ -19,7 +19,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.dndhandbook"
+        applicationId = "com.moscatech.dndhandbook"
         minSdk = 28
         targetSdk = 36
         versionCode = 1
