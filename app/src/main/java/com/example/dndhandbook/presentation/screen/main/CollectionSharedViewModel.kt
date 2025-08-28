@@ -27,14 +27,18 @@ class CollectionSharedViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()
 
+    private var hasChanges = false
+
     fun setCollection(newCollection: MonsterCollection) {
         _uiState.update { it.copy(collection = newCollection) }
     }
 
     fun updateName(name: String) {
+        val oldCollection = _uiState.value.collection.copy()
         _uiState.update {
             it.copy(collection = it.collection.copy(name = name))
         }
+        hasChanges = oldCollection.hasChanges(_uiState.value.collection)
     }
 
     fun addMonster(monster: DefaultObject) {
@@ -45,6 +49,7 @@ class CollectionSharedViewModel @Inject constructor(
         newList.add(monster)
         val newCollection =
             _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
+        hasChanges = _uiState.value.collection.hasChanges(newCollection)
         _uiState.update { it.addMonsterSuccess(newCollection) }
     }
 
@@ -56,6 +61,7 @@ class CollectionSharedViewModel @Inject constructor(
 
         val newCollection =
             _uiState.value.collection.copy(monsterList = newList.sortedBy { it.name })
+        hasChanges = _uiState.value.collection.hasChanges(newCollection)
         _uiState.update { it.deleteMonsterSuccess(newCollection) }
     }
 
@@ -77,6 +83,7 @@ class CollectionSharedViewModel @Inject constructor(
 
     fun resetData() {
         _uiState.update { it.resetData() }
+        hasChanges = false
     }
 
     fun resetAddMonsterSuccess() {
@@ -113,6 +120,12 @@ class CollectionSharedViewModel @Inject constructor(
     fun showDeleteDialog(show: Boolean) {
         _uiState.update { it.copy(showDeleteDialog = show) }
     }
+
+    fun showChangesDialog(show: Boolean) {
+        _uiState.update { it.copy(showChangesDialog = show) }
+    }
+
+    fun hasChanges(): Boolean = hasChanges
 }
 
 data class NewCollectionUIState(
@@ -122,6 +135,7 @@ data class NewCollectionUIState(
     val addMonsterSuccess: Boolean = false,
     val showDownloadDialog: Boolean = false,
     val showDeleteDialog: Boolean = false,
+    val showChangesDialog: Boolean = false,
 ) {
     fun deleteSuccess() = copy(
         collection = MonsterCollection.newInstance(),
@@ -136,6 +150,9 @@ data class NewCollectionUIState(
         saveSuccess = true,
         deleteSuccess = false,
         addMonsterSuccess = false,
+        showChangesDialog = false,
+        showDownloadDialog =  false,
+        showDeleteDialog = false,
     )
 
     fun addMonsterSuccess(collection: MonsterCollection) = copy(
@@ -159,5 +176,6 @@ data class NewCollectionUIState(
         addMonsterSuccess = false,
         showDeleteDialog = false,
         showDownloadDialog = false,
+        showChangesDialog = false,
     )
 }

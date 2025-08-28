@@ -41,6 +41,13 @@ data class MonsterCollection(
         )
     }
 
+    fun hasChanges(newData: MonsterCollection): Boolean {
+        return id != newData.id
+                || name != newData.name
+                || monsterList?.map { it.index }?.toSet() != newData.monsterList?.map { it.index }
+            ?.toSet()
+    }
+
     /**
      * Return new data with correct ID
      *
