@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.moscatech.dndhandbook.presentation.screen.home.HomeScreen
 import com.moscatech.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
+import com.moscatech.dndhandbook.presentation.screen.settings.SettingsScreen
 import com.moscatech.dndhandbook.presentation.screen.splash.SplashScreen
 import kotlinx.serialization.Serializable
 
@@ -25,6 +26,9 @@ data object SplashRoute : Route(route = "splashRoute")
 
 @Serializable
 data object HomeRoute : Route(route = "homeRoute")
+
+@Serializable
+data object SettingsRoute : Route(route = "settingsRoute")
 
 @Composable
 fun MainNavGraph(navController: NavHostController) {
@@ -44,6 +48,13 @@ fun MainNavGraph(navController: NavHostController) {
             HomeScreen(
                 navigateToCollection = { navController.navigate(NewCollectionNavGraph(it)) },
                 navigateToBestiary = { navController.navigate(BestiaryRoute) },
+                navigateToSettings = { navController.navigate(SettingsRoute) }
+            )
+        }
+
+        animatedComposable<SettingsRoute> {
+            SettingsScreen(
+                onBackPressed = { navController.navigateUp() }
             )
         }
 

@@ -1,6 +1,9 @@
 package com.moscatech.dndhandbook.presentation.screen.splash
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
+import com.moscatech.dndhandbook.data.local.preferences.PreferencesContract
+import com.moscatech.dndhandbook.data.remote.firebase.RemoteDatabaseContract
 import com.moscatech.dndhandbook.data.repository.monster.MonsterRepositoryContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -12,14 +15,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val monsterRepository: MonsterRepositoryContract
-) : BaseViewModel() {
+    private val monsterRepository: MonsterRepositoryContract,
+    private val preferencesHelper: PreferencesContract,
+    private val remoteDatabase: RemoteDatabaseContract,
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _showHome = MutableStateFlow(false)
     val showHome: StateFlow<Boolean> = _showHome.asStateFlow()
 
     init {
-       updateBestiaryData()
+        setupSettingsConfigs()
+        updateBestiaryData()
     }
 
     private fun updateBestiaryData() {
@@ -30,5 +37,13 @@ class SplashViewModel @Inject constructor(
                 _showHome.update { true }
             }
         )
+    }
+
+    private fun setupSettingsConfigs() {
+        defaultLaunch {
+            remoteDatabase.getSettingsConfigs()?.let {
+                preferencesHelper.saveSettingsConfigs(it)
+            }
+        }
     }
 }

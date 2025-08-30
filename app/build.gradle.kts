@@ -8,9 +8,21 @@ plugins {
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.0.21"
     id("androidx.room")
+    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("./key/dnd_android_key.jks")
+            storePassword = "DND@handbook123"
+            keyAlias = "DND@handbook123"
+            keyPassword = "DND@handbook123"
+        }
+    }
+
     namespace = "com.moscatech.dndhandbook"
     compileSdk = 36
 
@@ -23,12 +35,20 @@ android {
         minSdk = 28
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "BASE_DND_URL", "\"https://www.dnd5eapi.co\"")
+        buildConfigField("String", "BASE_DEEP_LINK", "\"https://dnd_handbook/monsterDetailDeepRoute\"")
+
+        buildConfigField("String", "API_DOC", "\"https://5e-bits.github.io/docs/\"")
+        buildConfigField("String", "API_REPO", "\"https://github.com/5e-bits/5e-srd-api\"")
+        buildConfigField("String", "DATABASE_REPO", "\"https://github.com/5e-bits/5e-database\"")
+        buildConfigField("String", "PRIVACY_POLICIES", "\"https://www.termsfeed.com/live/e25fc1ee-3088-4dfa-83e7-146871bd222a\"")
     }
     packaging {
         resources {
@@ -55,6 +75,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             isDebuggable = true
@@ -69,15 +90,11 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
             resValue("string", "app_name", "[Dev] D&D Handbook")
-            buildConfigField("String", "BASE_DND_URL", "\"https://www.dnd5eapi.co\"")
-            buildConfigField("String", "BASE_DEEP_LINK", "\"https://dnd_handbook/monsterDetailDeepRoute\"")
         }
 
         create("prod") {
             dimension = "version"
             resValue("string", "app_name", "D&D Handbook")
-            buildConfigField("String", "BASE_DND_URL", "\"https://www.dnd5eapi.co\"")
-            buildConfigField("String", "BASE_DEEP_LINK", "\"https://dnd_handbook/monsterDetailDeepRoute\"")
         }
     }
 
@@ -104,6 +121,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.browser)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -157,5 +175,11 @@ dependencies {
     implementation(libs.lottie.compose)
 
     // Open PDF
-    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
+    implementation(libs.pdfbox.android)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.crashlytics.ndk)
 }

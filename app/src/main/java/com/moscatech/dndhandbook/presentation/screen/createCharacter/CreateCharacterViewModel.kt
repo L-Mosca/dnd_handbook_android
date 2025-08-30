@@ -3,6 +3,7 @@ package com.moscatech.dndhandbook.presentation.screen.createCharacter
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.common.Constants
 import com.moscatech.dndhandbook.common.Resource
@@ -22,8 +23,8 @@ class CreateCharacterViewModel @Inject constructor(
     private val getRacesUseCase: GetRacesUseCase,
     private val getSubRacesUseCase: GetSubRacesUseCase,
     private val getClassUseCase: GetClassesUseCase,
-) :
-    BaseViewModel() {
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _state = mutableStateOf(CreateCharacterState())
     val state: State<CreateCharacterState> = _state

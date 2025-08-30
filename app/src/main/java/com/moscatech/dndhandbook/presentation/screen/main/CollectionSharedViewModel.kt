@@ -1,6 +1,7 @@
 package com.moscatech.dndhandbook.presentation.screen.main
 
 import android.net.Uri
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.domain.helper.file.FileContract
 import com.moscatech.dndhandbook.domain.helper.pdf.PDFHelper
@@ -22,7 +23,8 @@ class CollectionSharedViewModel @Inject constructor(
     private val deleteCollectionUseCase: DeleteCollectionUseCase,
     private val pdfCollectionUseCase: PDFCollectionUseCase,
     private val fileHelper: FileContract,
-) : BaseViewModel() {
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _uiState = MutableStateFlow(NewCollectionUIState())
     val uiState: StateFlow<NewCollectionUIState> = _uiState.asStateFlow()

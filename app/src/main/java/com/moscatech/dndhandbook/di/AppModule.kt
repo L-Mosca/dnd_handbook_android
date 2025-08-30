@@ -2,6 +2,9 @@ package com.moscatech.dndhandbook.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.moscatech.dndhandbook.BuildConfig
 import com.moscatech.dndhandbook.data.local.database.AppDatabase
 import com.moscatech.dndhandbook.data.local.database.BestiaryDao
@@ -9,12 +12,16 @@ import com.moscatech.dndhandbook.data.local.database.CollectionsDao
 import com.moscatech.dndhandbook.data.local.preferences.PreferencesContract
 import com.moscatech.dndhandbook.data.local.preferences.PreferencesHelper
 import com.moscatech.dndhandbook.data.remote.DndApi
+import com.moscatech.dndhandbook.data.remote.firebase.RemoteDatabase
+import com.moscatech.dndhandbook.data.remote.firebase.RemoteDatabaseContract
 import com.moscatech.dndhandbook.data.repository.character.CharacterRepository
 import com.moscatech.dndhandbook.data.repository.character.CharacterRepositoryContract
 import com.moscatech.dndhandbook.data.repository.collection.CollectionContract
 import com.moscatech.dndhandbook.data.repository.collection.CollectionRepository
 import com.moscatech.dndhandbook.data.repository.monster.MonsterRepository
 import com.moscatech.dndhandbook.data.repository.monster.MonsterRepositoryContract
+import com.moscatech.dndhandbook.data.repository.settings.SettingsContract
+import com.moscatech.dndhandbook.data.repository.settings.SettingsRepository
 import com.moscatech.dndhandbook.domain.helper.connectivity.ConnectivityContract
 import com.moscatech.dndhandbook.domain.helper.connectivity.ConnectivityHelper
 import com.moscatech.dndhandbook.domain.helper.file.FileContract
@@ -34,9 +41,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesDndApi(): DndApi {
-        return DndApi.newInstance(BuildConfig.BASE_DND_URL)
-    }
+    fun providesDndApi(): DndApi = DndApi.newInstance(BuildConfig.BASE_DND_URL)
 
     @Provides
     @Singleton
@@ -95,13 +100,32 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFileHelper(
-        @ApplicationContext context: Context
-    ): FileContract = FileHelper(context)
+    fun provideFileHelper(@ApplicationContext context: Context): FileContract = FileHelper(context)
 
     @Provides
     @Singleton
-    fun providePDFHelper(
-        @ApplicationContext context: Context
-    ): PDFContract = PDFHelper(context)
+    fun providePDFHelper(@ApplicationContext context: Context): PDFContract = PDFHelper(context)
+
+    @Provides
+    @Singleton
+    fun provideDatabaseReference(): DatabaseReference = FirebaseDatabase.getInstance().reference
+
+    @Provides
+    @Singleton
+    fun provideRemoteDatabase(dbReference: DatabaseReference): RemoteDatabaseContract {
+        return RemoteDatabase(dbReference)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(
+        remoteDatabase: RemoteDatabaseContract,
+        preferencesHelper: PreferencesContract,
+        connectivityHelper: ConnectivityContract,
+    ): SettingsContract = SettingsRepository(remoteDatabase, preferencesHelper, connectivityHelper)
+
+    @Provides
+    @Singleton
+    fun provideFirebaseCrashlytics(): FirebaseCrashlytics =
+        FirebaseCrashlytics.getInstance()
 }

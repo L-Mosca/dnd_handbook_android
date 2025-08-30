@@ -1,5 +1,6 @@
 package com.moscatech.dndhandbook.presentation.screen.bestiary
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.domain.models.base.DefaultList
 import com.moscatech.dndhandbook.domain.useCase.bestiary.getMonsters.GetMonstersUseCase
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BestiaryViewModel @Inject constructor(
     private val getMonstersUseCase: GetMonstersUseCase,
-) : BaseViewModel() {
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _uiState = MutableStateFlow(BestiaryState())
     val uiState: StateFlow<BestiaryState> = _uiState.asStateFlow()

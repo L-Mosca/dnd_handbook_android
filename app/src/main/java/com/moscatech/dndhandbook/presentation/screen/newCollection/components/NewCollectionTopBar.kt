@@ -25,7 +25,7 @@ fun NewCollectionTopBar(
     onSharePressed: (() -> Unit) = {},
 ) {
     BaseTopBar(
-        title = stringResource(R.string.create_new_collection),
+        title = stringResource(R.string.collection),
         onBackClick = onBackPressed,
         actions = {
             Icon(

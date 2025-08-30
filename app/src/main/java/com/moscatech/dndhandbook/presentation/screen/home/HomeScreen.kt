@@ -3,13 +3,18 @@ package com.moscatech.dndhandbook.presentation.screen.home
 import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,17 +43,16 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToCollection: ((Long?) -> Unit) = {},
     navigateToBestiary: (() -> Unit) = {},
+    navigateToSettings: (() -> Unit) = {},
 ) {
     val context = LocalContext.current
-
     val collectionViewModel = getCollectionSharedViewModel()
+    val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(null) {
         viewModel.getList()
         collectionViewModel.resetData()
     }
-
-    val uiState by viewModel.uiState.collectAsState()
 
     BackHandler {
         (context as? Activity)?.moveTaskToBack(true)
@@ -65,6 +69,7 @@ fun HomeScreen(
             navigateToCollection.invoke(it.id)
         },
         collectionList = uiState.collectionList,
+        onSettingsClicked = { navigateToSettings.invoke() },
     )
 }
 
@@ -74,6 +79,7 @@ private fun Home(
     onNewCollectionClicked: (() -> Unit)? = null,
     onCollectionClicked: ((MonsterCollection) -> Unit)? = null,
     collectionList: List<MonsterCollection> = emptyList(),
+    onSettingsClicked: (() -> Unit) = {},
 ) {
     Scaffold { innerPadding ->
 
@@ -84,21 +90,7 @@ private fun Home(
                 .background(Black800),
         ) {
             Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                ) {
-                    BaseText(
-                        text = stringResource(R.string.app_name),
-                        fontSize = 24.sp,
-                        color = Crimson800,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 10.dp),
-                    )
-                }
+                TopBar(onSettingsClicked = onSettingsClicked)
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -125,6 +117,35 @@ private fun Home(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun TopBar(onSettingsClicked: (() -> Unit) = {}) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 10.dp)
+    ) {
+        BaseText(
+            text = stringResource(R.string.app_name),
+            fontSize = 24.sp,
+            color = Crimson800,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp),
+        )
+
+        Icon(
+            imageVector = Icons.Default.Settings,
+            contentDescription = stringResource(R.string.settings),
+            tint = Crimson800,
+            modifier = Modifier
+                .size(28.dp)
+                .align(Alignment.CenterEnd)
+                .clickable { onSettingsClicked.invoke() }
+        )
     }
 }
 
