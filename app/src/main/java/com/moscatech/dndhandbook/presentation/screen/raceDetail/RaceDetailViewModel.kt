@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.common.Constants
 import com.moscatech.dndhandbook.common.Resource
@@ -17,9 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RaceDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getRaceDetailUseCase: GetRaceDetailUseCase
-) :
-    BaseViewModel() {
+    private val getRaceDetailUseCase: GetRaceDetailUseCase,
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _state = mutableStateOf(RaceDetailState())
     val state: State<RaceDetailState> = _state

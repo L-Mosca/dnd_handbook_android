@@ -1,5 +1,6 @@
 package com.moscatech.dndhandbook.presentation.screen.monsterList
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.domain.models.base.DefaultList
 import com.moscatech.dndhandbook.domain.useCase.bestiary.getMonsters.GetMonstersUseCase
@@ -12,8 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MonsterListViewModel @Inject constructor(
-    private val getMonsterUseCase: GetMonstersUseCase
-) : BaseViewModel() {
+    private val getMonsterUseCase: GetMonstersUseCase,
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _uiState = MutableStateFlow(MonsterListUIState())
     val uiState: StateFlow<MonsterListUIState> = _uiState.asStateFlow()

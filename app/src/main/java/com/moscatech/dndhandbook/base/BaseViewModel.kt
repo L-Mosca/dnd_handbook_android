@@ -2,11 +2,14 @@ package com.moscatech.dndhandbook.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(
+    private val crashlytics: FirebaseCrashlytics,
+) : ViewModel() {
 
     fun defaultLaunch(
         exceptionHandler: ((Throwable) -> Unit)? = null,
@@ -19,6 +22,7 @@ abstract class BaseViewModel : ViewModel() {
                 loadingStatus?.invoke(true)
                 function.invoke()
             } catch (throwable: Throwable) {
+                crashlytics.recordException(throwable)
                 throwable.printStackTrace()
                 defaultCatch(throwable, exceptionHandler)
             } finally {

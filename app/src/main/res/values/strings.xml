@@ -47,6 +47,7 @@
     <string name="sub_classes">Sub Classes</string>
 
     <!--New Collection-->
+    <string name="collection">Collection</string>
     <string name="create_new_collection">New collection</string>
     <string name="collection_name">Collection name</string>
     <string name="add_creature">Add creature</string>
@@ -78,4 +79,11 @@
     <!--Dialog-->
     <string name="confirm">Confirm</string>
     <string name="dismiss">Dismiss</string>
+    
+    <!--Settings-->
+    <string name="settings">Settings</string>
+    <string name="privacy_policies">Privacy policies</string>
+    <string name="api_reference">Rest API reference</string>
+    <string name="database_reference">Database reference</string>
+    <string name="api_doc">API docs</string>
 </resources>

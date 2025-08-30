@@ -3,6 +3,7 @@ package com.moscatech.dndhandbook.presentation.screen.monsterDetail
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moscatech.dndhandbook.base.BaseViewModel
 import com.moscatech.dndhandbook.domain.useCase.bestiary.getMonster.GetMonsterUseCase
 import com.moscatech.dndhandbook.navigation.MonsterDetailRoute
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class MonsterDetailViewModel @Inject constructor(
     private val getMonsterDetailUseCase: GetMonsterUseCase,
     savedStateHandle: SavedStateHandle,
-) : BaseViewModel() {
+    crashlytics: FirebaseCrashlytics,
+) : BaseViewModel(crashlytics) {
 
     private val _uiState = MutableStateFlow(MonsterDetailState())
     val uiState: StateFlow<MonsterDetailState> = _uiState.asStateFlow()
