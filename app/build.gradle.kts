@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -12,19 +15,29 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val keystorePropertiesFile = rootProject.file("app/key/dnd_android_password.txt")
+val keystoreProperties = Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+if (!keystorePropertiesFile.exists()) {
+    throw GradleException("Arquivo de assinatura não encontrado: ${keystorePropertiesFile.path}")
+}
+
 android {
 
     signingConfigs {
         create("release") {
             storeFile = file("./key/dnd_android_key.jks")
-            storePassword = "DND@handbook123"
-            keyAlias = "DND@handbook123"
-            keyPassword = "DND@handbook123"
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
 
     namespace = "com.moscatech.dndhandbook"
-    compileSdk = 36
+    compileSdk = 37
 
     room {
         schemaDirectory("$projectDir/schemas")
@@ -33,8 +46,8 @@ android {
     defaultConfig {
         applicationId = "com.moscatech.dndhandbook"
         minSdk = 28
-        targetSdk = 36
-        versionCode = 2
+        targetSdk = 37
+        versionCode = 3
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
