@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -12,14 +15,21 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+val keystorePropertiesFile = rootProject.file("app/key/dnd_android_password.txt")
+val keystoreProperties = Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+
 android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("./key/dnd_android_key.jks")
-            storePassword = "DND@handbook123"
-            keyAlias = "DND@handbook123"
-            keyPassword = "DND@handbook123"
+            storeFile = file("./key/dnd_keystore.jks")
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
         }
     }
 
@@ -34,7 +44,7 @@ android {
         applicationId = "com.moscatech.dndhandbook"
         minSdk = 28
         targetSdk = 36
-        versionCode = 2
+        versionCode = 4
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
