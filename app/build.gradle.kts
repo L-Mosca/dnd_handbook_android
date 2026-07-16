@@ -29,7 +29,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("./key/dnd_android_key.jks")
+            storeFile = file("./key/dnd_keystore.jks")
             storePassword = keystoreProperties.getProperty("storePassword")
             keyAlias = keystoreProperties.getProperty("keyAlias")
             keyPassword = keystoreProperties.getProperty("keyPassword")
@@ -37,7 +37,7 @@ android {
     }
 
     namespace = "com.moscatech.dndhandbook"
-    compileSdk = 37
+    compileSdk = 36
 
     room {
         schemaDirectory("$projectDir/schemas")
@@ -46,8 +46,8 @@ android {
     defaultConfig {
         applicationId = "com.moscatech.dndhandbook"
         minSdk = 28
-        targetSdk = 37
-        versionCode = 3
+        targetSdk = 36
+        versionCode = 4
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
