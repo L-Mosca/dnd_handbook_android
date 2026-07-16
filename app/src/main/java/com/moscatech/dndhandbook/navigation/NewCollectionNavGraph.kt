@@ -3,10 +3,14 @@ package com.moscatech.dndhandbook.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
+import com.moscatech.dndhandbook.presentation.screen.collection.CollectionScreen
 import com.moscatech.dndhandbook.presentation.screen.monsterDetail.MonsterDetailScreen
 import com.moscatech.dndhandbook.presentation.screen.monsterList.MonsterListScreen
 import com.moscatech.dndhandbook.presentation.screen.newCollection.NewCollectionScreen
 import kotlinx.serialization.Serializable
+
+@Serializable
+data object CollectionRoute : Route(route = "collectionRoute")
 
 @Serializable
 data class NewCollectionNavGraph(val id: Long? = null)
@@ -19,7 +23,16 @@ data class MonsterListRoute(val id: Long? = null) : Route(route = "monsterListRo
 
 fun NavGraphBuilder.newCollectionNavGraph(navController: NavHostController) {
 
-    navigation<NewCollectionNavGraph>(startDestination = NewCollectionRoute()) {
+    navigation<NewCollectionNavGraph>(startDestination = CollectionRoute) {
+        animatedComposable<CollectionRoute> {
+            CollectionScreen(
+                navigateToCollection = { collectionId ->
+                    navController.navigate(route = NewCollectionRoute(id = collectionId))
+                },
+                onBackPressed = { navController.navigateUp() }
+            )
+        }
+
         animatedComposable<NewCollectionRoute> {
             NewCollectionScreen(
                 onBackPressed = { navController.navigateUp() },

@@ -2,13 +2,8 @@
     <!--Home-->
     <string name="collections">Collections</string>
     <string name="bestiary">Bestiary</string>
-    <string name="bestiary_detail">
-    Detailed descriptions and statistics for a wide variety of creatures, monsters, and other beings that players and Dungeon Masters may encounter in their games.
-</string>
-
-    <string name="collection_detail">
-    Use collections to quickly access monsters during your RPG campaigns. Ideal for Game Masters who want to plan encounters and manage creatures with ease.
-</string>
+    <string name="bestiary_detail">Detailed descriptions and statistics for a wide variety of creatures and monsters</string>
+    <string name="collection_detail">Use collections to quickly access monsters during your RPG campaigns</string>
 
     <!--Monster Detail Screen-->
     <string name="armor_class">Armor Class</string>

@@ -18,8 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -47,7 +45,6 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val collectionViewModel = getCollectionSharedViewModel()
-    val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(null) {
         viewModel.getList()
@@ -64,11 +61,6 @@ fun HomeScreen(
             collectionViewModel.setCollection(MonsterCollection.newInstance())
             navigateToCollection.invoke(MonsterCollection.NEW_COLLECTION_ID)
         },
-        onCollectionClicked = {
-            collectionViewModel.setCollection(it)
-            navigateToCollection.invoke(it.id)
-        },
-        collectionList = uiState.collectionList,
         onSettingsClicked = { navigateToSettings.invoke() },
     )
 }
@@ -77,8 +69,6 @@ fun HomeScreen(
 private fun Home(
     onBestiaryClicked: (() -> Unit)? = null,
     onNewCollectionClicked: (() -> Unit)? = null,
-    onCollectionClicked: ((MonsterCollection) -> Unit)? = null,
-    collectionList: List<MonsterCollection> = emptyList(),
     onSettingsClicked: (() -> Unit) = {},
 ) {
     Scaffold { innerPadding ->
@@ -107,11 +97,7 @@ private fun Home(
                             //CreateCharacterButton(navController = navController)
                             HomeBestiary(onBestiaryClicked = onBestiaryClicked)
 
-                            HomeCollection(
-                                collectionList = collectionList,
-                                onCollectionClicked = { onCollectionClicked?.invoke(it) },
-                                addCollectionClicked = onNewCollectionClicked,
-                            )
+                            HomeCollection(addCollectionClicked = onNewCollectionClicked)
                         }
                     }
                 }
